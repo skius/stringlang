@@ -1,0 +1,28 @@
+want_random = $1;
+message = if (want_random == "yes" || want_random == "true") {
+     random("This is a sample message.",
+        "This may also be a sample message, but it isn't the first one for sure.",
+        "Oh look, a sample message.")
+} else {
+    "You didn't want a random message, so you shall receive this message. Each and every time."
+};
+
+other_thing = if ("a" != "b" && "a" == "a") {
+    "I am ignored";
+    "T"
+} else {
+    "F"
+};
+
+str = "";
+rval = "1";
+while (rval != "10") {
+    str = str + "f";
+    rval = random("10")
+};
+
+if ($2) {
+    str + " " + other_thing + " You provided a second argument, and it was '" + $2 + "'. Here comes the calculated message: " + message
+} else {
+    other_thing + " You did not provide a second argument, so I will not tell you the calculated message. Instead, enjoy a random number from 1 to 100: " + random("100")
+}
