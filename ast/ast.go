@@ -30,7 +30,6 @@ type Expr interface {
 }
 
 type Val string
-const False = Val("")
 func NewVal(a Attrib) (Expr, error) {
 	quoted := attribToString(a)
 	return Val(quoted[1:len(quoted)-1]), nil
@@ -42,27 +41,27 @@ func (v Val) String() string {
 	return "\"" + string(v) + "\""
 }
 
-type ExprSeq []Expr
-func NewExprSeq() (Expr, error) {
-	return ExprSeq([]Expr{}), nil
+type Block []Expr
+func NewBlock() (Expr, error) {
+	return Block([]Expr{}), nil
 }
-func ExprSeqAppend(s, e Attrib) (Expr, error) {
-	seq := s.(ExprSeq)
+func BlockPrepend(e, b Attrib) (Expr, error) {
+	block := b.(Block)
 	exp := e.(Expr)
-	seq2 := append(seq, exp)
-	return seq2, nil
+	block2 := append([]Expr{exp}, block...)
+	return Block(block2), nil
 }
-func (es ExprSeq) Eval(c Context) Val {
+func (b Block) Eval(c Context) Val {
 	var last Val
-	for _, exp := range es {
+	for _, exp := range b {
 		last = exp.Eval(c)
 	}
 	return last
 }
-func (es ExprSeq) String() string {
+func (b Block) String() string {
 	str := ""
-	for i, exp := range es {
-		if i < len(es) - 1 {
+	for i, exp := range b {
+		if i < len(b) - 1 {
 			str += exp.String() + ";\n"
 		} else {
 			str += exp.String()
@@ -186,22 +185,22 @@ func (v Var) String() string {
 
 type Call struct {
 	Fn Var
-	Args []Expr
+	Args CallArgs
 }
 func NewCall(f, as Attrib) (Expr, error) {
 	fn := f.(Var)
-	args := as.(ExprSeq)
+	args := as.(CallArgs)
 	return Call {Fn: fn, Args: args}, nil
 }
 func (ca Call) Eval(c Context) Val {
+	fn, ok := c.FunctionMap[string(ca.Fn)]
+	if !ok {
+		panic("function '" + string(ca.Fn) + "' not found.")
+	}
 	vals := make([]string, 0, len(ca.Args))
 	for _, argExp := range ca.Args {
 		v := argExp.Eval(c)
 		vals = append(vals, string(v))
-	}
-	fn, ok := c.FunctionMap[string(ca.Fn)]
-	if !ok {
-		panic("function '" + string(ca.Fn) + "' not found.")
 	}
 	res := fn(vals)
 	return Val(res)
@@ -313,6 +312,18 @@ func (e While) String() string {
 	return str
 }
 
+
+// CallArgs is not an Expr, since it can never appear on its own
+type CallArgs []Expr
+func NewCallArgs() (CallArgs, error) {
+	return []Expr{}, nil
+}
+func CallArgsPrepend(e, a Attrib) (CallArgs, error) {
+	args := a.(CallArgs)
+	exp := e.(Expr)
+	args2 := append([]Expr{exp}, args...)
+	return args2, nil
+}
 
 func attribToString(a Attrib) string {
 	return string(a.(*token.Token).Lit)

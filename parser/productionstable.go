@@ -21,7 +21,7 @@ type (
 
 var productionsTable = ProdTab{
 	ProdTabEntry{
-		String: `S' : ExprSeq	<<  >>`,
+		String: `S' : Block	<<  >>`,
 		Id:         "S'",
 		NTType:     0,
 		Index:      0,
@@ -31,33 +31,33 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `ExprSeq : ConcatExpr Expr	<< ast.ExprSeqAppend(X[0], X[1]) >>`,
-		Id:         "ExprSeq",
+		String: `Block : Expr BlockHelper	<< ast.BlockPrepend(X[0], X[1]) >>`,
+		Id:         "Block",
 		NTType:     1,
 		Index:      1,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.ExprSeqAppend(X[0], X[1])
+			return ast.BlockPrepend(X[0], X[1])
 		},
 	},
 	ProdTabEntry{
-		String: `ConcatExpr : ExprSeq ";"	<< X[0], nil >>`,
-		Id:         "ConcatExpr",
+		String: `BlockHelper : ";" Expr BlockHelper	<< ast.BlockPrepend(X[1], X[2]) >>`,
+		Id:         "BlockHelper",
 		NTType:     2,
 		Index:      2,
-		NumSymbols: 2,
+		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return X[0], nil
+			return ast.BlockPrepend(X[1], X[2])
 		},
 	},
 	ProdTabEntry{
-		String: `ConcatExpr : empty	<< ast.NewExprSeq() >>`,
-		Id:         "ConcatExpr",
+		String: `BlockHelper : empty	<< ast.NewBlock() >>`,
+		Id:         "BlockHelper",
 		NTType:     2,
 		Index:      3,
 		NumSymbols: 0,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewExprSeq()
+			return ast.NewBlock()
 		},
 	},
 	ProdTabEntry{
@@ -71,7 +71,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr : Expr000	<< X[0], nil >>`,
+		String: `Expr : ExprOr	<< X[0], nil >>`,
 		Id:         "Expr",
 		NTType:     3,
 		Index:      5,
@@ -81,8 +81,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr000 : Expr000 "||" Expr00	<< ast.NewOr(X[0], X[2]) >>`,
-		Id:         "Expr000",
+		String: `ExprOr : ExprOr "||" ExprAnd	<< ast.NewOr(X[0], X[2]) >>`,
+		Id:         "ExprOr",
 		NTType:     4,
 		Index:      6,
 		NumSymbols: 3,
@@ -91,8 +91,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr000 : Expr00	<< X[0], nil >>`,
-		Id:         "Expr000",
+		String: `ExprOr : ExprAnd	<< X[0], nil >>`,
+		Id:         "ExprOr",
 		NTType:     4,
 		Index:      7,
 		NumSymbols: 1,
@@ -101,8 +101,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr00 : Expr00 "&&" Expr01	<< ast.NewAnd(X[0], X[2]) >>`,
-		Id:         "Expr00",
+		String: `ExprAnd : ExprAnd "&&" ExprNotEquals	<< ast.NewAnd(X[0], X[2]) >>`,
+		Id:         "ExprAnd",
 		NTType:     5,
 		Index:      8,
 		NumSymbols: 3,
@@ -111,8 +111,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr00 : Expr01	<< X[0], nil >>`,
-		Id:         "Expr00",
+		String: `ExprAnd : ExprNotEquals	<< X[0], nil >>`,
+		Id:         "ExprAnd",
 		NTType:     5,
 		Index:      9,
 		NumSymbols: 1,
@@ -121,8 +121,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr01 : Expr01 "!=" Expr0	<< ast.NewNotEquals(X[0], X[2]) >>`,
-		Id:         "Expr01",
+		String: `ExprNotEquals : ExprNotEquals "!=" ExprEquals	<< ast.NewNotEquals(X[0], X[2]) >>`,
+		Id:         "ExprNotEquals",
 		NTType:     6,
 		Index:      10,
 		NumSymbols: 3,
@@ -131,8 +131,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr01 : Expr0	<< X[0], nil >>`,
-		Id:         "Expr01",
+		String: `ExprNotEquals : ExprEquals	<< X[0], nil >>`,
+		Id:         "ExprNotEquals",
 		NTType:     6,
 		Index:      11,
 		NumSymbols: 1,
@@ -141,8 +141,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr0 : Expr0 "==" Expr1	<< ast.NewEquals(X[0], X[2]) >>`,
-		Id:         "Expr0",
+		String: `ExprEquals : ExprEquals "==" ExprConcat	<< ast.NewEquals(X[0], X[2]) >>`,
+		Id:         "ExprEquals",
 		NTType:     7,
 		Index:      12,
 		NumSymbols: 3,
@@ -151,8 +151,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr0 : Expr1	<< X[0], nil >>`,
-		Id:         "Expr0",
+		String: `ExprEquals : ExprConcat	<< X[0], nil >>`,
+		Id:         "ExprEquals",
 		NTType:     7,
 		Index:      13,
 		NumSymbols: 1,
@@ -161,8 +161,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr1 : Expr1 "+" Expr2	<< ast.NewConcat(X[0], X[2]) >>`,
-		Id:         "Expr1",
+		String: `ExprConcat : ExprConcat "+" ExprLeaf	<< ast.NewConcat(X[0], X[2]) >>`,
+		Id:         "ExprConcat",
 		NTType:     8,
 		Index:      14,
 		NumSymbols: 3,
@@ -171,8 +171,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr1 : Expr2	<< X[0], nil >>`,
-		Id:         "Expr1",
+		String: `ExprConcat : ExprLeaf	<< X[0], nil >>`,
+		Id:         "ExprConcat",
 		NTType:     8,
 		Index:      15,
 		NumSymbols: 1,
@@ -181,8 +181,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr2 : IfElse	<< X[0], nil >>`,
-		Id:         "Expr2",
+		String: `ExprLeaf : IfElse	<< X[0], nil >>`,
+		Id:         "ExprLeaf",
 		NTType:     9,
 		Index:      16,
 		NumSymbols: 1,
@@ -191,8 +191,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr2 : While	<< X[0], nil >>`,
-		Id:         "Expr2",
+		String: `ExprLeaf : While	<< X[0], nil >>`,
+		Id:         "ExprLeaf",
 		NTType:     9,
 		Index:      17,
 		NumSymbols: 1,
@@ -201,8 +201,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr2 : string_lit	<< ast.NewVal(X[0]) >>`,
-		Id:         "Expr2",
+		String: `ExprLeaf : string_lit	<< ast.NewVal(X[0]) >>`,
+		Id:         "ExprLeaf",
 		NTType:     9,
 		Index:      18,
 		NumSymbols: 1,
@@ -211,8 +211,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr2 : Arg	<< X[0], nil >>`,
-		Id:         "Expr2",
+		String: `ExprLeaf : Arg	<< X[0], nil >>`,
+		Id:         "ExprLeaf",
 		NTType:     9,
 		Index:      19,
 		NumSymbols: 1,
@@ -221,8 +221,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr2 : Var	<< X[0], nil >>`,
-		Id:         "Expr2",
+		String: `ExprLeaf : Var	<< X[0], nil >>`,
+		Id:         "ExprLeaf",
 		NTType:     9,
 		Index:      20,
 		NumSymbols: 1,
@@ -231,8 +231,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr2 : Var "(" ExprSeqCall ")"	<< ast.NewCall(X[0], X[2]) >>`,
-		Id:         "Expr2",
+		String: `ExprLeaf : Var "(" CallArgs ")"	<< ast.NewCall(X[0], X[2]) >>`,
+		Id:         "ExprLeaf",
 		NTType:     9,
 		Index:      21,
 		NumSymbols: 4,
@@ -241,8 +241,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr2 : "(" Expr ")"	<< X[1], nil >>`,
-		Id:         "Expr2",
+		String: `ExprLeaf : "(" Expr ")"	<< X[1], nil >>`,
+		Id:         "ExprLeaf",
 		NTType:     9,
 		Index:      22,
 		NumSymbols: 3,
@@ -251,8 +251,8 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Expr2 : Index	<< X[0], nil >>`,
-		Id:         "Expr2",
+		String: `ExprLeaf : Index	<< X[0], nil >>`,
+		Id:         "ExprLeaf",
 		NTType:     9,
 		Index:      23,
 		NumSymbols: 1,
@@ -261,7 +261,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Index : Expr2 "[" Expr "]"	<< ast.NewIndex(X[0], X[2]) >>`,
+		String: `Index : ExprLeaf "[" Expr "]"	<< ast.NewIndex(X[0], X[2]) >>`,
 		Id:         "Index",
 		NTType:     10,
 		Index:      24,
@@ -271,7 +271,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Index : Expr2 "[" int_lit "]"	<< ast.NewIndexInt(X[0], X[2]) >>`,
+		String: `Index : ExprLeaf "[" int_lit "]"	<< ast.NewIndexInt(X[0], X[2]) >>`,
 		Id:         "Index",
 		NTType:     10,
 		Index:      25,
@@ -281,43 +281,43 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `ExprSeqCall : ConcatExprCall Expr	<< ast.ExprSeqAppend(X[0], X[1]) >>`,
-		Id:         "ExprSeqCall",
+		String: `CallArgs : Expr CallArgsHelper	<< ast.CallArgsPrepend(X[0], X[1]) >>`,
+		Id:         "CallArgs",
 		NTType:     11,
 		Index:      26,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.ExprSeqAppend(X[0], X[1])
+			return ast.CallArgsPrepend(X[0], X[1])
 		},
 	},
 	ProdTabEntry{
-		String: `ExprSeqCall : empty	<< ast.NewExprSeq() >>`,
-		Id:         "ExprSeqCall",
+		String: `CallArgs : empty	<< ast.NewCallArgs() >>`,
+		Id:         "CallArgs",
 		NTType:     11,
 		Index:      27,
 		NumSymbols: 0,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewExprSeq()
+			return ast.NewCallArgs()
 		},
 	},
 	ProdTabEntry{
-		String: `ConcatExprCall : ExprSeqCall ","	<< X[0], nil >>`,
-		Id:         "ConcatExprCall",
+		String: `CallArgsHelper : "," Expr CallArgsHelper	<< ast.CallArgsPrepend(X[1], X[2]) >>`,
+		Id:         "CallArgsHelper",
 		NTType:     12,
 		Index:      28,
-		NumSymbols: 2,
+		NumSymbols: 3,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return X[0], nil
+			return ast.CallArgsPrepend(X[1], X[2])
 		},
 	},
 	ProdTabEntry{
-		String: `ConcatExprCall : empty	<< ast.NewExprSeq() >>`,
-		Id:         "ConcatExprCall",
+		String: `CallArgsHelper : empty	<< ast.NewCallArgs() >>`,
+		Id:         "CallArgsHelper",
 		NTType:     12,
 		Index:      29,
 		NumSymbols: 0,
 		ReduceFunc: func(X []Attrib) (Attrib, error) {
-			return ast.NewExprSeq()
+			return ast.NewCallArgs()
 		},
 	},
 	ProdTabEntry{
@@ -341,7 +341,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `IfElse : "if" "(" Expr ")" "{" ExprSeq "}" "else" "{" ExprSeq "}"	<< ast.NewIfElse(X[2], X[5], X[9]) >>`,
+		String: `IfElse : "if" "(" Expr ")" "{" Block "}" "else" "{" Block "}"	<< ast.NewIfElse(X[2], X[5], X[9]) >>`,
 		Id:         "IfElse",
 		NTType:     15,
 		Index:      32,
@@ -351,7 +351,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `IfElse : "if" "(" Expr ")" "{" ExprSeq "}" "else" IfElse	<< ast.NewIfElse(X[2], X[5], X[8]) >>`,
+		String: `IfElse : "if" "(" Expr ")" "{" Block "}" "else" IfElse	<< ast.NewIfElse(X[2], X[5], X[8]) >>`,
 		Id:         "IfElse",
 		NTType:     15,
 		Index:      33,
@@ -361,7 +361,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `While : "while" "(" Expr ")" "{" ExprSeq "}"	<< ast.NewWhile(X[2], X[5]) >>`,
+		String: `While : "while" "(" Expr ")" "{" Block "}"	<< ast.NewWhile(X[2], X[5]) >>`,
 		Id:         "While",
 		NTType:     16,
 		Index:      34,

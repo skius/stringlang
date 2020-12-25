@@ -11,43 +11,45 @@ string_lit : '"' {.} '"' ;
 
 << import "github.com/skius/stringlang/ast" >>
 
-ExprSeq
-    : ConcatExpr Expr       << ast.ExprSeqAppend($0, $1) >>
+Block
+    : Expr BlockHelper          << ast.BlockPrepend($0, $1) >>
     ;
 
-ConcatExpr
-    : ExprSeq ";"           << $0, nil >>
-    | empty                 << ast.NewExprSeq() >>
+BlockHelper
+    : ";" Expr BlockHelper      << ast.BlockPrepend($1, $2) >>
+    | empty                     << ast.NewBlock() >>
     ;
+
+
 
 Expr
-    :   Var "=" Expr        << ast.NewAssn($0, $2) >>
-    |   ExprOr             << $0, nil >>
+    : Var "=" Expr              << ast.NewAssn($0, $2) >>
+    | ExprOr                    << $0, nil >>
     ;
 
 ExprOr
-    :   ExprOr "||" ExprAnd    << ast.NewOr($0, $2) >>
-    |   ExprAnd                 << $0, nil >>
+    : ExprOr "||" ExprAnd       << ast.NewOr($0, $2) >>
+    | ExprAnd                   << $0, nil >>
     ;
 
 ExprAnd
-    :   ExprAnd "&&" ExprNotEquals     << ast.NewAnd($0, $2) >>
-    |   ExprNotEquals                 << $0, nil >>
+    : ExprAnd "&&" ExprNotEquals        << ast.NewAnd($0, $2) >>
+    | ExprNotEquals                     << $0, nil >>
     ;
 
 ExprNotEquals
-    :   ExprNotEquals "!=" ExprEquals      << ast.NewNotEquals($0, $2) >>
-    |   ExprEquals                  << $0, nil >>
+    : ExprNotEquals "!=" ExprEquals     << ast.NewNotEquals($0, $2) >>
+    | ExprEquals                        << $0, nil >>
     ;
 
 ExprEquals
-    :   ExprEquals "==" ExprConcat       << ast.NewEquals($0, $2) >>
-    |   ExprConcat                  << $0, nil >>
+    : ExprEquals "==" ExprConcat        << ast.NewEquals($0, $2) >>
+    | ExprConcat                        << $0, nil >>
     ;
 
 ExprConcat
-    :   ExprConcat "+" ExprLeaf        << ast.NewConcat($0, $2) >>
-    |   ExprLeaf                  << $0, nil >>
+    : ExprConcat "+" ExprLeaf           << ast.NewConcat($0, $2) >>
+    | ExprLeaf                          << $0, nil >>
     ;
 
 ExprLeaf
@@ -56,24 +58,24 @@ ExprLeaf
     | string_lit                        << ast.NewVal($0) >>
     | Arg                               << $0, nil >>
     | Var                               << $0, nil >>
-    | Var "(" ExprSeqCall ")"           << ast.NewCall($0, $2) >>
+    | Var "(" CallArgs ")"              << ast.NewCall($0, $2) >>
     | "(" Expr ")"                      << $1, nil >>
     | Index                             << $0, nil >>
     ;
 
 Index
-    : ExprLeaf "[" Expr "]"                << ast.NewIndex($0, $2) >>
-    | ExprLeaf "[" int_lit "]"             << ast.NewIndexInt($0, $2) >>
+    : ExprLeaf "[" Expr "]"             << ast.NewIndex($0, $2) >>
+    | ExprLeaf "[" int_lit "]"          << ast.NewIndexInt($0, $2) >>
     ;
 
-ExprSeqCall
-    : ConcatExprCall Expr               << ast.ExprSeqAppend($0, $1) >>
-    | empty                             << ast.NewExprSeq() >>
+CallArgs
+    : Expr CallArgsHelper               << ast.CallArgsPrepend($0, $1) >>
+    | empty                             << ast.NewCallArgs() >>
     ;
 
-ConcatExprCall
-    : ExprSeqCall ","           << $0, nil >>
-    | empty                     << ast.NewExprSeq() >>
+CallArgsHelper
+    : "," Expr CallArgsHelper           << ast.CallArgsPrepend($1, $2) >>
+    | empty                             << ast.NewCallArgs() >>
     ;
 
 Arg
@@ -86,17 +88,17 @@ Var
 
 IfElse
     : "if" "(" Expr ")" "{"
-            ExprSeq
+          Block
       "}" "else" "{"
-            ExprSeq
+          Block
       "}"                       << ast.NewIfElse($2, $5, $9) >>
     | "if" "(" Expr ")" "{"
-            ExprSeq
+          Block
       "}" "else" IfElse         << ast.NewIfElse($2, $5, $8) >>
     ;
 
 While
     : "while" "(" Expr ")" "{"
-            ExprSeq
+          Block
       "}"                       << ast.NewWhile($2, $5) >>
     ;
