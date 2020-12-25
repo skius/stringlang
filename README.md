@@ -8,7 +8,7 @@ See `stringlang_programs/`
 
 ## Syntax
 
-The following code block contains a simple (and not 100% correct, see Notes section below the block) overview of what
+The following code block contains a simple (and not 100% correct, see Caveats section below the block) overview of what
 constitutes a `StringLang` source file. The complete grammar can be found in `lang.bnf`.
 
 ```
