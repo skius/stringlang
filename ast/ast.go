@@ -10,7 +10,10 @@ func NewContext(args []string, funcs map[string]func([]string)string) Context {
 	return Context {
 		Args: args,
 		VariableMap: make(map[Var]Val),
+		UserFunctionMap: make(map[string]FuncDecl),
 		FunctionMap: funcs,
+		MaxStackSize: -1,
+		MaxWhileIter: -1,
 	}
 }
 
@@ -18,6 +21,7 @@ type Context struct {
 	Args []string
 	VariableMap map[Var]Val
 	FunctionMap map[string]func([]string)string
+	UserFunctionMap map[string]FuncDecl
 	MaxStackSize int64
 	MaxWhileIter int
 }
@@ -39,6 +43,32 @@ func (v Val) Eval(c Context) Val {
 }
 func (v Val) String() string {
 	return "\"" + string(v) + "\""
+}
+
+type Program struct {
+	Funcs []FuncDecl
+	Code Block
+}
+func NewProgram(f, b Attrib) (Expr, error) {
+	funcs := f.([]FuncDecl)
+	code := b.(Block)
+	return Program{Funcs: funcs, Code: code}, nil
+}
+func (p Program) Eval(c Context) Val {
+	customFunctions := make(map[string]FuncDecl)
+	for _, f := range p.Funcs {
+		customFunctions[f.Identifier] = f
+	}
+	c.UserFunctionMap = customFunctions
+	return p.Code.Eval(c)
+}
+func (p Program) String() string {
+	funcdecls := make([]string, len(p.Funcs))
+	for i := range p.Funcs {
+		funcdecls[i] = p.Funcs[i].String()
+	}
+	result := strings.Join(funcdecls, "\n")
+	return result + "\n" + p.Code.String()
 }
 
 type Block []Expr
@@ -193,17 +223,28 @@ func NewCall(f, as Attrib) (Expr, error) {
 	return Call {Fn: fn, Args: args}, nil
 }
 func (ca Call) Eval(c Context) Val {
-	fn, ok := c.FunctionMap[string(ca.Fn)]
+	userFn, ok := c.UserFunctionMap[string(ca.Fn)]
 	if !ok {
-		panic("function '" + string(ca.Fn) + "' not found.")
+		fn, ok := c.FunctionMap[string(ca.Fn)]
+		if !ok {
+			panic("function '" + string(ca.Fn) + "' not found.")
+		}
+		vals := make([]string, 0, len(ca.Args))
+		for _, argExp := range ca.Args {
+			v := argExp.Eval(c)
+			vals = append(vals, string(v))
+		}
+		res := fn(vals)
+		return Val(res)
 	}
-	vals := make([]string, 0, len(ca.Args))
+
+	vals := make([]Val, 0, len(ca.Args))
 	for _, argExp := range ca.Args {
 		v := argExp.Eval(c)
-		vals = append(vals, string(v))
+		vals = append(vals, v)
 	}
-	res := fn(vals)
-	return Val(res)
+	res := userFn.Call(c, vals)
+	return res
 }
 func (ca Call) String() string {
 	args := make([]string, 0, len(ca.Args))
@@ -323,6 +364,51 @@ func CallArgsPrepend(e, a Attrib) (CallArgs, error) {
 	exp := e.(Expr)
 	args2 := append([]Expr{exp}, args...)
 	return args2, nil
+}
+
+// FuncDecl is not an Expr, since it can never appear on its own
+type FuncDecl struct {
+	Params []string
+	Code Block
+	Identifier string
+}
+func NewFuncDecl(i, p, b Attrib) (FuncDecl, error) {
+	id := attribToString(i)
+	params := p.([]string)
+	code := b.(Block)
+	return FuncDecl{Params: params, Code: code, Identifier: id}, nil
+}
+func (f FuncDecl) Call(c Context, args []Val) Val {
+	newVars := make(map[Var]Val)
+	for i, p := range f.Params {
+		var argVal Val
+		if i < len(args) {
+			argVal = args[i]
+		}
+		newVars[Var(p)] = argVal
+	}
+	cNew := Context {
+		VariableMap: newVars,
+		UserFunctionMap: c.UserFunctionMap,
+		FunctionMap: c.FunctionMap,
+		Args: c.Args,
+		MaxWhileIter: c.MaxWhileIter,
+		MaxStackSize: c.MaxStackSize,
+	}
+	return f.Code.Eval(cNew)
+}
+func (f FuncDecl) String() string {
+	return "func(){} // unimplemented"
+}
+func FuncDeclsAppend(f, fs Attrib) ([]FuncDecl, error){
+	fdecl := f.(FuncDecl)
+	funcs := fs.([]FuncDecl)
+	return append(funcs, fdecl), nil
+}
+func FuncParamsPrepend(p, ps Attrib) ([]string, error) {
+	param := attribToString(p)
+	params := ps.([]string)
+	return append([]string{param}, params...), nil
 }
 
 func attribToString(a Attrib) string {
