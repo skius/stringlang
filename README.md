@@ -174,8 +174,10 @@ To evaluate a `StringLang` program, the interpreter needs an `stringlang.Context
 It contains fields which allow the interpreter's user to supply their custom built-in functions and arguments to the program.
 See `cmd/stringlang/main.go` for an example.
 
-There are also some stoppers, mainly a limit for the number of iterations a `while` loop can do 
-before being prematurely stopped and one to cap how large the sum of the sizes of all variable-values is allowed to become.
+There is a channel available with `context.GetExitChannel()` for quickly killing the whole evaluation.
+Additionally, one can set the (approximate) maximum stack space in bytes the `StringLang` program is allowed to use by
+setting `context.MaxStackSize` to a non-negative number. `cmd/stringlang/main.go` also contains examples
+for these two features. 
 
 ## Why?
 

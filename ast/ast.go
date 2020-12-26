@@ -6,30 +6,37 @@ import (
 	"strings"
 )
 
-func NewContext(args []string, funcs map[string]func([]string)string) Context {
-	return Context {
-		Args: args,
-		VariableMap: make(map[Var]Val),
+func NewContext(args []string, funcs map[string]func([]string)string) *Context {
+	return &Context {
+		Args:            args,
+		VariableMap:     make(map[Var]Val),
 		UserFunctionMap: make(map[string]FuncDecl),
-		FunctionMap: funcs,
-		MaxStackSize: -1,
-		MaxWhileIter: -1,
+		FunctionMap:     funcs,
+		MaxStackSize:    -1,
+		exitChannel:     make(chan int, 1),
 	}
 }
 
 type Context struct {
-	Args []string
-	VariableMap map[Var]Val
-	FunctionMap map[string]func([]string)string
+	Args            []string
+	VariableMap     map[Var]Val
+	FunctionMap     map[string]func([]string)string
 	UserFunctionMap map[string]FuncDecl
-	MaxStackSize int64
-	MaxWhileIter int
+	MaxStackSize    int64
+	exitChannel     chan int
+}
+
+func (c *Context) GetExitChannel() chan int {
+	if c.exitChannel == nil {
+		c.exitChannel = make(chan int, 1)
+	}
+	return c.exitChannel
 }
 
 type Attrib interface {}
 
 type Expr interface {
-	Eval(Context) Val
+	Eval(*Context) Val
 	String() string
 }
 
@@ -38,7 +45,7 @@ func NewVal(a Attrib) (Expr, error) {
 	quoted := attribToString(a)
 	return Val(quoted[1:len(quoted)-1]), nil
 }
-func (v Val) Eval(c Context) Val {
+func (v Val) Eval(c *Context) Val {
 	return v
 }
 func (v Val) String() string {
@@ -54,7 +61,7 @@ func NewProgram(f, b Attrib) (Expr, error) {
 	code := b.(Block)
 	return Program{Funcs: funcs, Code: code}, nil
 }
-func (p Program) Eval(c Context) Val {
+func (p Program) Eval(c *Context) Val {
 	customFunctions := make(map[string]FuncDecl)
 	for _, f := range p.Funcs {
 		customFunctions[f.Identifier] = f
@@ -81,7 +88,7 @@ func BlockPrepend(e, b Attrib) (Expr, error) {
 	block2 := append([]Expr{exp}, block...)
 	return Block(block2), nil
 }
-func (b Block) Eval(c Context) Val {
+func (b Block) Eval(c *Context) Val {
 	var last Val
 	for _, exp := range b {
 		last = exp.Eval(c)
@@ -106,7 +113,7 @@ func NewArg(i Attrib) (Expr, error) {
 	intValue, err := strconv.Atoi(s)
 	return Arg(intValue), err
 }
-func (a Arg) Eval(c Context) Val {
+func (a Arg) Eval(c *Context) Val {
 	if int(a) > len(c.Args) {
 		return ""
 	}
@@ -123,7 +130,7 @@ type Equals struct {
 func NewEquals(a, b Attrib) (Expr, error) {
 	return Equals{A: a.(Expr), B: b.(Expr)}, nil
 }
-func (e Equals) Eval(c Context) Val {
+func (e Equals) Eval(c *Context) Val {
 	val := "false"
 	if e.A.Eval(c) == e.B.Eval(c) {
 		val = "true"
@@ -141,7 +148,7 @@ type NotEquals struct {
 func NewNotEquals(a, b Attrib) (Expr, error) {
 	return NotEquals{A: a.(Expr), B: b.(Expr)}, nil
 }
-func (e NotEquals) Eval(c Context) Val {
+func (e NotEquals) Eval(c *Context) Val {
 	val := "false"
 	if e.A.Eval(c) != e.B.Eval(c) {
 		val = "true"
@@ -159,7 +166,7 @@ type Or struct {
 func NewOr(a, b Attrib) (Expr, error) {
 	return Or{A: a.(Expr), B: b.(Expr)}, nil
 }
-func (o Or) Eval(c Context) Val {
+func (o Or) Eval(c *Context) Val {
 	if boolOf(o.A.Eval(c)) || boolOf(o.B.Eval(c)) {
 		return Val("true")
 	} else {
@@ -177,7 +184,7 @@ type And struct {
 func NewAnd(a, b Attrib) (Expr, error) {
 	return And{A: a.(Expr), B: b.(Expr)}, nil
 }
-func (a And) Eval(c Context) Val {
+func (a And) Eval(c *Context) Val {
 	if boolOf(a.A.Eval(c)) && boolOf(a.B.Eval(c)) {
 		return Val("true")
 	} else {
@@ -195,7 +202,7 @@ type Concat struct {
 func NewConcat(a, b Attrib) (Expr, error) {
 	return Concat{A: a.(Expr), B: b.(Expr)}, nil
 }
-func (cc Concat) Eval(c Context) Val {
+func (cc Concat) Eval(c *Context) Val {
 	return cc.A.Eval(c) + cc.B.Eval(c)
 }
 func (cc Concat) String() string {
@@ -206,7 +213,7 @@ type Var string
 func NewVar(a Attrib) (Expr, error) {
 	return Var(attribToString(a)), nil
 }
-func (v Var) Eval(c Context) Val {
+func (v Var) Eval(c *Context) Val {
 	return c.VariableMap[v]
 }
 func (v Var) String() string {
@@ -222,7 +229,11 @@ func NewCall(f, as Attrib) (Expr, error) {
 	args := as.(CallArgs)
 	return Call {Fn: fn, Args: args}, nil
 }
-func (ca Call) Eval(c Context) Val {
+func (ca Call) Eval(c *Context) Val {
+	if checkExit(c) {
+		return ""
+	}
+
 	userFn, ok := c.UserFunctionMap[string(ca.Fn)]
 	if !ok {
 		fn, ok := c.FunctionMap[string(ca.Fn)]
@@ -265,7 +276,7 @@ func NewIndex(s, i Attrib) (Expr, error) {
 func NewIndexInt(s, i Attrib) (Expr, error) {
 	return Index {Source: s.(Expr), I: Val(attribToString(i))}, nil
 }
-func (i Index) Eval(c Context) Val {
+func (i Index) Eval(c *Context) Val {
 	src := string(i.Source.Eval(c))
 	idx, err := strconv.Atoi(string(i.I.Eval(c)))
 	if err != nil {
@@ -289,7 +300,7 @@ func NewAssn(v, e Attrib) (Expr, error) {
 	ex := e.(Expr)
 	return Assn {V: va, E: ex}, nil
 }
-func (a Assn) Eval(c Context) Val {
+func (a Assn) Eval(c *Context) Val {
 	newVal := a.E.Eval(c)
 	c.VariableMap[a.V] = newVal
 	return newVal
@@ -309,7 +320,7 @@ func NewIfElse(c, t, e Attrib) (Expr, error) {
 	el := e.(Expr)
 	return IfElse{Cond: co, Then: th, Else: el}, nil
 }
-func (e IfElse) Eval(c Context) Val {
+func (e IfElse) Eval(c *Context) Val {
 	if boolOf(e.Cond.Eval(c)) {
 		return e.Then.Eval(c)
 	} else {
@@ -330,7 +341,7 @@ func NewWhile(c, b Attrib) (Expr, error) {
 	bo := b.(Expr)
 	return While{Cond: co, Body: bo}, nil
 }
-func (e While) Eval(c Context) Val {
+func (e While) Eval(c *Context) Val {
 	var cond Val = e.Cond.Eval(c)
 	var body Val
 	steps := 0
@@ -338,10 +349,7 @@ func (e While) Eval(c Context) Val {
 		body = e.Body.Eval(c)
 		cond = e.Cond.Eval(c)
 
-		if c.MaxWhileIter > -1 && steps > c.MaxWhileIter {
-			break
-		}
-		if c.MaxStackSize > -1 && checkSize(c.VariableMap) > c.MaxStackSize {
+		if checkExit(c) {
 			break
 		}
 		steps++
@@ -378,7 +386,7 @@ func NewFuncDecl(i, p, b Attrib) (FuncDecl, error) {
 	code := b.(Block)
 	return FuncDecl{Params: params, Code: code, Identifier: id}, nil
 }
-func (f FuncDecl) Call(c Context, args []Val) Val {
+func (f FuncDecl) Call(c *Context, args []Val) Val {
 	newVars := make(map[Var]Val)
 	for i, p := range f.Params {
 		var argVal Val
@@ -388,14 +396,14 @@ func (f FuncDecl) Call(c Context, args []Val) Val {
 		newVars[Var(p)] = argVal
 	}
 	cNew := Context {
-		VariableMap: newVars,
+		VariableMap:     newVars,
 		UserFunctionMap: c.UserFunctionMap,
-		FunctionMap: c.FunctionMap,
-		Args: c.Args,
-		MaxWhileIter: c.MaxWhileIter,
-		MaxStackSize: c.MaxStackSize,
+		FunctionMap:     c.FunctionMap,
+		Args:            c.Args,
+		MaxStackSize:    c.MaxStackSize - checkSize(c.VariableMap), // New context needs to account for Go stackframes
+		exitChannel:     c.exitChannel,
 	}
-	return f.Code.Eval(cNew)
+	return f.Code.Eval(&cNew)
 }
 func (f FuncDecl) String() string {
 	return "func(){} // unimplemented"
@@ -422,4 +430,28 @@ func checkSize(m map[Var]Val) (total int64) {
 		total += int64(len(k)) + int64(len(v))
 	}
 	return
+}
+
+const (
+	SigExternalExit = iota + 1
+	SigOutOfMemory
+)
+
+// checkExit returns true if we need to exit
+func checkExit(c *Context) bool {
+	if c.MaxStackSize > -1 && checkSize(c.VariableMap) > c.MaxStackSize {
+		select {
+		case c.exitChannel <- SigOutOfMemory:
+		default:
+		}
+
+		return true
+	}
+	select {
+	case sig := <-c.exitChannel:
+		c.exitChannel <- sig
+		return true
+	default:
+		return false
+	}
 }

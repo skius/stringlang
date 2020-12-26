@@ -53,10 +53,22 @@ func main() {
 	}
 
 	ctx := stringlang.NewContext(args, funcs)
-	ctx.MaxWhileIter = 10000
 	ctx.MaxStackSize = 100 * 1024 * 1024 // 100MB limit for variables
+	exit := ctx.GetExitChannel()
 
-	result := string(expr.Eval(ctx))
+	resultChan := make(chan string)
+	go func() {
+		resultChan <- string(expr.Eval(ctx))
+	}()
+
+	var result string
+	select {
+	case result = <- resultChan:
+	case <-time.After(time.Second*30):
+		exit <- 1
+		fmt.Println("Program timed out after 30 seconds.")
+		return
+	}
 
 	fmt.Println("Returns:")
 	fmt.Println(strings.ReplaceAll(result, `\n`, "\n"))
