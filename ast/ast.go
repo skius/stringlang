@@ -114,7 +114,7 @@ func NewArg(i Attrib) (Expr, error) {
 	return Arg(intValue), err
 }
 func (a Arg) Eval(c *Context) Val {
-	if int(a) > len(c.Args) {
+	if int(a) >= len(c.Args) {
 		return ""
 	}
 	return Val(c.Args[a])
