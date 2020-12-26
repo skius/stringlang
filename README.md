@@ -66,7 +66,7 @@ header:
     function1 function2 ... functionN                       // N may be 0  
 
 function:
-    identifier(param1, param2, ..., paramN) { block }       // paramX are identifiers, N may be 0
+    fun identifier(param1, param2, ..., paramN) { block }   // paramX are identifiers, N may be 0
 
 block:
     expression1; expression2; ...; expressionN              // no trailing semi-colon and N cannot be 0
@@ -120,7 +120,7 @@ via the context, see the Context section). Because built-in functions are writte
 Go can accomplish. 
 
 User-defined `StringLang` functions are evaluated with their own completely separate variable scope and
-are mutually recursive. The arguments passed to them are bound to the variable in the corresponding parameter list.
+are mutually recursive. The arguments passed to them are bound to the variables in the corresponding parameter lists.
 
 All functions in `StringLang` are pass-by-value.
 
