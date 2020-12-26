@@ -2,7 +2,49 @@
 
 An interpreted, expression-oriented language where everything evaluates to strings.
 
-## Examples
+## Usage
+
+### Installation
+
+You need Go to build the official interpreter from this repository.
+
+Run `go get github.com/skius/stringlang/cmd/stringlang` to install the interpreter on your machine. You can then
+run it using `stringlang <program.stringlang> <arg0> <arg1> ...`
+
+### Running from code
+
+To interpret StringLang code from your Go program, all you need is the following:
+```go
+package main
+import "github.com/skius/stringlang"
+
+func main() {
+    stringlang := `"Replace me with the " + "source code of your StringLang program"`
+    expr, err := stringlang.Parse(stringlang)
+    if err != nil {
+        panic(err)
+    }
+    // The built-in functions your StringLang program will have access to
+    funcs := []map[string]func([]string)string{
+        "length": func (as []string) string { return len(as[0]) },
+        // Add more built-in functions here
+    }
+    // Arguments to your StringLang program
+    args := os.Args
+    ctx := NewContext(args, funcs)
+    result := expr.Eval(ctx)
+}
+```
+
+### Contributing
+
+Feel free to open Issues and Pull Requests! The language specification and interpreter is by no means final.
+To change the syntax of the language, you'll need to modify `lang.bnf` and also `ast/ast.go` if you need new structures.
+Every time you change `lang.bnf`, you need to run `gocc lang.bnf` to generate the new parser and lexer.
+
+Get the parser generator `gocc` used in this project from: [goccmack/gocc](https://github.com/goccmack/gocc)
+
+### Example StringLang programs
 
 See `stringlang_programs/`
 
@@ -17,10 +59,17 @@ number: positive integer
 string_literal: a "double-quoted" string, containing any sequence of characters
 
 
-program = block
+program:
+     header block           
+
+header:
+    function1 function2 ... functionN                       // N may be 0  
+
+function:
+    identifier(param1, param2, ..., paramN) { block }       // paramX are identifiers, N may be 0
 
 block:
-    expression1; expression2; ...; expressionN              // Note: no trailing semi-colon and N cannot be 0
+    expression1; expression2; ...; expressionN              // no trailing semi-colon and N cannot be 0
 
 expression:
     string_literal
@@ -63,6 +112,18 @@ While the above description gives a good overview of `StringLang`, there are som
 
 All expressions/values in `StringLang` are Strings.
 
+### Functions
+
+Functions in `StringLang` can either be user-defined (i.e. they are written in `StringLang` and reside
+in the header of the interpreted file), or they can be built-in (i.e. supplied to the interpreter
+via the context, see the Context section). Because built-in functions are written in Go, they can accomplish anything
+Go can accomplish. 
+
+User-defined `StringLang` functions are evaluated with their own completely separate variable scope and
+are mutually recursive. The arguments passed to them are bound to the variable in the corresponding parameter list.
+
+All functions in `StringLang` are pass-by-value.
+
 ### Binary Operators
 
 The following list gives the binary operators, ordered from low to high precedence:
@@ -87,7 +148,7 @@ identifier = expression     The value of 'expression'.
 $number                     The value of the 'number'-th (zero-indexed) argument to the program.
 expr1[expr2 or number]      The character at position 'expr2' resp. 'number' of the value 
                             that 'expr1' evaluates to.
-identifier(expr1, ...)      Function call to built-in function 'identifier' with arguments 'expr1, ...'.
+identifier(expr1, ...)      Function call to function 'identifier' with arguments 'expr1, ...'.
                             Arguments are evaluated before passed to the function.
                             Evaluates to the function's return value.
 expr1 <binop> expr2         The value of the corresponding binary operation. 
@@ -102,14 +163,15 @@ block                       The value of the last expression in the block.
 
 ```
 
-#### Exceptions, errors
+#### Exceptions, errors, defaults
 
-In the case of an invalid character-access or argument expression, the returned value is always `""`.
+In the case of an invalid (out-of-bounds or NaN) character-access or argument expression,
+the returned value is always `""`. The values of all variables are initialized to `""`.
 
 ### Context (functions and arguments)
 
-To evaluate a `StringLang` program, the interpreter needs an `ast.Context` object.
-It contains fields which allow the end-user to supply their custom built-in functions and arguments to the program.
+To evaluate a `StringLang` program, the interpreter needs an `stringlang.Context` object.
+It contains fields which allow the interpreter's user to supply their custom built-in functions and arguments to the program.
 See `cmd/stringlang/main.go` for an example.
 
 There are also some stoppers, mainly a limit for the number of iterations a `while` loop can do 
