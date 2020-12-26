@@ -1,0 +1,45 @@
+fun add(a, b) {
+    res = "";
+    cnt = "";
+    while (length(cnt) != a) {
+        res = res + "x";
+        cnt = cnt + "x"
+    };
+    cnt = "";
+    while (length(cnt) != b) {
+        res = res + "x";
+        cnt = cnt + "x"
+    };
+    length(res)
+}
+
+/* Returns a string of length 'a' */
+fun of_length(a) {
+    res = "";
+    while (length(res) != a) {
+        res = res + "x"
+    };
+    res
+}
+
+fun multiply(a, b) {
+    res = "";
+    cnt = "";
+    while (length(cnt) != b) {
+        res = res + of_length(a);
+        cnt = cnt + "x"
+    };
+    length(res)
+}
+
+fun multiply2(a, b) {
+    res = "0";
+    cnt = "";
+    while (length(cnt) != b) {
+        res = add(res, a);
+        cnt = cnt + "x"
+    };
+    res
+}
+
+add("5", "10") + " " + multiply("10", "23") + " " + multiply2("2", "23")
