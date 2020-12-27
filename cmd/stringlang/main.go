@@ -53,7 +53,7 @@ func main() {
 	}
 
 	ctx := stringlang.NewContext(args, funcs)
-	ctx.MaxStackSize = 100 * 1024 * 1024 // 100MB limit for variables
+	ctx.SetMaxStackSize(100 * 1024 * 1024) // 100MB limit for programs
 	exit := ctx.GetExitChannel()
 
 	resultChan := make(chan string)

@@ -57,6 +57,7 @@ constitutes a `StringLang` source file. The complete grammar can be found in `la
 identifier: any string of alphanumeric and underscore characters not beginning with a digit
 number: positive integer
 string_literal: a "double-quoted" string, containing any sequence of characters
+comment: /* any text enclosed by /* and */, except '/*' and '*/' */
 
 
 program:
@@ -135,8 +136,8 @@ The following list gives the binary operators, ordered from low to high preceden
 +    Concatenation   Concatenates the operands
 ```
 #### Note: 
-1) The boolean value of a `StringLang` value is `true` 
-if and only if the String is not `""` and not `"false"`, else it is `false`.
+1) The boolean value of a `StringLang` value is `true` if and only if the String is not `""` and 
+   not `"false"`, else it is `false`.
 2) The `StringLang` value of a boolean result of a logic operation is always either `"true"` or `"false"` 
 
 ### Evaluation 
@@ -170,13 +171,13 @@ the returned value is always `""`. The values of all variables are initialized t
 
 ### Context (functions and arguments)
 
-To evaluate a `StringLang` program, the interpreter needs an `stringlang.Context` object.
+To evaluate a `StringLang` program, the interpreter needs a `stringlang.Context` object.
 It contains fields which allow the interpreter's user to supply their custom built-in functions and arguments to the program.
 See `cmd/stringlang/main.go` for an example.
 
 There is a channel available with `context.GetExitChannel()` for quickly killing the whole evaluation.
-Additionally, one can set the (approximate) maximum stack space in bytes the `StringLang` program is allowed to use by
-setting `context.MaxStackSize` to a non-negative number. `cmd/stringlang/main.go` also contains examples
+Additionally, one can set the (approximate) maximum stack space in bytes the `StringLang` program is allowed to use with
+`context.SetMaxStackSize(int)` to a non-negative number. `cmd/stringlang/main.go` also contains examples
 for these two features. 
 
 ## Why?

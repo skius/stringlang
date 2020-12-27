@@ -13,7 +13,6 @@ string_lit : '"' {.} '"' ;
 
 Program
     : FuncDecls Block           << ast.NewProgram($0, $1) >>
-    //| Block                     << $0, nil >>
     ;
 
 

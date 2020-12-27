@@ -13,6 +13,7 @@ func NewContext(args []string, funcs map[string]func([]string)string) *Context {
 		UserFunctionMap: make(map[string]FuncDecl),
 		FunctionMap:     funcs,
 		MaxStackSize:    -1,
+		limitStackSize:  false,
 		exitChannel:     make(chan int, 1),
 	}
 }
@@ -24,6 +25,12 @@ type Context struct {
 	UserFunctionMap map[string]FuncDecl
 	MaxStackSize    int64
 	exitChannel     chan int
+	limitStackSize	bool
+}
+
+func (c *Context) SetMaxStackSize(sz int64) {
+	c.MaxStackSize = sz
+	c.limitStackSize = true
 }
 
 func (c *Context) GetExitChannel() chan int {
@@ -386,6 +393,7 @@ func NewFuncDecl(i, p, b Attrib) (FuncDecl, error) {
 	code := b.(Block)
 	return FuncDecl{Params: params, Code: code, Identifier: id}, nil
 }
+const GoStackframeEstimate = 8*1024
 func (f FuncDecl) Call(c *Context, args []Val) Val {
 	newVars := make(map[Var]Val)
 	for i, p := range f.Params {
@@ -400,7 +408,8 @@ func (f FuncDecl) Call(c *Context, args []Val) Val {
 		UserFunctionMap: c.UserFunctionMap,
 		FunctionMap:     c.FunctionMap,
 		Args:            c.Args,
-		MaxStackSize:    c.MaxStackSize - checkSize(c.VariableMap), // New context needs to account for Go stackframes
+		MaxStackSize:    c.MaxStackSize - checkSize(c.VariableMap) - checkSize(newVars) - GoStackframeEstimate, // New context needs to account for Go stackframes
+		limitStackSize:  c.limitStackSize,
 		exitChannel:     c.exitChannel,
 	}
 	return f.Code.Eval(&cNew)
@@ -439,7 +448,7 @@ const (
 
 // checkExit returns true if we need to exit
 func checkExit(c *Context) bool {
-	if c.MaxStackSize > -1 && checkSize(c.VariableMap) > c.MaxStackSize {
+	if c.limitStackSize && checkSize(c.VariableMap) > c.MaxStackSize {
 		select {
 		case c.exitChannel <- SigOutOfMemory:
 		default:
