@@ -4,54 +4,51 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/skius/stringlang"
+	"github.com/skius/stringlang/ast"
 	"os"
 	"strings"
 	"time"
 )
 
 func repl() {
-	fmt.Println("Welcome to the StringLang* REPL! (* function definitions not supported)")
+	fmt.Println("Welcome to the StringLang REPL!")
 	fmt.Println("Enter as much code as you want, run it by ending your input with ';;', repeat!")
 	fmt.Println("Reset your program using 'reset;;' and quit the REPL using 'quit;;'.")
 
-	program := ""
+	program := ast.EmptyProgram()
 
 	for {
 		input := readLines()
 
 		// Special keywords
-		if input == "reset;;" {
+		if strings.HasSuffix(input, "reset;;") {
 			fmt.Println("Resetting REPL... Reset!")
-			program = ""
+			program = ast.EmptyProgram()
 			continue
 		}
 
-		if input == "quit;;" {
+		if strings.HasSuffix(input, "quit;;") {
 			break
 		}
 
 		// Remove trailing whitespace and semicolon, because StringLang programs end without semicolon
-		code := strings.Trim(input, "\t\n\r ;")
-		// We keep track of the full program as its source code; a better way would be extending the AST
-		if program == "" {
-			program = code
-		} else {
-			program += "; " + code
-		}
+		source := strings.Trim(input, "\t\n\r ;")
 
-		expr, err := stringlang.Parse([]byte(program))
+		newExpr, err := stringlang.Parse([]byte(source))
 		if err != nil {
 			fmt.Println("There was an error parsing your program: ", err)
-			fmt.Println("Resetting REPL... Reset!")
-			program = ""
 			continue
 		}
 
-		result, err := evalOrTimeout(expr, time.Second * 30)
+		// Combine the program extension with the old program
+		newProgram := newExpr.(ast.Program)
+		program.Funcs = append(program.Funcs, newProgram.Funcs...)
+		program.Code = append(program.Code, newProgram.Code...)
+
+
+		result, err := evalOrTimeout(program, time.Second * 30)
 		if err != nil {
 			fmt.Println("There was an error running your program: ", err)
-			fmt.Println("Resetting REPL... Reset!")
-			program = ""
 			continue
 		}
 		fmt.Println(result)

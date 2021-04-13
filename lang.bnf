@@ -12,7 +12,8 @@ string_lit : '"' {.} '"' ;
 << import "github.com/skius/stringlang/ast" >>
 
 Program
-    : FuncDecls Block           << ast.NewProgram($0, $1) >>
+    : FuncDecls                 << ast.NewProgram($0, ast.Block([]ast.Expr{})) >>
+    | FuncDecls Block           << ast.NewProgram($0, $1) >>
     ;
 
 
@@ -108,7 +109,7 @@ CallArgsHelper
     ;
 
 Arg
-    : "$" int_lit               << ast.NewArg($1) >>
+    : "%" int_lit               << ast.NewArg($1) >>
     ;
 
 Var

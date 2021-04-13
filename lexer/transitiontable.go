@@ -25,7 +25,7 @@ var TransTab = TransitionTable{
 			return 2
 		case r == 34: // ['"','"']
 			return 3
-		case r == 36: // ['$','$']
+		case r == 37: // ['%','%']
 			return 4
 		case r == 38: // ['&','&']
 			return 5

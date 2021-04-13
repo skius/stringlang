@@ -37,7 +37,7 @@ var ActTab = ActionTable{
 		Ignore: "",
 	},
 	ActionRow{ // S4
-		Accept: 1,
+		Accept: 21,
 		Ignore: "",
 	},
 	ActionRow{ // S5
@@ -153,7 +153,7 @@ var ActTab = ActionTable{
 		Ignore: "",
 	},
 	ActionRow{ // S33
-		Accept: 21,
+		Accept: 22,
 		Ignore: "",
 	},
 	ActionRow{ // S34
@@ -185,7 +185,7 @@ var ActTab = ActionTable{
 		Ignore: "!comment",
 	},
 	ActionRow{ // S41
-		Accept: 22,
+		Accept: 23,
 		Ignore: "",
 	},
 	ActionRow{ // S42
@@ -193,7 +193,7 @@ var ActTab = ActionTable{
 		Ignore: "",
 	},
 	ActionRow{ // S43
-		Accept: 23,
+		Accept: 24,
 		Ignore: "",
 	},
 }

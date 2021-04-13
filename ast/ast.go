@@ -68,6 +68,10 @@ func NewProgram(f, b Attrib) (Expr, error) {
 	code := b.(Block)
 	return Program{Funcs: funcs, Code: code}, nil
 }
+// Useful for building ASTs manually
+func EmptyProgram() Program {
+	return Program{Funcs: []FuncDecl{}, Code: []Expr{}}
+}
 func (p Program) Eval(c *Context) Val {
 	customFunctions := make(map[string]FuncDecl)
 	for _, f := range p.Funcs {
