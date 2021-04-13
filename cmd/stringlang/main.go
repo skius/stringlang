@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"github.com/skius/stringlang"
 	"io/ioutil"
@@ -12,10 +13,15 @@ import (
 )
 
 func main() {
-	if len(os.Args) < 2 {
-		fmt.Println("Usage: ./stringlang <program.stringlang> ..<args>")
+	if len(os.Args) == 2 && (os.Args[1] == "-h" || os.Args[1] == "--help") {
+		fmt.Println("Usage: ./stringlang [<program.stringlang>] [..<args>]")
 		return
 	}
+	if len(os.Args) == 1 {
+		repl()
+		return
+	}
+
 	file := os.Args[1]
 	content, err := ioutil.ReadFile(file)
 	if err != nil {
@@ -27,6 +33,35 @@ func main() {
 		panic(err)
 	}
 
+	result, err := evalOrTimeout(expr, time.Second * 30)
+	if err != nil {
+		panic(err)
+	}
+
+	fmt.Println("Returns:")
+	fmt.Println(strings.ReplaceAll(result, `\n`, "\n"))
+}
+
+func evalOrTimeout(expr stringlang.Expr, timeout time.Duration) (string, error) {
+	ctx := exampleContext()
+	exit := ctx.GetExitChannel()
+
+	resultChan := make(chan string)
+	go func() {
+		resultChan <- string(expr.Eval(ctx))
+	}()
+
+	var result string
+	select {
+	case result = <- resultChan:
+	case <-time.After(timeout):
+		exit <- 1
+		return "", errors.New(fmt.Sprint("Program timed out after ", timeout))
+	}
+	return result, nil
+}
+
+func exampleContext() *stringlang.Context {
 	rand.Seed(time.Now().UnixNano())
 	funcs := map[string]func([]string)string {
 		"random": func(args []string) string {
@@ -54,22 +89,5 @@ func main() {
 
 	ctx := stringlang.NewContext(args, funcs)
 	ctx.SetMaxStackSize(100 * 1024 * 1024) // 100MB limit for programs
-	exit := ctx.GetExitChannel()
-
-	resultChan := make(chan string)
-	go func() {
-		resultChan <- string(expr.Eval(ctx))
-	}()
-
-	var result string
-	select {
-	case result = <- resultChan:
-	case <-time.After(time.Second*30):
-		exit <- 1
-		fmt.Println("Program timed out after 30 seconds.")
-		return
-	}
-
-	fmt.Println("Returns:")
-	fmt.Println(strings.ReplaceAll(result, `\n`, "\n"))
+	return ctx
 }
