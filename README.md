@@ -6,35 +6,46 @@ An interpreted, expression-oriented language where everything evaluates to strin
 
 ### Installation
 
-You need Go to build the official interpreter from this repository.
+You need Go to build the official interpreter from this repository.  
+Run `go get github.com/skius/stringlang/cmd/stringlang` to install the CLI on your machine.
 
-Run `go get github.com/skius/stringlang/cmd/stringlang` to install the interpreter on your machine. You can then
-run it using `stringlang <program.stringlang> <arg0> <arg1> ...`
+### CLI
+
+Run StringLang programs using `stringlang <program.stringlang> <arg0> <arg1> ...`,
+or alternatively run the StringLang REPL by running `stringlang` with no arguments.
 
 ### Running from code
 
 To interpret StringLang code from your Go program, all you need is the following:
+
 ```go
 package main
-import "github.com/skius/stringlang"
+
+import (
+   "github.com/skius/stringlang"
+   "os"
+   "strconv"
+)
 
 func main() {
-    stringlang := `"Replace me with the " + "source code of your StringLang program"`
-    expr, err := stringlang.Parse(stringlang)
-    if err != nil {
-        panic(err)
-    }
-    // The built-in functions your StringLang program will have access to
-    funcs := []map[string]func([]string)string{
-        "length": func (as []string) string { return len(as[0]) },
-        // Add more built-in functions here
-    }
-    // Arguments to your StringLang program
-    args := os.Args
-    ctx := NewContext(args, funcs)
-    result := expr.Eval(ctx)
+   source := `"Replace me with the " + "source code of your StringLang program"`
+   expr, err := stringlang.Parse([]byte(source))
+   if err != nil {
+      panic(err)
+   }
+   // The built-in functions your StringLang program will have access to
+   funcs := map[string]func([]string) string{
+      "length": func(as []string) string { return strconv.Itoa(len(as[0])) },
+      // Add more built-in functions here
+   }
+   // Arguments to your StringLang program
+   args := os.Args
+   ctx := stringlang.NewContext(args, funcs)
+   result := expr.Eval(ctx)
 }
 ```
+
+See the CLI's [main.go](cmd/stringlang/main.go) for a more advanced example.
 
 ### Contributing
 
