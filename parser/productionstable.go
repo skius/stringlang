@@ -12,7 +12,7 @@ type (
 		NTType     int
 		Index      int
 		NumSymbols int
-		ReduceFunc func([]Attrib) (Attrib, error)
+		ReduceFunc func([]Attrib, interface{}) (Attrib, error)
 	}
 	Attrib interface {
 	}
@@ -25,7 +25,7 @@ var productionsTable = ProdTab{
 		NTType:     0,
 		Index:      0,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -35,7 +35,7 @@ var productionsTable = ProdTab{
 		NTType:     1,
 		Index:      1,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewProgram(X[0], ast.Block([]ast.Expr{}))
 		},
 	},
@@ -45,7 +45,7 @@ var productionsTable = ProdTab{
 		NTType:     1,
 		Index:      2,
 		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewProgram(X[0], X[1])
 		},
 	},
@@ -55,7 +55,7 @@ var productionsTable = ProdTab{
 		NTType:     2,
 		Index:      3,
 		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.FuncDeclsAppend(X[1], X[0])
 		},
 	},
@@ -65,7 +65,7 @@ var productionsTable = ProdTab{
 		NTType:     2,
 		Index:      4,
 		NumSymbols: 0,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return []ast.FuncDecl{}, nil
 		},
 	},
@@ -75,7 +75,7 @@ var productionsTable = ProdTab{
 		NTType:     3,
 		Index:      5,
 		NumSymbols: 8,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewFuncDecl(X[1], X[3], X[6])
 		},
 	},
@@ -85,7 +85,7 @@ var productionsTable = ProdTab{
 		NTType:     4,
 		Index:      6,
 		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.FuncParamsPrepend(X[0], X[1])
 		},
 	},
@@ -95,7 +95,7 @@ var productionsTable = ProdTab{
 		NTType:     4,
 		Index:      7,
 		NumSymbols: 0,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return []string{}, nil
 		},
 	},
@@ -105,7 +105,7 @@ var productionsTable = ProdTab{
 		NTType:     5,
 		Index:      8,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.FuncParamsPrepend(X[1], X[2])
 		},
 	},
@@ -115,7 +115,7 @@ var productionsTable = ProdTab{
 		NTType:     5,
 		Index:      9,
 		NumSymbols: 0,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return []string{}, nil
 		},
 	},
@@ -125,7 +125,7 @@ var productionsTable = ProdTab{
 		NTType:     6,
 		Index:      10,
 		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.BlockPrepend(X[0], X[1])
 		},
 	},
@@ -135,7 +135,7 @@ var productionsTable = ProdTab{
 		NTType:     7,
 		Index:      11,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.BlockPrepend(X[1], X[2])
 		},
 	},
@@ -145,7 +145,7 @@ var productionsTable = ProdTab{
 		NTType:     7,
 		Index:      12,
 		NumSymbols: 0,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewBlock()
 		},
 	},
@@ -155,7 +155,7 @@ var productionsTable = ProdTab{
 		NTType:     8,
 		Index:      13,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewAssn(X[0], X[2])
 		},
 	},
@@ -165,7 +165,7 @@ var productionsTable = ProdTab{
 		NTType:     8,
 		Index:      14,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -175,7 +175,7 @@ var productionsTable = ProdTab{
 		NTType:     9,
 		Index:      15,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewOr(X[0], X[2])
 		},
 	},
@@ -185,7 +185,7 @@ var productionsTable = ProdTab{
 		NTType:     9,
 		Index:      16,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -195,7 +195,7 @@ var productionsTable = ProdTab{
 		NTType:     10,
 		Index:      17,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewAnd(X[0], X[2])
 		},
 	},
@@ -205,7 +205,7 @@ var productionsTable = ProdTab{
 		NTType:     10,
 		Index:      18,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -215,7 +215,7 @@ var productionsTable = ProdTab{
 		NTType:     11,
 		Index:      19,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewNotEquals(X[0], X[2])
 		},
 	},
@@ -225,7 +225,7 @@ var productionsTable = ProdTab{
 		NTType:     11,
 		Index:      20,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -235,7 +235,7 @@ var productionsTable = ProdTab{
 		NTType:     12,
 		Index:      21,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewEquals(X[0], X[2])
 		},
 	},
@@ -245,7 +245,7 @@ var productionsTable = ProdTab{
 		NTType:     12,
 		Index:      22,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -255,7 +255,7 @@ var productionsTable = ProdTab{
 		NTType:     13,
 		Index:      23,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewConcat(X[0], X[2])
 		},
 	},
@@ -265,7 +265,7 @@ var productionsTable = ProdTab{
 		NTType:     13,
 		Index:      24,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -275,7 +275,7 @@ var productionsTable = ProdTab{
 		NTType:     14,
 		Index:      25,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -285,7 +285,7 @@ var productionsTable = ProdTab{
 		NTType:     14,
 		Index:      26,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -295,7 +295,7 @@ var productionsTable = ProdTab{
 		NTType:     14,
 		Index:      27,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewVal(X[0])
 		},
 	},
@@ -305,7 +305,7 @@ var productionsTable = ProdTab{
 		NTType:     14,
 		Index:      28,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -315,7 +315,7 @@ var productionsTable = ProdTab{
 		NTType:     14,
 		Index:      29,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -325,7 +325,7 @@ var productionsTable = ProdTab{
 		NTType:     14,
 		Index:      30,
 		NumSymbols: 4,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewCall(X[0], X[2])
 		},
 	},
@@ -335,7 +335,7 @@ var productionsTable = ProdTab{
 		NTType:     14,
 		Index:      31,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[1], nil
 		},
 	},
@@ -345,7 +345,7 @@ var productionsTable = ProdTab{
 		NTType:     14,
 		Index:      32,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return X[0], nil
 		},
 	},
@@ -355,7 +355,7 @@ var productionsTable = ProdTab{
 		NTType:     15,
 		Index:      33,
 		NumSymbols: 4,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewIndex(X[0], X[2])
 		},
 	},
@@ -365,7 +365,7 @@ var productionsTable = ProdTab{
 		NTType:     15,
 		Index:      34,
 		NumSymbols: 4,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewIndexInt(X[0], X[2])
 		},
 	},
@@ -375,7 +375,7 @@ var productionsTable = ProdTab{
 		NTType:     16,
 		Index:      35,
 		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.CallArgsPrepend(X[0], X[1])
 		},
 	},
@@ -385,7 +385,7 @@ var productionsTable = ProdTab{
 		NTType:     16,
 		Index:      36,
 		NumSymbols: 0,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewCallArgs()
 		},
 	},
@@ -395,7 +395,7 @@ var productionsTable = ProdTab{
 		NTType:     17,
 		Index:      37,
 		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.CallArgsPrepend(X[1], X[2])
 		},
 	},
@@ -405,17 +405,17 @@ var productionsTable = ProdTab{
 		NTType:     17,
 		Index:      38,
 		NumSymbols: 0,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewCallArgs()
 		},
 	},
 	ProdTabEntry{
-		String: `Arg : "%!"(MISSING) int_lit	<< ast.NewArg(X[1]) >>`,
+		String: `Arg : "%" int_lit	<< ast.NewArg(X[1]) >>`,
 		Id:         "Arg",
 		NTType:     18,
 		Index:      39,
 		NumSymbols: 2,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewArg(X[1])
 		},
 	},
@@ -425,7 +425,7 @@ var productionsTable = ProdTab{
 		NTType:     19,
 		Index:      40,
 		NumSymbols: 1,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewVar(X[0])
 		},
 	},
@@ -435,7 +435,7 @@ var productionsTable = ProdTab{
 		NTType:     20,
 		Index:      41,
 		NumSymbols: 11,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewIfElse(X[2], X[5], X[9])
 		},
 	},
@@ -445,7 +445,7 @@ var productionsTable = ProdTab{
 		NTType:     20,
 		Index:      42,
 		NumSymbols: 9,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewIfElse(X[2], X[5], X[8])
 		},
 	},
@@ -455,7 +455,7 @@ var productionsTable = ProdTab{
 		NTType:     21,
 		Index:      43,
 		NumSymbols: 7,
-		ReduceFunc: func(X []Attrib) (Attrib, error) {
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewWhile(X[2], X[5])
 		},
 	},
