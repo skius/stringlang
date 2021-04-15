@@ -33,7 +33,7 @@ func main() {
 		panic(err)
 	}
 
-	result, err := evalOrTimeout(expr, time.Second * 30)
+	result, err := evalOrTimeout(exampleContext(), expr, time.Second * 30)
 	if err != nil {
 		panic(err)
 	}
@@ -42,8 +42,7 @@ func main() {
 	fmt.Println(strings.ReplaceAll(result, `\n`, "\n"))
 }
 
-func evalOrTimeout(expr stringlang.Expr, timeout time.Duration) (string, error) {
-	ctx := exampleContext()
+func evalOrTimeout(ctx *stringlang.Context, expr stringlang.Expr, timeout time.Duration) (string, error) {
 	exit := ctx.GetExitChannel()
 
 	resultChan := make(chan string)

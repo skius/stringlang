@@ -27,16 +27,20 @@ var White  = "\033[97m"
 
 func repl() {
 
+	// TODO: Figure out better what to do when stack overflows (because subsequent calls will just return "" because stack will still be overflown
+	// TODO: Figure out why in an infinite loop Ctrl-C doesnt work? only after 30sec timeout, then EOF
+
 	// _ is missing setIndent
-	printLn, readLn, cleanup, _ := initTerminal()
+	printLn, readLn, cleanup, _, setMultiLine := initTerminal()
 	defer cleanup()
 
 	printLn("Welcome to the StringLang REPL!")
 	printLn("Enter code, run it by pressing ENTER, repeat!")
-	printLn("Note: This REPL stores all code you've entered and will execute everything each time you enter new code.")
+	printLn("The special variable '_' can be used to refer to the previous result.")
 	printLn("Reset your program using 'reset;;' and quit the REPL using 'quit;;'.")
 
-	program := ast.EmptyProgram()
+	funcs := []ast.FuncDecl{}
+	context := exampleContext()
 
 	repl:
 	for {
@@ -45,22 +49,33 @@ func repl() {
 		var newExpr stringlang.Expr
 		// Read-parse loop until we either know input can't be valid a StringLang fragment, or we have a successful parse
 		for {
+			if input == "" {
+				// input can only ever be "" if this is the first iteration of
+				// the read-parse loop ~=~ the beginning of a new expression
+				setMultiLine(false)
+			} else {
+				// We only reach the second iteration if the first ended unexpectedly but is recoverable, i.e. multiline
+				setMultiLine(true)
+			}
+
 			// Uncomment for automated basic and bad indentation support
 			// setIndent(indentLevel)
+
 			temp := readLn()
 
 			// Special keywords
 			trimmedTemp := strings.TrimSpace(temp)
 			if strings.HasSuffix(trimmedTemp, "reset;;") {
 				printLn("Resetting REPL... Reset!")
-				program = ast.EmptyProgram()
+				funcs = []ast.FuncDecl{}
+				context = exampleContext()
 				continue repl
 			}
 			if strings.HasSuffix(trimmedTemp, "quit;;") {
 				break repl
 			}
 
-			// Check if we need to change indentation
+			// Basic and easily broken check if we need to change indentation
 			opens := strings.Count(temp, "{")
 			closes := strings.Count(temp, "}")
 			indentLevel = indentLevel + opens - closes
@@ -85,27 +100,34 @@ func repl() {
 				continue
 			}
 
-			// Otherwise there's no chance the program could become correct, so we have to reset
+			// Otherwise there's no chance the program could become correct, so we have to reset this expression
 			printLn("There was an error parsing your input: ", err)
 			input = ""
 			indentLevel = 0
 		}
 
-		// Combine the program extension with the old program
 		newProgram := newExpr.(ast.Program)
-		program.Funcs = append(program.Funcs, newProgram.Funcs...)
-		program.Code = append(program.Code, newProgram.Code...)
+
+		// Combine the new functions with the old ones
+		// Order is important, newer functions need to be at the end of the slice
+		// such that they properly replace earlier definitions
+		funcs = append(funcs, newProgram.Funcs...)
+
+		newProgram.Funcs = funcs
 
 		if len(newProgram.Code) == 0 {
 			// No new top-level code, so no need to run anything
 			continue
 		}
 
-		result, err := evalOrTimeout(program, time.Second * 30)
+		// Eval by reusing context, so we store previous computations
+		result, err := evalOrTimeout(context, newProgram, time.Second * 30)
 		if err != nil {
 			printLn("There was an error running your program: ", err)
 			continue
 		}
+		// Update special variable '_' to refer to result
+		context.VariableMap["_"] = ast.Val(result)
 		printLn(Yellow + result + Reset)
 
 	}
@@ -113,12 +135,12 @@ func repl() {
 	printLn("Exiting REPL.")
 }
 
-func initTerminal() (func(...interface{}), func() string, func(), func(int)) {
+func initTerminal() (func(...interface{}), func() string, func(), func(int), func(bool)) {
 	var printLn func(...interface{})
 	var readLn func() string
 	var cleanup = func() {}
 	var setIndent func(int)
-
+	var setMultiLine func(bool)
 
 	if runtime.GOOS == "windows" {
 		Reset  = ""
@@ -131,6 +153,12 @@ func initTerminal() (func(...interface{}), func() string, func(), func(int)) {
 		Gray   = ""
 		White  = ""
 
+		// currently unused
+		var multiLine bool
+		setMultiLine = func(is bool) {
+			multiLine = is
+		}
+
 		var indent int
 		setIndent = func(i int) {
 			indent = i
@@ -141,7 +169,7 @@ func initTerminal() (func(...interface{}), func() string, func(), func(int)) {
 			fmt.Println(a...)
 		}
 		readLn = func() string {
-			fmt.Print(genSpaces(indent * 4))
+			fmt.Print("> " + genSpaces(indent * 4))
 			s, err := stdin.ReadString('\n')
 			if err != nil {
 				panic(err)
@@ -158,9 +186,34 @@ func initTerminal() (func(...interface{}), func() string, func(), func(int)) {
 
 		t := term.NewTerminal(os.Stdin, "> ")
 
+		var _updatePrompt func()
+
+		var multiLine bool
+		setMultiLine = func(is bool) {
+			multiLine = is
+			_updatePrompt()
+		}
+
+		var indent int
 		setIndent = func(i int) {
-			// Need to add "> " if we want it even with indentation
-			t.SetPrompt(genSpaces(i * 4))
+			indent = i
+			_updatePrompt()
+		}
+
+		_getMultiLinePrefix := func() string {
+			if multiLine {
+				return "  "
+			} else {
+				return "> "
+			}
+		}
+
+		_getIndentPrefix := func() string {
+			return genSpaces(indent * 4)
+		}
+
+		_updatePrompt = func() {
+			t.SetPrompt(_getMultiLinePrefix() + _getIndentPrefix())
 		}
 
 		printLn = func(a ...interface{}) {
@@ -181,7 +234,7 @@ func initTerminal() (func(...interface{}), func() string, func(), func(int)) {
 			term.Restore(int(os.Stdin.Fd()), oldState)
 		}
 	}
-	return printLn, readLn, cleanup, setIndent
+	return printLn, readLn, cleanup, setIndent, setMultiLine
 }
 
 func genSpaces(i int) string {
