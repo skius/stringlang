@@ -12,7 +12,7 @@ type Val = ast.Val
 type Var = ast.Var
 type Context = ast.Context
 
-func NewContext(args []string, funcs map[string]func([]string)string) *Context {
+func NewContext(args []string, funcs map[string]func([]string) string) *Context {
 	return ast.NewContext(args, funcs)
 }
 

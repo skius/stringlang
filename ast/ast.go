@@ -6,8 +6,8 @@ import (
 	"strings"
 )
 
-func NewContext(args []string, funcs map[string]func([]string)string) *Context {
-	return &Context {
+func NewContext(args []string, funcs map[string]func([]string) string) *Context {
+	return &Context{
 		Args:            args,
 		VariableMap:     make(map[Var]Val),
 		UserFunctionMap: make(map[string]FuncDecl),
@@ -21,16 +21,19 @@ func NewContext(args []string, funcs map[string]func([]string)string) *Context {
 type Context struct {
 	Args            []string
 	VariableMap     map[Var]Val
-	FunctionMap     map[string]func([]string)string
+	FunctionMap     map[string]func([]string) string
 	UserFunctionMap map[string]FuncDecl
 	MaxStackSize    int64
 	exitChannel     chan int
-	limitStackSize	bool
+	limitStackSize  bool
 }
 
 func (c *Context) SetMaxStackSize(sz int64) {
 	c.MaxStackSize = sz
 	c.limitStackSize = true
+	if sz < 0 {
+		c.limitStackSize = false
+	}
 }
 
 func (c *Context) GetExitChannel() chan int {
@@ -40,7 +43,7 @@ func (c *Context) GetExitChannel() chan int {
 	return c.exitChannel
 }
 
-type Attrib interface {}
+type Attrib interface{}
 
 type Expr interface {
 	Eval(*Context) Val
@@ -48,9 +51,10 @@ type Expr interface {
 }
 
 type Val string
+
 func NewVal(a Attrib) (Expr, error) {
 	quoted := attribToString(a)
-	return Val(quoted[1:len(quoted)-1]), nil
+	return Val(quoted[1 : len(quoted)-1]), nil
 }
 func (v Val) Eval(c *Context) Val {
 	return v
@@ -61,13 +65,15 @@ func (v Val) String() string {
 
 type Program struct {
 	Funcs []FuncDecl
-	Code Block
+	Code  Block
 }
+
 func NewProgram(f, b Attrib) (Expr, error) {
 	funcs := f.([]FuncDecl)
 	code := b.(Block)
 	return Program{Funcs: funcs, Code: code}, nil
 }
+
 // Useful for building ASTs manually
 func EmptyProgram() Program {
 	return Program{Funcs: []FuncDecl{}, Code: []Expr{}}
@@ -90,6 +96,7 @@ func (p Program) String() string {
 }
 
 type Block []Expr
+
 func NewBlock() (Expr, error) {
 	return Block([]Expr{}), nil
 }
@@ -109,7 +116,7 @@ func (b Block) Eval(c *Context) Val {
 func (b Block) String() string {
 	str := ""
 	for i, exp := range b {
-		if i < len(b) - 1 {
+		if i < len(b)-1 {
 			str += exp.String() + ";\n"
 		} else {
 			str += exp.String()
@@ -119,6 +126,7 @@ func (b Block) String() string {
 }
 
 type Arg int
+
 func NewArg(i Attrib) (Expr, error) {
 	s := attribToString(i)
 	intValue, err := strconv.Atoi(s)
@@ -138,6 +146,7 @@ type Equals struct {
 	A Expr
 	B Expr
 }
+
 func NewEquals(a, b Attrib) (Expr, error) {
 	return Equals{A: a.(Expr), B: b.(Expr)}, nil
 }
@@ -156,6 +165,7 @@ type NotEquals struct {
 	A Expr
 	B Expr
 }
+
 func NewNotEquals(a, b Attrib) (Expr, error) {
 	return NotEquals{A: a.(Expr), B: b.(Expr)}, nil
 }
@@ -174,6 +184,7 @@ type Or struct {
 	A Expr
 	B Expr
 }
+
 func NewOr(a, b Attrib) (Expr, error) {
 	return Or{A: a.(Expr), B: b.(Expr)}, nil
 }
@@ -192,6 +203,7 @@ type And struct {
 	A Expr
 	B Expr
 }
+
 func NewAnd(a, b Attrib) (Expr, error) {
 	return And{A: a.(Expr), B: b.(Expr)}, nil
 }
@@ -210,6 +222,7 @@ type Concat struct {
 	A Expr
 	B Expr
 }
+
 func NewConcat(a, b Attrib) (Expr, error) {
 	return Concat{A: a.(Expr), B: b.(Expr)}, nil
 }
@@ -221,6 +234,7 @@ func (cc Concat) String() string {
 }
 
 type Var string
+
 func NewVar(a Attrib) (Expr, error) {
 	return Var(attribToString(a)), nil
 }
@@ -232,13 +246,14 @@ func (v Var) String() string {
 }
 
 type Call struct {
-	Fn Var
+	Fn   Var
 	Args CallArgs
 }
+
 func NewCall(f, as Attrib) (Expr, error) {
 	fn := f.(Var)
 	args := as.(CallArgs)
-	return Call {Fn: fn, Args: args}, nil
+	return Call{Fn: fn, Args: args}, nil
 }
 func (ca Call) Eval(c *Context) Val {
 	if checkExit(c) {
@@ -279,13 +294,14 @@ func (ca Call) String() string {
 
 type Index struct {
 	Source Expr
-	I 	Expr
+	I      Expr
 }
+
 func NewIndex(s, i Attrib) (Expr, error) {
-	return Index {Source: s.(Expr), I: i.(Expr)}, nil
+	return Index{Source: s.(Expr), I: i.(Expr)}, nil
 }
 func NewIndexInt(s, i Attrib) (Expr, error) {
-	return Index {Source: s.(Expr), I: Val(attribToString(i))}, nil
+	return Index{Source: s.(Expr), I: Val(attribToString(i))}, nil
 }
 func (i Index) Eval(c *Context) Val {
 	src := string(i.Source.Eval(c))
@@ -306,10 +322,11 @@ type Assn struct {
 	V Var
 	E Expr
 }
+
 func NewAssn(v, e Attrib) (Expr, error) {
 	va := v.(Var)
 	ex := e.(Expr)
-	return Assn {V: va, E: ex}, nil
+	return Assn{V: va, E: ex}, nil
 }
 func (a Assn) Eval(c *Context) Val {
 	newVal := a.E.Eval(c)
@@ -325,6 +342,7 @@ type IfElse struct {
 	Then Expr
 	Else Expr
 }
+
 func NewIfElse(c, t, e Attrib) (Expr, error) {
 	co := c.(Expr)
 	th := t.(Expr)
@@ -347,6 +365,7 @@ type While struct {
 	Cond Expr
 	Body Expr
 }
+
 func NewWhile(c, b Attrib) (Expr, error) {
 	co := c.(Expr)
 	bo := b.(Expr)
@@ -372,9 +391,9 @@ func (e While) String() string {
 	return str
 }
 
-
 // CallArgs is not an Expr, since it can never appear on its own
 type CallArgs []Expr
+
 func NewCallArgs() (CallArgs, error) {
 	return []Expr{}, nil
 }
@@ -387,17 +406,20 @@ func CallArgsPrepend(e, a Attrib) (CallArgs, error) {
 
 // FuncDecl is not an Expr, since it can never appear on its own
 type FuncDecl struct {
-	Params []string
-	Code Block
+	Params     []string
+	Code       Block
 	Identifier string
 }
+
 func NewFuncDecl(i, p, b Attrib) (FuncDecl, error) {
 	id := attribToString(i)
 	params := p.([]string)
 	code := b.(Block)
 	return FuncDecl{Params: params, Code: code, Identifier: id}, nil
 }
-const GoStackframeEstimate = 8*1024
+
+const GoStackframeEstimate = 8 * 1024
+
 func (f FuncDecl) Call(c *Context, args []Val) Val {
 	newVars := make(map[Var]Val)
 	for i, p := range f.Params {
@@ -407,21 +429,29 @@ func (f FuncDecl) Call(c *Context, args []Val) Val {
 		}
 		newVars[Var(p)] = argVal
 	}
-	cNew := Context {
+	cNew := Context{
 		VariableMap:     newVars,
 		UserFunctionMap: c.UserFunctionMap,
 		FunctionMap:     c.FunctionMap,
 		Args:            c.Args,
-		MaxStackSize:    c.MaxStackSize - checkSize(c.VariableMap) - checkSize(newVars) - GoStackframeEstimate, // New context needs to account for Go stackframes
+		MaxStackSize:    c.MaxStackSize - CheckSize(c.VariableMap) - GoStackframeEstimate, // New context needs to account for Go stackframes
 		limitStackSize:  c.limitStackSize,
 		exitChannel:     c.exitChannel,
 	}
 	return f.Code.Eval(&cNew)
 }
 func (f FuncDecl) String() string {
-	return "func(){} // unimplemented"
+	var id = f.Identifier
+	var args = ""
+	for _, arg := range f.Params {
+		args += arg + ", "
+	}
+	if len(args) > 0 {
+		args = args[:len(args)-2] // ignore last ", "
+	}
+	return "fun " + id + "(" + args + ") {\n\t" + f.Code.String() + "\n}"
 }
-func FuncDeclsAppend(f, fs Attrib) ([]FuncDecl, error){
+func FuncDeclsAppend(f, fs Attrib) ([]FuncDecl, error) {
 	fdecl := f.(FuncDecl)
 	funcs := fs.([]FuncDecl)
 	return append(funcs, fdecl), nil
@@ -438,7 +468,7 @@ func attribToString(a Attrib) string {
 func boolOf(v Val) bool {
 	return v != "false" && v != ""
 }
-func checkSize(m map[Var]Val) (total int64) {
+func CheckSize(m map[Var]Val) (total int64) {
 	for k, v := range m {
 		total += int64(len(k)) + int64(len(v))
 	}
@@ -452,17 +482,16 @@ const (
 
 // checkExit returns true if we need to exit
 func checkExit(c *Context) bool {
-	if c.limitStackSize && checkSize(c.VariableMap) > c.MaxStackSize {
+	if c.limitStackSize && CheckSize(c.VariableMap) > c.MaxStackSize {
 		select {
 		case c.exitChannel <- SigOutOfMemory:
 		default:
 		}
-
 		return true
 	}
 	select {
-	case sig := <-c.exitChannel:
-		c.exitChannel <- sig
+	case <-c.exitChannel:
+		// c.exitChannel <- sig // No need to propagate I think?
 		return true
 	default:
 		return false
