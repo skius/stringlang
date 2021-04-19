@@ -1,0 +1,123 @@
+/*
+    Purely proof of concept implementation of "length" (using a just as instrumental function "succ").
+    With these functions arithmetic operations are easily implemented (see functions.stringlang for examples,
+    note however that the "length" function there is built-in, i.e. provided by Go)
+*/
+
+fun last(s) {
+    curr = "";
+    i = "0";
+    while ((curr = s[i]) != "") {
+        last = curr;
+        i = succ(i)
+    };
+    last
+}
+
+fun init(s) {
+    init = "";
+    i = "0";
+    curr = "";
+    next = s[i];
+    while (next != "") {
+        init = init + curr;
+        curr = next;
+        i = succ(i);
+        next = s[i]
+    };
+    init
+}
+
+fun tail(s) {
+    tail = "";
+    i = "1";
+    while (s[i] != "") {
+        tail = tail + s[i];
+        i = succ(i)
+    };
+    tail
+}
+
+fun reverse(s) {
+    if (s == "") {
+        ""
+    } else {
+        last(s) + reverse(init(s))
+    }
+}
+
+fun succLarge(n) {
+    nRev = reverse(n); /* Convert big-endian to little-endian for easier working with */
+    res = "";
+    if (nRev["0"] == "9") {
+        /* Carry */
+        tailOrZero = if (tail(nRev) == "") { "0" } else { tail(nRev) };
+        /* Need to temporarily convert to big-endian such that succ works */
+        res = "0" + reverse(succ(reverse(tailOrZero)))
+    } else {
+        res = succ(nRev["0"]) + tail(nRev)
+    };
+    reverse(res) /* Back to big-endian from little-endian */
+}
+
+/*
+    succ(n) only works due to the fact that a number's base-10 representation can be walked through using
+    only log n bits, allowing computation of the successor of a large number n to only actually need the numbers from
+    0 to log n. Because this process is recursive, if we provide a base case we can bootstrap ourselves from that
+    to all natural numbers.
+*/
+fun succ(n) {
+    /* Bootstrap all the base cases */
+    if (n == "0") {
+        "1"
+    } else if (n == "1") {
+        "2"
+    } else if (n == "2") {
+        "3"
+    } else if (n == "3") {
+        "4"
+    } else if (n == "4") {
+        "5"
+    } else if (n == "5") {
+        "6"
+    } else if (n == "6") {
+        "7"
+    } else if (n == "7") {
+        "8"
+    } else if (n == "8") {
+        "9"
+    } else {
+        /* Recursively handle larger values */
+        succLarge(n)
+    }
+}
+
+fun length(s) {
+    i = "0";
+    while (s[i] != "") {
+        i = succ(i)
+    };
+    i
+}
+
+"last of bungaloo = " + last("bungaloo") + "\n" +
+"init of bungaloo = " + init("bungaloo") + "\n" +
+"tail of bungaloo = " + tail("bungaloo") + "\n" +
+"reverse of bungaloo = " + reverse("bungaloo") + "\n" +
+"length of bungaloo = " + length("bungaloo") + "\n" +
+"succ of 9 = " + succ("9") + "\n" +
+"succ of 41 = " + succ("41") + "\n" +
+"succ of 9199999999999999999999999999999999999999999999999999 = " + succ("9199999999999999999999999999999999999999999999999999")
+
+
+/*
+Returns:
+last of bungaloo = o
+init of bungaloo = bungalo
+tail of bungaloo = ungaloo
+reverse of bungaloo = oolagnub
+length of bungaloo = 8
+succ of 9 = 10
+succ of 41 = 42
+succ of 9199999999999999999999999999999999999999999999999999 = 9200000000000000000000000000000000000000000000000000
+*/
