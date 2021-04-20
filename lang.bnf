@@ -5,7 +5,26 @@ _alpha : 'a'-'z' | 'A'-'Z' | '_' ;
 _alphanum : _alpha | _digit ;
 id : _alpha { _alphanum } ;
 
-string_lit : '"' {.} '"' ;
+_ascii_char
+	: '\x01' - '\x21'
+	| '\x23' - '\x5B'
+	| '\x5D' - '\x7F'
+;
+_unicode_char
+	: _ascii_char
+	| _unicode_byte
+;
+_unicode_byte
+	: '\u0080' - '\uFFFC'
+	// skip invalid code point (\uFFFD)
+	| '\uFFFE' - '\U0010FFFF'
+;
+
+// Thanks: https://github.com/awalterschulze/gographviz/blob/master/dot.bnf
+_escaped_char : '\\' ( _unicode_char | '"' | '\\' ) ;
+_char         : _unicode_char | _escaped_char ;
+
+string_lit : '"' { _char } '"' ;
 !whitespace : ' ' | '\t' | '\n' | '\r' ;
 !comment : '/' '*' {. | '*'} '*' '/' ;
 
