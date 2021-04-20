@@ -27,11 +27,9 @@ func EmptyProgram() Program {
 	return Program{Funcs: []FuncDecl{}, Code: []Expr{}}
 }
 func (p Program) Eval(c *Context) Val {
-	customFunctions := make(map[string]FuncDecl)
 	for _, f := range p.Funcs {
-		customFunctions[f.Identifier] = f
+		c.UserFunctionMap[f.Identifier] = f
 	}
-	c.UserFunctionMap = customFunctions
 	return p.Code.Eval(c)
 }
 func (p Program) String() string {

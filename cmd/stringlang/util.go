@@ -76,6 +76,21 @@ func exampleContext(limitStack bool) *stringlang.Context {
 	}
 
 	ctx := stringlang.NewContext(args, funcs)
+	// Add special eval function, needs reference to ctx to work
+	// Modifies context, i.e. eval adds support for unhygienic macros
+	// Only works if ctx gets reused, like what REPL is doing
+	ctx.FunctionMap["eval"] = func(args []string) string {
+		if len(args) == 0 {
+			return ""
+		}
+		src := args[0]
+		expr, err := stringlang.Parse([]byte(src))
+		if err != nil {
+			return ""
+		}
+		result := expr.Eval(ctx)
+		return string(result)
+	}
 	if limitStack {
 		ctx.SetMaxStackSize(100 * 1024 * 1024) // 100MB limit for programs
 	}

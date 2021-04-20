@@ -131,14 +131,14 @@ func (r *Repl) Run() {
 			continue
 		}
 
-		// Combine the new functions with the old ones
-		// Order is important, newer functions need to be at the end of the slice
-		// such that they properly replace earlier definitions
 		prog := expr.(ast.Program)
-		r.UserFuncs = append(r.UserFuncs, prog.Funcs...)
-		prog.Funcs = r.UserFuncs
 		if len(prog.Code) == 0 {
 			// No new top-level code, so no need to run anything
+			// Store new user functions, however
+			for i := range prog.Funcs {
+				fn := prog.Funcs[i]
+				r.Context.UserFunctionMap[fn.Identifier] = fn
+			}
 			continue
 		}
 
