@@ -14,7 +14,7 @@ func (e While) Eval(c *Context) Val {
 	var cond Val = e.Cond.Eval(c)
 	var body Val
 	steps := 0
-	for boolOf(cond) {
+	for BoolOf(cond) {
 		body = e.Body.Eval(c)
 		cond = e.Cond.Eval(c)
 

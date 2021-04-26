@@ -13,7 +13,7 @@ func NewIfElse(c, t, e Attrib) (Expr, error) {
 	return IfElse{Cond: co, Then: th, Else: el}, nil
 }
 func (e IfElse) Eval(c *Context) Val {
-	if boolOf(e.Cond.Eval(c)) {
+	if BoolOf(e.Cond.Eval(c)) {
 		return e.Then.Eval(c)
 	} else {
 		return e.Else.Eval(c)

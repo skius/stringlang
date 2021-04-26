@@ -9,7 +9,7 @@ func NewOr(a, b Attrib) (Expr, error) {
 	return Or{A: a.(Expr), B: b.(Expr)}, nil
 }
 func (o Or) Eval(c *Context) Val {
-	if boolOf(o.A.Eval(c)) || boolOf(o.B.Eval(c)) {
+	if BoolOf(o.A.Eval(c)) || BoolOf(o.B.Eval(c)) {
 		return Val("true")
 	} else {
 		return Val("false")

@@ -3,15 +3,31 @@ package main
 import (
 	"fmt"
 	"github.com/skius/stringlang"
+	"github.com/skius/stringlang/ast"
+	"github.com/skius/stringlang/optimizer"
 	"io/ioutil"
 	"os"
-	"strings"
 	"time"
 )
 
 func main() {
 	if len(os.Args) == 2 && (os.Args[1] == "-h" || os.Args[1] == "--help") {
-		fmt.Println("Usage: ./stringlang [<program.stringlang>] [..<args>]")
+		fmt.Println("Usage: ./stringlang [[--normalize] <program.stringlang>] [..<args>]")
+		return
+	}
+	if len(os.Args) > 2 && (os.Args[1] == "-n" || os.Args[1] == "--normalize") {
+		file := os.Args[2]
+		content, err := ioutil.ReadFile(file)
+		if err != nil {
+			panic(err)
+		}
+
+		expr, err := stringlang.Parse(content)
+		if err != nil {
+			panic(err)
+		}
+
+		fmt.Println(optimizer.Normalize(expr.(ast.Program)))
 		return
 	}
 	if len(os.Args) == 1 {
@@ -37,5 +53,5 @@ func main() {
 	}
 
 	fmt.Println("Returns:")
-	fmt.Println(strings.ReplaceAll(result, `\n`, "\n"))
+	fmt.Println(result)
 }
