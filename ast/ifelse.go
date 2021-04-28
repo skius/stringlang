@@ -1,5 +1,7 @@
 package ast
 
+import "strings"
+
 type IfElse struct {
 	Cond Expr
 	Then Expr
@@ -20,6 +22,12 @@ func (e IfElse) Eval(c *Context) Val {
 	}
 }
 func (e IfElse) String() string {
-	str := "if (" + e.Cond.String() + ") {\n\t" + e.Then.String() + "\n} else {\n\t" + e.Else.String() + "\n}"
+	thenLines := strings.Split(e.Then.String(), "\n")
+	thenStr := strings.Join(thenLines, "\n\t")
+
+	elseLines := strings.Split(e.Else.String(), "\n")
+	elseStr := strings.Join(elseLines, "\n\t")
+
+	str := "if (" + e.Cond.String() + ") {\n\t" + thenStr + "\n} else {\n\t" + elseStr + "\n}"
 	return str
 }

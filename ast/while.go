@@ -1,5 +1,7 @@
 package ast
 
+import "strings"
+
 type While struct {
 	Cond Expr
 	Body Expr
@@ -26,6 +28,9 @@ func (e While) Eval(c *Context) Val {
 	return body
 }
 func (e While) String() string {
-	str := "while (" + e.Cond.String() + ") {\n\t" + e.Body.String() + "\n}"
+	thenLines := strings.Split(e.Body.String(), "\n")
+	thenStr := strings.Join(thenLines, "\n\t")
+
+	str := "while (" + e.Cond.String() + ") {\n\t" + thenStr + "\n}"
 	return str
 }
