@@ -49,7 +49,6 @@ func (ca Call) String() string {
 	return ca.Fn.String() + "(" + strings.Join(args, ", ") + ")"
 }
 
-
 // CallArgs is not an Expr, since it can never appear on its own
 type CallArgs []Expr
 
@@ -116,4 +115,3 @@ func FuncParamsPrepend(p, ps Attrib) ([]string, error) {
 	params := ps.([]string)
 	return append([]string{param}, params...), nil
 }
-

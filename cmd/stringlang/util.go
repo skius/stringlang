@@ -40,7 +40,7 @@ func evalOrTimeout(ctx *stringlang.Context, expr stringlang.Expr, timeout time.D
 	var result string
 	select {
 	case result = <-resultChan:
-	case err := <- errChan:
+	case err := <-errChan:
 		return "", errors.New(fmt.Sprint(err))
 	case <-time.After(timeout):
 		exit <- 1

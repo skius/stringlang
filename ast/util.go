@@ -161,7 +161,6 @@ func checkExit(c *Context) bool {
 	}
 }
 
-
 /*
 Complete switch of expressions
 

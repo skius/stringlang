@@ -5,8 +5,8 @@ import (
 )
 
 type normalizer struct {
-	names map[string]struct{} // Used variables
-	lastName string // last generated name
+	names    map[string]struct{} // Used variables
+	lastName string              // last generated name
 }
 
 // Normalize returns an equivalent program, but with at most one level of expression nesting
@@ -22,8 +22,8 @@ func Normalize(prog Program) Program {
 		n.reset()
 		n.names = UsedVars(prog.Funcs[i].Code)
 		funcs[i] = FuncDecl{
-			Params: prog.Funcs[i].Params,
-			Code: n.compileStmt(prog.Funcs[i].Code),
+			Params:     prog.Funcs[i].Params,
+			Code:       n.compileStmt(prog.Funcs[i].Code),
 			Identifier: prog.Funcs[i].Identifier,
 		}
 	}
@@ -278,11 +278,11 @@ func (n *normalizer) reset() {
 
 func (n *normalizer) genName() string {
 	name := n.lastName
-	_, ok := n.names["__" + name]
-	for ; ok; _, ok = n.names["__" + name] {
+	_, ok := n.names["__"+name]
+	for ; ok; _, ok = n.names["__"+name] {
 		name = succ(name)
 	}
-	n.names["__" + name] = struct{}{}
+	n.names["__"+name] = struct{}{}
 	n.lastName = name
 	return "__" + name
 }
@@ -298,7 +298,7 @@ func succ(s string) string {
 		return reverse("a" + reverse(succ(reverse(sRev[1:]))))
 	}
 
-	res := string(sRev[0] + 1) + sRev[1:]
+	res := string(sRev[0]+1) + sRev[1:]
 	return reverse(res)
 }
 

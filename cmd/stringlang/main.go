@@ -27,7 +27,8 @@ func main() {
 			panic(err)
 		}
 
-		fmt.Println(optimizer.Normalize(expr.(ast.Program)))
+		opt := optimizer.Normalize(expr.(ast.Program))
+		fmt.Println(opt)
 		return
 	}
 	if len(os.Args) == 1 {
