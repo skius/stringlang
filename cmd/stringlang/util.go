@@ -2,10 +2,10 @@ package main
 
 import (
 	"errors"
+	"flag"
 	"fmt"
 	"github.com/skius/stringlang"
 	"math/rand"
-	"os"
 	"strconv"
 	"strings"
 	"time"
@@ -69,11 +69,8 @@ func exampleContext(limitStack bool) *stringlang.Context {
 		},
 	}
 
-	// We want the .stringlang file, and not the interpreter's path to be argument 0
-	args := make([]string, len(os.Args)-1)
-	for i := 1; i < len(os.Args); i++ {
-		args[i-1] = os.Args[i]
-	}
+	args := make([]string, len(flag.Args()))
+	copy(args, flag.Args())
 
 	ctx := stringlang.NewContext(args, funcs)
 	// Add special eval function, needs reference to ctx to work

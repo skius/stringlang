@@ -1,54 +1,78 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"github.com/skius/stringlang"
 	"github.com/skius/stringlang/ast"
+	"github.com/skius/stringlang/cfg"
 	"github.com/skius/stringlang/optimizer"
 	"io/ioutil"
-	"os"
 	"time"
 )
 
 func main() {
-	if len(os.Args) == 2 && (os.Args[1] == "-h" || os.Args[1] == "--help") {
-		fmt.Println("Usage: ./stringlang [[--normalize] <program.stringlang>] [..<args>]")
-		return
-	}
-	if len(os.Args) > 2 && (os.Args[1] == "-n" || os.Args[1] == "--normalize") {
-		file := os.Args[2]
-		content, err := ioutil.ReadFile(file)
-		if err != nil {
-			panic(err)
-		}
+	var normalize bool
+	flag.BoolVar(&normalize, "normalize", false, "Normalize program")
 
-		expr, err := stringlang.Parse(content)
-		if err != nil {
-			panic(err)
-		}
+	var printSource bool
+	flag.BoolVar(&printSource, "print", false, "Print program source")
 
-		opt := optimizer.Normalize(expr.(ast.Program))
-		fmt.Println(opt)
-		return
-	}
-	if len(os.Args) == 1 {
+	var graphvizFile string
+	flag.StringVar(&graphvizFile, "graphviz", "", "Write CFG of program as .dot file to argument")
+
+	flag.Parse()
+
+	anyFlagSet := false
+	flag.Visit(func(f *flag.Flag) {
+		anyFlagSet = true
+	})
+
+	if !anyFlagSet && len(flag.Args()) == 0 {
 		r := new(Repl)
 		r.Run()
 		return
 	}
 
-	file := os.Args[1]
-	content, err := ioutil.ReadFile(file)
+	if anyFlagSet && len(flag.Args()) == 0 {
+		fmt.Println("Usage: ./stringlang [[--normalize] [--graphviz=file] [--print] <program.stringlang> [..<args>]]")
+	}
+
+	sourceFile := flag.Args()[0]
+	source, err := ioutil.ReadFile(sourceFile)
 	if err != nil {
 		panic(err)
 	}
 
-	expr, err := stringlang.Parse(content)
+	expr, err := stringlang.Parse(source)
 	if err != nil {
 		panic(err)
 	}
 
-	result, err := evalOrTimeout(exampleContext(true), expr, time.Second*30)
+	program := expr.(ast.Program)
+
+	if normalize {
+		program = optimizer.Normalize(program)
+	}
+
+	if graphvizFile != "" {
+		g, fgs := cfg.New(program)
+		graph := cfg.GraphViz(g, fgs)
+
+		output := graph.String()
+
+		err = ioutil.WriteFile(graphvizFile, []byte(output), 0666)
+		if err != nil {
+			panic(err)
+		}
+	}
+
+	if printSource {
+		fmt.Println(program.String())
+		return
+	}
+
+	result, err := evalOrTimeout(exampleContext(true), program, time.Second*30)
 	if err != nil {
 		panic(err)
 	}
