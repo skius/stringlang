@@ -1,29 +1,15 @@
-package main
+package stringlang
 
 import (
 	"errors"
 	"flag"
 	"fmt"
-	"github.com/skius/stringlang"
 	"math/rand"
 	"strconv"
-	"strings"
 	"time"
 )
 
-func genSpaces(i int) string {
-	s := ""
-	for j := 0; j < i; j++ {
-		s += " "
-	}
-	return s
-}
-
-func isCmd(s, cmd string) bool {
-	return strings.HasSuffix(s, cmd+";;")
-}
-
-func evalOrTimeout(ctx *stringlang.Context, expr stringlang.Expr, timeout time.Duration) (string, error) {
+func EvalOrTimeout(ctx *Context, expr Expr, timeout time.Duration) (string, error) {
 	exit := ctx.GetExitChannel()
 
 	resultChan := make(chan string)
@@ -49,7 +35,7 @@ func evalOrTimeout(ctx *stringlang.Context, expr stringlang.Expr, timeout time.D
 	return result, nil
 }
 
-func exampleContext(limitStack bool) *stringlang.Context {
+func ExampleContext(limitStack bool) *Context {
 	rand.Seed(time.Now().UnixNano())
 	funcs := map[string]func([]string) string{
 		"random": func(args []string) string {
@@ -72,7 +58,7 @@ func exampleContext(limitStack bool) *stringlang.Context {
 	args := make([]string, len(flag.Args()))
 	copy(args, flag.Args())
 
-	ctx := stringlang.NewContext(args, funcs)
+	ctx := NewContext(args, funcs)
 	// Add special eval function, needs reference to ctx to work
 	// Modifies context, i.e. eval adds support for unhygienic macros
 	// Only works if ctx gets reused, like what REPL is doing
@@ -82,7 +68,7 @@ func exampleContext(limitStack bool) *stringlang.Context {
 			return ""
 		}
 		src := args[0]
-		expr, err := stringlang.Parse([]byte(src))
+		expr, err := Parse([]byte(src))
 		if err != nil {
 			return ""
 		}

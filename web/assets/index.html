@@ -2,17 +2,11 @@
     <head>
         <meta charset="utf-8"/>
         <script src="wasm_exec.js"></script>
-        <script>
-            const go = new Go();
-            WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
-                go.run(result.instance);
-            });
-        </script>
     </head>
     <body>
+        <pre id="result"></pre>
         <input id="in">
         <input type="button" id="btn" onclick="readin()" value="Run">
-        <pre id="result"></pre>
 
         <script>
             document.getElementById("in").addEventListener("keydown", function(event) {
@@ -22,14 +16,22 @@
                 }
             })
 
+            function write(str) {
+                document.getElementById("result").innerText += "\n" + str;
+            }
+
             function readin() {
                 let inp = document.getElementById("in");
                 console.log(inp.value);
 
-                let res = stringlang(inp.value);
+                SLInput(inp.value);
                 inp.value = ""
-                document.getElementById("result").innerText = res;
             }
+
+            const go = new Go();
+            WebAssembly.instantiateStreaming(fetch("main.wasm"), go.importObject).then((result) => {
+                go.run(result.instance);
+            });
         </script>
     </body>
 </html>

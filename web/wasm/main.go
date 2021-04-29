@@ -2,32 +2,27 @@ package main
 
 import (
 	"fmt"
-	"github.com/skius/stringlang"
+	"github.com/skius/stringlang/cmd/stringlang/repl"
 	"syscall/js"
 )
 
-var ctx *stringlang.Context
-
-func Eval(s string) string {
-	// TODO: Extract the repl from cmd/stringlang into a separate package and use it here
-	expr, err := stringlang.Parse([]byte(s))
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	res := expr.Eval(ctx)
-
-	return string(res)
+type wasm struct {
+	inChan chan<- string
 }
 
-func wrapper() js.Func {
+// Receives input from wasm and forwards it to the JSTerminal
+func (w *wasm) input(s string) {
+	w.inChan <- s
+}
+
+func wrapperInput(w *wasm) js.Func {
 	jsonFunc := js.FuncOf(func(this js.Value, args []js.Value) interface{} {
 		if len(args) != 1 {
 			return "Invalid no of arguments passed"
 		}
 		input := args[0].String()
-		res := Eval(input)
-		return res
+		w.input(input)
+		return nil
 	})
 	return jsonFunc
 }
@@ -35,8 +30,16 @@ func wrapper() js.Func {
 func main() {
 	fmt.Println("Running!")
 
-	ctx = stringlang.NewContext([]string{}, map[string]func([]string) string{})
+	w := new(wasm)
+	inCh := make(chan string, 1)
+	w.inChan = inCh
 
-	js.Global().Set("stringlang", wrapper())
+	js.Global().Set("SLInput", wrapperInput(w))
+
+	t := NewJSTerminal(inCh)
+	r := repl.Init(t)
+
+	r.Run()
+
 	<-make(chan bool)
 }

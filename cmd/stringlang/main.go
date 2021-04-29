@@ -6,6 +6,7 @@ import (
 	"github.com/skius/stringlang"
 	"github.com/skius/stringlang/ast"
 	"github.com/skius/stringlang/cfg"
+	"github.com/skius/stringlang/cmd/stringlang/repl"
 	"github.com/skius/stringlang/optimizer"
 	"io/ioutil"
 	"time"
@@ -29,7 +30,8 @@ func main() {
 	})
 
 	if !anyFlagSet && len(flag.Args()) == 0 {
-		r := new(Repl)
+		t := repl.DefaultTerminal()
+		r := repl.Init(t)
 		r.Run()
 		return
 	}
@@ -72,7 +74,7 @@ func main() {
 		return
 	}
 
-	result, err := evalOrTimeout(exampleContext(true), program, time.Second*30)
+	result, err := stringlang.EvalOrTimeout(stringlang.ExampleContext(true), program, time.Second*30)
 	if err != nil {
 		panic(err)
 	}

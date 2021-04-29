@@ -1,4 +1,4 @@
-package main
+package repl
 
 import (
 	"bufio"
@@ -35,7 +35,7 @@ type Terminal interface {
 	ResetColor() string
 }
 
-func initTerminal() Terminal {
+func DefaultTerminal() Terminal {
 	if runtime.GOOS == "windows" {
 		t := new(SimpleTerminal)
 		t.Init(bufio.NewReader(os.Stdin))

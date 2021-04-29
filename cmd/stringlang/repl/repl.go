@@ -1,4 +1,4 @@
-package main
+package repl
 
 import (
 	"github.com/skius/stringlang"
@@ -17,12 +17,14 @@ type Repl struct {
 	T            Terminal
 }
 
-func (r *Repl) Init(t Terminal) {
-	r.Context = exampleContext(false)
+func Init(t Terminal) *Repl {
+	r := new(Repl)
+	r.Context = stringlang.ExampleContext(false)
 	r.UserFuncs = make([]ast.FuncDecl, 0)
 	r.IndentLevel = 0
 	r.PartialParse = ""
 	r.T = t
+	return r
 }
 
 func (r *Repl) PrintWelcome() {
@@ -40,7 +42,7 @@ func (r *Repl) ResetPartial() {
 func (r *Repl) FullReset() {
 	r.T.PrintLn("Resetting REPL... Reset!")
 	r.UserFuncs = []ast.FuncDecl{}
-	r.Context = exampleContext(false)
+	r.Context = stringlang.ExampleContext(false)
 	r.ResetPartial()
 }
 
@@ -115,10 +117,8 @@ func (r *Repl) ReadExpr() (expr stringlang.Expr, reset bool, quit bool) {
 }
 
 func (r *Repl) Run() {
-	t := initTerminal()
+	t := r.T
 	defer t.Cleanup()
-
-	r.Init(t)
 	r.PrintWelcome()
 
 	for {
@@ -143,7 +143,7 @@ func (r *Repl) Run() {
 		}
 
 		// Eval by reusing context, so we store previous computations
-		result, err := evalOrTimeout(r.Context, prog, time.Second*5)
+		result, err := stringlang.EvalOrTimeout(r.Context, prog, time.Second*5)
 		if err != nil {
 			t.PrintLn("There was an error running your program: ", err)
 			continue
