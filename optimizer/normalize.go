@@ -2,11 +2,12 @@ package optimizer
 
 import (
 	. "github.com/skius/stringlang/ast"
+	"strconv"
 )
 
 type normalizer struct {
-	names    map[string]struct{} // Used variables
-	lastName string              // last generated name
+	names map[string]struct{} // Used variables
+	last  int                 // last generated temp
 }
 
 // Normalize returns an equivalent program, but with at most one level of expression nesting
@@ -87,7 +88,7 @@ func (n *normalizer) compileStmt(_e Expr) (res []Expr) {
 		res = append(res, codeB...)
 		res = append(res, NotEquals{A: locA, B: locB})
 	case IfElse: // TODO: currently short-circuiting is broken
-		codeCond, locCond := n.compileExpr(e.Cond, 1)
+		codeCond, locCond := n.compileExpr(e.Cond, 0)
 		res = append(res, codeCond...)
 
 		newIfElse := IfElse{
@@ -98,7 +99,7 @@ func (n *normalizer) compileStmt(_e Expr) (res []Expr) {
 		res = append(res, newIfElse)
 	case While: // TODO: this is a tricky one, I believe...
 		// Need to put excess condition code _before_ loop but also _append to the end_ of the body to keep semantics
-		codeCond, locCond := n.compileExpr(e.Cond, 1)
+		codeCond, locCond := n.compileExpr(e.Cond, 0)
 		res = append(res, codeCond...)
 
 		newWhile := While{
@@ -273,18 +274,18 @@ func (n *normalizer) compileExpr(_e Expr, maxDepth int) (code []Expr, loc Expr) 
 
 func (n *normalizer) reset() {
 	n.names = make(map[string]struct{})
-	n.lastName = "a"
+	n.last = 1
 }
 
 func (n *normalizer) genName() string {
-	name := n.lastName
-	_, ok := n.names["__"+name]
-	for ; ok; _, ok = n.names["__"+name] {
-		name = succ(name)
+	lastNum := strconv.Itoa(n.last)
+	_, ok := n.names["__temp"+lastNum]
+	for ; ok; _, ok = n.names["__temp"+lastNum] {
+		lastNum = strconv.Itoa(n.last)
+		n.last++
 	}
-	n.names["__"+name] = struct{}{}
-	n.lastName = name
-	return "__" + name
+	n.names["__temp"+lastNum] = struct{}{}
+	return "__temp" + lastNum
 }
 
 func succ(s string) string {
