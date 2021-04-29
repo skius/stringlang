@@ -1,7 +1,7 @@
 package ast
 
 import (
-	"github.com/skius/stringlang/token"
+	"github.com/skius/stringlang/internal/frontend/token"
 )
 
 func CheckSize(m map[Var]Val) (total int64) {

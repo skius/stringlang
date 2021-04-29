@@ -5,7 +5,7 @@ package lexer
 import (
 	"fmt"
 
-	"github.com/skius/stringlang/token"
+	"github.com/skius/stringlang/internal/frontend/token"
 )
 
 type ActionTable [NumStates]ActionRow

@@ -3,8 +3,8 @@ package stringlang
 import (
 	"errors"
 	"github.com/skius/stringlang/ast"
-	"github.com/skius/stringlang/lexer"
-	"github.com/skius/stringlang/parser"
+	"github.com/skius/stringlang/internal/frontend/lexer"
+	"github.com/skius/stringlang/internal/frontend/parser"
 )
 
 type Expr = ast.Expr

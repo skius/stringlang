@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"unicode/utf8"
 
-	"github.com/skius/stringlang/token"
+	"github.com/skius/stringlang/internal/frontend/token"
 )
 
 const (

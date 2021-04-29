@@ -6,8 +6,8 @@ import (
 	"fmt"
 	"strings"
 
-	parseError "github.com/skius/stringlang/errors"
-	"github.com/skius/stringlang/token"
+	parseError "github.com/skius/stringlang/internal/frontend/errors"
+	"github.com/skius/stringlang/internal/frontend/token"
 )
 
 const (

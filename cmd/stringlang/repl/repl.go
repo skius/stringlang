@@ -3,8 +3,8 @@ package repl
 import (
 	"github.com/skius/stringlang"
 	"github.com/skius/stringlang/ast"
-	"github.com/skius/stringlang/errors"
-	"github.com/skius/stringlang/token"
+	"github.com/skius/stringlang/internal/frontend/errors"
+	"github.com/skius/stringlang/internal/frontend/token"
 	"strings"
 	"time"
 )

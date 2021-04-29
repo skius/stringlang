@@ -8,7 +8,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/skius/stringlang/token"
+	"github.com/skius/stringlang/internal/frontend/token"
 )
 
 type ErrorSymbol interface {
