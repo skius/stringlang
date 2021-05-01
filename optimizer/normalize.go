@@ -248,10 +248,14 @@ func (n *normalizer) compileExpr(_e Expr, maxDepth int) (code []Expr, loc Expr) 
 		newBody := make(Block, len(body))
 		copy(newBody, body)
 		lastBody := len(body) - 1
-		newBody[lastBody] = Assn{V: v, E: newBody[lastBody]}
+		newBody[lastBody] = Assn{V: v, E: body[lastBody]}
+
+		// Because the v might not be initialized if the while loop never executes, we need to initialize it before the while loop
+		init := Assn{V: v, E: Val("")}
+		code = []Expr{init}
 
 		loc = v
-		code = n.compileStmt(While{Cond: e.Cond, Body: newBody})
+		code = append(code, n.compileStmt(While{Cond: e.Cond, Body: newBody})...)
 	case Call:
 		if maxDepth == 0 {
 			v := Var(n.genName())
