@@ -45,9 +45,12 @@ func Compute(graph *cfg.CFG) (seLiveIn, seLiveOut map[int]util.Set) {
 		if val, ok := expr.(ast.Assn); ok {
 			// Same as for liveness, if we define a variable it will not be side-effect-live before it's defined
 			kill = util.SetFrom(string(val.V))
-			// Additionally however, the variables used to define this side-effect-live variable are now
-			// side-effect-live
-			gen = ast.UsedVars([]ast.Expr{val.E})
+
+			if set.Contains(string(val.V)) {
+				// Additionally however, the variables used to define side-effect-live variables are now
+				// side-effect-live
+				gen = ast.UsedVars([]ast.Expr{val.E})
+			}
 		}
 
 		if val, ok := expr.(ast.Call); ok {
