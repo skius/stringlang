@@ -1,5 +1,8 @@
 github.com/awalterschulze/gographviz v2.0.3+incompatible h1:9sVEXJBJLwGX7EQVhLm2elIKCm7P2YHFC8v6096G09E=
 github.com/awalterschulze/gographviz v2.0.3+incompatible/go.mod h1:GEV5wmg4YquNw7v1kkyoX9etIk8yVmXj+AkDHuuETHs=
+github.com/skius/dataflowanalysis v0.0.0-20210429150840-b53e10b16a06 h1:PWMtZgz/lqw7SdIIfTkHqOssLcvXz0EXz9lmWIAeCok=
+github.com/skius/dataflowanalysis v0.0.0-20210429150840-b53e10b16a06/go.mod h1:atl5Dub/SYVPvGLUtNDBV7dwbLB8pcvPsqe7+UpOero=
+github.com/skius/stringlang v0.4.1-0.20210428173909-210ecc853c3c/go.mod h1:8ZFAp4orA5qe/aYTDbZDepvgYRe4bBz1NQOkHYQcPUY=
 golang.org/x/sys v0.0.0-20201119102817-f84b799fce68 h1:nxC68pudNYkKU6jWhgrqdreuFiOQWj1Fs7T3VrH4Pjw=
 golang.org/x/sys v0.0.0-20201119102817-f84b799fce68/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
 golang.org/x/term v0.0.0-20210406210042-72f3dc4e9b72 h1:VqE9gduFZ4dbR7XoL77lHFp0/DyDUBKSXK7CMFkVcV0=

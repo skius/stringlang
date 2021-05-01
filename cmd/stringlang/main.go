@@ -8,6 +8,9 @@ import (
 	"github.com/skius/stringlang/cfg"
 	"github.com/skius/stringlang/cmd/stringlang/repl"
 	"github.com/skius/stringlang/optimizer"
+	"github.com/skius/stringlang/optimizer/analysis/liveness"
+	"github.com/skius/stringlang/optimizer/analysis/sideeffect"
+	"github.com/skius/stringlang/optimizer/analysis/util"
 	"io/ioutil"
 	"time"
 )
@@ -21,6 +24,12 @@ func main() {
 
 	var graphvizFile string
 	flag.StringVar(&graphvizFile, "graphviz", "", "Write CFG of program as .dot file to argument")
+
+	var sideffectAnalysis bool
+	flag.BoolVar(&sideffectAnalysis, "sideeffect", false, "Print results of side-effect analysis [forces --normalize]")
+
+	var livenessAnalysis bool
+	flag.BoolVar(&livenessAnalysis, "liveness", false, "Print results of liveness analysis [forces --normalize]")
 
 	flag.Parse()
 
@@ -38,6 +47,7 @@ func main() {
 
 	if anyFlagSet && len(flag.Args()) == 0 {
 		fmt.Println("Usage: ./stringlang [[--normalize] [--graphviz=file] [--print] <program.stringlang> [..<args>]]")
+		return
 	}
 
 	sourceFile := flag.Args()[0]
@@ -52,6 +62,35 @@ func main() {
 	}
 
 	program := expr.(ast.Program)
+
+	if sideffectAnalysis {
+		// Forces normalize
+		normalize = false
+		program = optimizer.Normalize(program)
+
+		fmt.Println("Side-effect Analysis:")
+		// TODO memoize normalization results, graphs etc using functions
+		g, _ := cfg.New(program)
+		in, out := sideeffect.Compute(g)
+		str := util.PrettyPrintFlows(g, in, out)
+		fmt.Println(str)
+		fmt.Println()
+		fmt.Println()
+	}
+
+	if livenessAnalysis {
+		// Forces normalize
+		normalize = false
+		program = optimizer.Normalize(program)
+
+		fmt.Println("Liveness Analysis:")
+		g, _ := cfg.New(program)
+		in, out := liveness.Compute(g)
+		str := util.PrettyPrintFlows(g, in, out)
+		fmt.Println(str)
+		fmt.Println()
+		fmt.Println()
+	}
 
 	if normalize {
 		program = optimizer.Normalize(program)

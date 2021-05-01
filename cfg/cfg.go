@@ -14,6 +14,7 @@ type Node struct {
 
 type CFG struct {
 	Entry *Node
+	Exits []*Node
 }
 
 type counter struct {
@@ -28,7 +29,7 @@ func New(prog ast.Program) (*CFG, map[string]*CFG) {
 	// Block is non-empty, can do this
 	// TODO: ugly
 	cfg.Entry = buildNode(prog.Code[0], ctr)
-	fillBlock(cfg.Entry, prog.Code[1:], ctr, false)
+	cfg.Exits = fillBlock(cfg.Entry, prog.Code[1:], ctr, false)
 
 	fillPreds(cfg)
 
@@ -39,7 +40,7 @@ func New(prog ast.Program) (*CFG, map[string]*CFG) {
 	for _, fd := range prog.Funcs {
 		funcCfg := new(CFG)
 		funcCfg.Entry = buildNode(fd.Code[0], ctr)
-		fillBlock(funcCfg.Entry, fd.Code[1:], ctr, false)
+		funcCfg.Exits = fillBlock(funcCfg.Entry, fd.Code[1:], ctr, false)
 		fillPreds(funcCfg)
 		cfgFuncs[fd.Identifier] = funcCfg
 	}
