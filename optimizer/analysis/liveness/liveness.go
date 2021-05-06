@@ -27,7 +27,7 @@ func Compute(graph *cfg.CFG) (liveIn, liveOut map[int]util.Set) {
 		node := nodeF.(*util.NodePI)
 		expr := node.Get().(ast.Expr)
 
-		gen := util.Set(ast.UsedVars([]ast.Expr{expr}))
+		gen := util.Set(ast.UsedVars(expr))
 		kill := make(util.Set)
 
 		if val, ok := expr.(ast.Assn); ok {

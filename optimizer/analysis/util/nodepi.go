@@ -11,6 +11,10 @@ type NodePI struct {
 	inner *cfg.Node
 }
 
+func (n *NodePI) CFGNode() *cfg.Node {
+	return n.inner
+}
+
 func (n *NodePI) Label() int {
 	return n.inner.Label
 }

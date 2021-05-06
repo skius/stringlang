@@ -36,28 +36,33 @@ func Compute(graph *cfg.CFG) (seLiveIn, seLiveOut map[int]util.Set) {
 		if _, ok := exitLabels[node.Label()]; ok {
 			// Current node is n exit node, i.e. a return value. All UsedVars are therefore used in for side-effects
 			// Additionally we don't have any useful incoming facts, hence we can just return
-			return util.Set(ast.UsedVars([]ast.Expr{expr}))
+			return util.Set(ast.UsedVars(expr))
 		}
 
 		gen := make(util.Set)
-		kill := make(util.Set)
+
+		// Same as for liveness, if we define a variable it will not be side-effect-live before it's defined
+		kill := util.Set(ast.DefinedVars(expr))
 
 		if val, ok := expr.(ast.Assn); ok {
-			// Same as for liveness, if we define a variable it will not be side-effect-live before it's defined
-			kill = util.SetFrom(string(val.V))
-
 			if set.Contains(string(val.V)) {
-				// Additionally however, the variables used to define side-effect-live variables are now
-				// side-effect-live
-				gen = ast.UsedVars([]ast.Expr{val.E})
+				// The variables used to define side-effect-live variables are now side-effect-live
+				gen = ast.UsedVars(val.E)
 			}
 		}
 
 		if val, ok := expr.(ast.Call); ok {
 			// A call may contain side-effects, hence all variables used as arguments are side-effect-live
 			for _, arg := range val.Args {
-				gen = gen.Union(ast.UsedVars([]ast.Expr{arg}))
+				gen = gen.Union(ast.UsedVars(arg))
 			}
+		}
+
+		cfgNode := node.CFGNode()
+		if cfgNode.IsBranch() {
+			// Because a branch's Succs might have side-effects, we must over-approximate and say all branch's UsedVars
+			// are side-effect-live
+			gen = gen.Union(ast.UsedVars(expr))
 		}
 
 		// inFlow = gen(node) \union (outFlow \except kill(node))

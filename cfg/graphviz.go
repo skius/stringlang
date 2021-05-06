@@ -29,8 +29,8 @@ func GraphViz(cfg *CFG, cfgFuncs map[string]*CFG) *gographviz.Graph {
 func buildGraph(graph *gographviz.Graph, cfg *CFG, parentGraph string) {
 	cfg.Visit(func(node *Node) {
 		currLabel := strconv.Itoa(node.Label)
-		exprLabel := strconv.Quote(node.Expr.String())
-		err := graph.AddNode(parentGraph, currLabel, map[string]string{"label": exprLabel})
+		nodeLabel := strconv.Quote(node.String())
+		err := graph.AddNode(parentGraph, currLabel, map[string]string{"label": nodeLabel})
 		if err != nil {
 			panic(err)
 		}

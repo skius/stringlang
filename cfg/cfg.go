@@ -1,6 +1,10 @@
 package cfg
 
-import "github.com/skius/stringlang/ast"
+import (
+	"fmt"
+	"github.com/skius/stringlang/ast"
+	"strconv"
+)
 
 type Node struct {
 	SuccNotTaken  *Node
@@ -10,6 +14,122 @@ type Node struct {
 	FuncSucc      *Node // TODO: Fill these
 	Label         int
 	Expr          ast.Expr
+	Type		  string
+}
+
+func (n *Node) IsIf() bool {
+	return n.Type == "if"
+}
+
+func (n *Node) IsWhile() bool {
+	return n.Type == "while"
+}
+
+func (n *Node) IsSentinel() bool {
+	return n.Expr == nil
+}
+
+func (n *Node) IsBranch() bool {
+	return n.SuccTaken != nil
+}
+
+func (n *Node) String() string {
+	if n.IsSentinel() {
+		return "<sentinel>"
+	}
+	lbl := strconv.Itoa(n.Label) + ": "
+	if n.Type != "" {
+		return lbl + n.Type + " (" + n.Expr.String() + ")"
+	}
+	return lbl + n.Expr.String()
+}
+
+// Remove removes n from the CFG by updating its preds and succs
+func (n *Node) Remove() {
+	if n.IsSentinel() {
+		panic("Trying to remove sentinel from CFG")
+	}
+	if n.IsWhile() {
+		panic("Trying to remove While from CFG")
+	}
+	if n.SuccNotTaken == nil {
+		panic("Trying to remove exit node")
+	}
+
+	fmt.Println("Removing, ", *n)
+
+
+
+	if n.SuccTaken != nil && n.SuccTaken.Label != n.SuccNotTaken.Label {
+		panic("Removing branch with different nottaken/taken branches")
+	}
+
+	predsNT := n.PredsNotTaken
+	predsT := n.PredsTaken
+
+	succPredsNT := make([]*Node, 0)
+	succPredsT := make([]*Node, 0)
+
+	for _, pred := range n.SuccNotTaken.PredsNotTaken {
+		if pred.Label != n.Label {
+			succPredsNT = append(succPredsNT, pred)
+		}
+	}
+	succPredsNT = append(succPredsNT, predsNT...)
+
+	for _, pred := range n.SuccNotTaken.PredsTaken {
+		if pred.Label != n.Label {
+			succPredsNT = append(succPredsNT, pred)
+		}
+	}
+	succPredsT = append(succPredsT, predsT...)
+
+	n.SuccNotTaken.PredsNotTaken = predsNT
+	n.SuccNotTaken.PredsTaken = predsT
+
+	for _, predNT := range predsNT {
+		predNT.SuccNotTaken = n.SuccNotTaken
+	}
+
+	for _, predT := range predsT {
+		predT.SuccTaken = n.SuccNotTaken
+	}
+
+
+
+
+
+
+	//predsNT := n.PredsNotTaken
+	//predsT := n.PredsTaken
+	//
+	//// SuccTaken will be removed as well, because it won't be reachable anymore
+	//// But we'll do this in a later pass where we compute reachability using just forward edges
+	//
+	//succ := n.SuccNotTaken
+	//
+	//succPredsNTNew := make([]*Node, 0, len(succ.PredsNotTaken) + len(predsNT))
+	//
+	//for _, p := range succ.PredsNotTaken {
+	//	if p == n {
+	//		continue
+	//	}
+	//	succPredsNTNew = append(succPredsNTNew, p)
+	//}
+	//
+	//succ.PredsNotTaken = succPredsNTNew
+	//
+	//for _, predNT := range predsNT {
+	//	predNT.SuccNotTaken = succ
+	//	succ.PredsNotTaken = append(succ.PredsNotTaken, predNT)
+	//}
+	//
+	//for _, predT := range predsT {
+	//	predT.SuccTaken = succ
+	//	succ.PredsTaken = append(succ.PredsTaken, predT)
+	//}
+
+	// There shouldn't be forward references to n around anymore now
 }
 
 type CFG struct {
@@ -21,26 +141,55 @@ type counter struct {
 	curr int
 }
 
+// NewFromBlock is useful if we do local analysis of the program
+func NewFromBlock(b ast.Block) *CFG {
+	cfg := new(CFG)
+	ctr := new(counter)
+	ctr.curr = -1
+
+	sentinel := new(Node)
+	sentinel.Label = ctr.incAndGet()
+	cfg.Entry = sentinel
+	exits := fillBlock(cfg.Entry, b, ctr, false)
+	cfg.Exits = exits
+
+	fillPreds(cfg)
+	return cfg
+}
+
 // New returns the CFG of the top-level expressions and a map of FuncDecls to CFGs
 func New(prog ast.Program) (*CFG, map[string]*CFG) {
 	cfg := new(CFG)
 	ctr := new(counter)
+	ctr.curr = -1 // to start our labelling at 0
 
-	// Block is non-empty, can do this
-	// TODO: ugly
-	cfg.Entry = buildNode(prog.Code[0], ctr)
-	cfg.Exits = fillBlock(cfg.Entry, prog.Code[1:], ctr, false)
+	sentinel := new(Node)
+	sentinel.Label = ctr.incAndGet()
+	cfg.Entry = sentinel
+	exits := fillBlock(cfg.Entry, prog.Code, ctr, false)
+
+	//sentinelExits := make([]*Node, 0, len(exits))
+	//for _, exit := range exits {
+	//	sentinelExit := new(Node)
+	//	sentinelExit.Label = ctr.incAndGet()
+	//	exit.SuccNotTaken = sentinelExit
+	//	sentinelExit.PredsNotTaken = []*Node{exit}
+	//	sentinelExits = append(sentinelExits, sentinelExit)
+	//}
+	cfg.Exits = exits
 
 	fillPreds(cfg)
 
 	cfgFuncs := make(map[string]*CFG)
 
 	// Reuse ctr so we have globally unique labels
-	// (will cause problems when if I implement separate compilation units)
+	// (will cause problems if I implement separate compilation units)
 	for _, fd := range prog.Funcs {
 		funcCfg := new(CFG)
-		funcCfg.Entry = buildNode(fd.Code[0], ctr)
-		funcCfg.Exits = fillBlock(funcCfg.Entry, fd.Code[1:], ctr, false)
+		sentinel = new(Node)
+		sentinel.Label = ctr.incAndGet()
+		funcCfg.Entry = sentinel
+		funcCfg.Exits = fillBlock(funcCfg.Entry, fd.Code, ctr, false)
 		fillPreds(funcCfg)
 		cfgFuncs[fd.Identifier] = funcCfg
 	}
@@ -48,13 +197,18 @@ func New(prog ast.Program) (*CFG, map[string]*CFG) {
 	return cfg, cfgFuncs
 }
 
-// Visit runs the given closure over the CFG in DFS preorder
-func (cfg *CFG) Visit(f func(*Node)) {
+func VisitAll(start *Node, f func(*Node)) {
 	visited := make(map[int]bool)
 
 	var dfs func(*Node)
 	dfs = func(curr *Node) {
 		if curr == nil || visited[curr.Label] {
+			return
+		}
+		if curr.IsSentinel() {
+			// Skip it, but consider successors
+			dfs(curr.SuccNotTaken)
+			dfs(curr.SuccTaken)
 			return
 		}
 		visited[curr.Label] = true
@@ -65,7 +219,12 @@ func (cfg *CFG) Visit(f func(*Node)) {
 		dfs(curr.SuccTaken)
 	}
 
-	dfs(cfg.Entry)
+	dfs(start)
+}
+
+// Visit runs the given closure over the CFG in DFS preorder
+func (cfg *CFG) Visit(f func(*Node)) {
+	VisitAll(cfg.Entry, f)
 }
 
 // Fills in backward edges for CFG which already has forward edges
@@ -103,16 +262,21 @@ func fillBlock(entryPred *Node, block ast.Block, ctr *counter, isBranch bool) []
 	}
 
 	for _, expr := range block {
+		//if exprN, ok := expr.(ExprWithNode); ok {
+		//	expr = exprN.Expr
+		//}
 
 		switch e := expr.(type) {
 		case ast.IfElse:
 			condNode := buildNode(e.Cond, ctr)
+			condNode.Type = "if"
 			updateSucc(condNode)
 			tExits := fillBlock(condNode, e.Then.(ast.Block), ctr, true)
 			nExits := fillBlock(condNode, e.Else.(ast.Block), ctr, false)
 			preds = append(tExits, nExits...)
 		case ast.While:
 			condNode := buildNode(e.Cond, ctr)
+			condNode.Type = "while"
 			updateSucc(condNode)
 			bExits := fillBlock(condNode, e.Body.(ast.Block), ctr, true)
 			for _, pred := range bExits {

@@ -11,6 +11,7 @@ import (
 	"github.com/skius/stringlang/optimizer/analysis/liveness"
 	"github.com/skius/stringlang/optimizer/analysis/sideeffect"
 	"github.com/skius/stringlang/optimizer/analysis/util"
+	"github.com/skius/stringlang/optimizer/dead"
 	"io/ioutil"
 	"time"
 )
@@ -30,6 +31,10 @@ func main() {
 
 	var livenessAnalysis bool
 	flag.BoolVar(&livenessAnalysis, "liveness", false, "Print results of liveness analysis [forces --normalize]")
+
+	var doOptimize bool
+	flag.BoolVar(&doOptimize, "optimize", false, "Optimize program [forces --normalize]")
+
 
 	flag.Parse()
 
@@ -90,6 +95,14 @@ func main() {
 		fmt.Println(str)
 		fmt.Println()
 		fmt.Println()
+	}
+
+	if doOptimize {
+		// Forces normalize
+		normalize = false
+		program = optimizer.Normalize(program)
+
+		program = dead.Eliminate(program)
 	}
 
 	if normalize {

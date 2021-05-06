@@ -2,10 +2,8 @@ package util
 
 import (
 	dfa "github.com/skius/dataflowanalysis"
-	"github.com/skius/stringlang/ast"
 	"github.com/skius/stringlang/cfg"
 	"sort"
-	"strconv"
 	"strings"
 )
 
@@ -107,7 +105,7 @@ func PrettyPrintFlows(graph *cfg.CFG, in, out map[int]Set) string {
 		node := idToNode[id]
 		res += "\n"
 		res += in[node.Label()].String() + "\n"
-		res += strconv.Itoa(id) + ": " + node.Get().(ast.Expr).String() + "\n"
+		res += node.(*NodePI).CFGNode().String() + "\n"
 		res += out[node.Label()].String() + "\n"
 	}
 

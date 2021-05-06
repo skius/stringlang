@@ -15,21 +15,29 @@ func BoolOf(v Val) bool {
 	return v != "false" && v != ""
 }
 
+func HasSideEffectsIgnoreAssn(e Expr) bool {
+	return hasSideEffects(e, true)
+}
+
 func HasSideEffects(e Expr) bool {
+	return hasSideEffects(e, false)
+}
+
+func hasSideEffects(e Expr, ignoreAssn bool) bool {
 	switch val := e.(type) {
 	case Program:
 		panic("Program has side effects?")
 	case Block:
 		any := false
 		for _, e := range val {
-			if HasSideEffects(e) {
-				any = true
-				break
-			}
-		}
+		if HasSideEffects(e) {
+		any = true
+		break
+	}
+	}
 		return any
 	case Assn:
-		return true
+		return !ignoreAssn
 	case Var:
 		return false
 	case Val:
@@ -54,9 +62,66 @@ func HasSideEffects(e Expr) bool {
 		return HasSideEffects(val.Source) || HasSideEffects(val.I)
 	}
 	return false
+
 }
 
-func UsedVars(b Block) map[string]struct{} {
+func DefinedVars(b Expr) map[string]struct{} {
+	def := make(map[string]struct{})
+	setDefinedVars(b, def)
+	return def
+}
+
+func setDefinedVars(expr Expr, def map[string]struct{}) {
+	switch val := expr.(type) {
+	case Program:
+		setDefinedVars(val.Code, def)
+	case Block:
+		for _, e := range val {
+			setDefinedVars(e, def)
+		}
+	case Assn:
+		def[string(val.V)] = struct{}{}
+		setDefinedVars(val.E, def)
+	case Var:
+		return
+	case Val:
+		return
+	case Arg:
+		return
+	case And:
+		setDefinedVars(val.A, def)
+		setDefinedVars(val.B, def)
+	case Or:
+		setDefinedVars(val.A, def)
+		setDefinedVars(val.B, def)
+	case NotEquals:
+		setDefinedVars(val.A, def)
+		setDefinedVars(val.B, def)
+	case Equals:
+		setDefinedVars(val.A, def)
+		setDefinedVars(val.B, def)
+	case Concat:
+		setDefinedVars(val.A, def)
+		setDefinedVars(val.B, def)
+	case While:
+		setDefinedVars(val.Cond, def)
+		setDefinedVars(val.Body, def)
+	case IfElse:
+		setDefinedVars(val.Cond, def)
+		setDefinedVars(val.Then, def)
+		setDefinedVars(val.Else, def)
+	case Call:
+		for _, e := range val.Args {
+			setDefinedVars(e, def)
+		}
+	case Index:
+		setDefinedVars(val.Source, def)
+		setDefinedVars(val.I, def)
+	}
+	return
+}
+
+func UsedVars(b Expr) map[string]struct{} {
 	used := make(map[string]struct{})
 	setUsedVars(b, used)
 	return used
