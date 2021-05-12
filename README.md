@@ -51,7 +51,7 @@ See the CLI's [main.go](cmd/stringlang/main.go) for a more advanced example.
 
 Feel free to open Issues and Pull Requests! The language specification and interpreter is by no means final.
 To change the syntax of the language, you'll need to modify `lang.bnf` and also `ast/ast.go` if you need new structures.
-Every time you change `lang.bnf`, you need to run `gocc lang.bnf` to generate the new parser and lexer.
+Every time you change `lang.bnf`, you need to run `gocc -o "./internal/frontend" -p "github.com/skius/internal/frontend" lang.bnf` to generate the new parser and lexer.
 
 Get the parser generator `gocc` used in this project from: [goccmack/gocc](https://github.com/goccmack/gocc)
 
