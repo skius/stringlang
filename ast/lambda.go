@@ -1,6 +1,9 @@
 package ast
 
-import "strings"
+import (
+	"sort"
+	"strings"
+)
 
 type Lambda struct {
 	Params []string
@@ -15,10 +18,22 @@ func NewLambda(ps, b Attrib) (Expr, error) {
 
 func (l Lambda) Eval(c *Context) Val {
 	// Closure by value, copy the value of l's body's free vars in the current context into its body
-	fv := FreeVars(l)
-	for v := range fv {
-		l.Code = append([]Expr{Assn{V: Var(v), E: c.VariableMap[Var(v)]}}, l.Code...)
+	fvMap := FreeVars(l)
+
+	// Need to sort as slice because key traversal in maps is non-deterministic
+	fv := make([]string, 0, len(fvMap))
+	for v := range fvMap {
+		fv = append(fv, v)
 	}
+	sort.Strings(fv)
+
+	captures := make([]Expr, len(fv))
+	for i := range fv {
+		captures[i] = Assn{V: Var(fv[i]), E: c.VariableMap[Var(fv[i])]}
+	}
+	l.Code = append(captures, l.Code...)
+	// We are evaluating the lambda itself, not calling it, hence we must return the string-value of a lambda
+	// For calling, see Lambda.Call
 	return Val(l.String())
 }
 
