@@ -1,6 +1,6 @@
 package ast
 
-func NewContext(args []string, funcs map[string]func([]string) string) *Context {
+func NewContext(args []string, funcs map[string]func([]string) string, parseFn func([]byte) (Expr, error)) *Context {
 	return &Context{
 		Args:            args,
 		VariableMap:     make(map[Var]Val),
@@ -9,6 +9,7 @@ func NewContext(args []string, funcs map[string]func([]string) string) *Context 
 		MaxStackSize:    -1,
 		limitStackSize:  false,
 		exitChannel:     make(chan int, 1),
+		parseFn:         parseFn,
 	}
 }
 
@@ -20,6 +21,7 @@ type Context struct {
 	MaxStackSize    int64
 	exitChannel     chan int
 	limitStackSize  bool
+	parseFn         func([]byte) (Expr, error) /* Ugly hack to avoid illegal circular imports */
 }
 
 func (c *Context) SetMaxStackSize(sz int64) {

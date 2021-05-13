@@ -107,9 +107,16 @@ ExprLeaf
     | string_lit                        << ast.NewVal($0) >>
     | Arg                               << $0, nil >>
     | Var                               << $0, nil >>
-    | Var "(" CallArgs ")"              << ast.NewCall($0, $2) >>
+    | ExprLeaf "(" CallArgs ")"         << ast.NewCall($0, $2) >>
     | "(" Expr ")"                      << $1, nil >>
     | Index                             << $0, nil >>
+    | Lambda                            << $0, nil >>
+    ;
+
+Lambda
+    : "fun" "(" FuncParams ")" "{"
+          Block
+      "}"                               << ast.NewLambda($2, $5) >>
     ;
 
 Index

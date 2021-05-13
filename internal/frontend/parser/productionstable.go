@@ -320,7 +320,7 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `ExprLeaf : Var "(" CallArgs ")"	<< ast.NewCall(X[0], X[2]) >>`,
+		String: `ExprLeaf : ExprLeaf "(" CallArgs ")"	<< ast.NewCall(X[0], X[2]) >>`,
 		Id:         "ExprLeaf",
 		NTType:     14,
 		Index:      30,
@@ -350,10 +350,30 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
+		String: `ExprLeaf : Lambda	<< X[0], nil >>`,
+		Id:         "ExprLeaf",
+		NTType:     14,
+		Index:      33,
+		NumSymbols: 1,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return X[0], nil
+		},
+	},
+	ProdTabEntry{
+		String: `Lambda : "fun" "(" FuncParams ")" "{" Block "}"	<< ast.NewLambda(X[2], X[5]) >>`,
+		Id:         "Lambda",
+		NTType:     15,
+		Index:      34,
+		NumSymbols: 7,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return ast.NewLambda(X[2], X[5])
+		},
+	},
+	ProdTabEntry{
 		String: `Index : ExprLeaf "[" Expr "]"	<< ast.NewIndex(X[0], X[2]) >>`,
 		Id:         "Index",
-		NTType:     15,
-		Index:      33,
+		NTType:     16,
+		Index:      35,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewIndex(X[0], X[2])
@@ -362,8 +382,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Index : ExprLeaf "[" int_lit "]"	<< ast.NewIndexInt(X[0], X[2]) >>`,
 		Id:         "Index",
-		NTType:     15,
-		Index:      34,
+		NTType:     16,
+		Index:      36,
 		NumSymbols: 4,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewIndexInt(X[0], X[2])
@@ -372,8 +392,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CallArgs : Expr CallArgsHelper	<< ast.CallArgsPrepend(X[0], X[1]) >>`,
 		Id:         "CallArgs",
-		NTType:     16,
-		Index:      35,
+		NTType:     17,
+		Index:      37,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.CallArgsPrepend(X[0], X[1])
@@ -382,26 +402,6 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `CallArgs : empty	<< ast.NewCallArgs() >>`,
 		Id:         "CallArgs",
-		NTType:     16,
-		Index:      36,
-		NumSymbols: 0,
-		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
-			return ast.NewCallArgs()
-		},
-	},
-	ProdTabEntry{
-		String: `CallArgsHelper : "," Expr CallArgsHelper	<< ast.CallArgsPrepend(X[1], X[2]) >>`,
-		Id:         "CallArgsHelper",
-		NTType:     17,
-		Index:      37,
-		NumSymbols: 3,
-		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
-			return ast.CallArgsPrepend(X[1], X[2])
-		},
-	},
-	ProdTabEntry{
-		String: `CallArgsHelper : empty	<< ast.NewCallArgs() >>`,
-		Id:         "CallArgsHelper",
 		NTType:     17,
 		Index:      38,
 		NumSymbols: 0,
@@ -410,10 +410,30 @@ var productionsTable = ProdTab{
 		},
 	},
 	ProdTabEntry{
-		String: `Arg : "%" int_lit	<< ast.NewArg(X[1]) >>`,
-		Id:         "Arg",
+		String: `CallArgsHelper : "," Expr CallArgsHelper	<< ast.CallArgsPrepend(X[1], X[2]) >>`,
+		Id:         "CallArgsHelper",
 		NTType:     18,
 		Index:      39,
+		NumSymbols: 3,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return ast.CallArgsPrepend(X[1], X[2])
+		},
+	},
+	ProdTabEntry{
+		String: `CallArgsHelper : empty	<< ast.NewCallArgs() >>`,
+		Id:         "CallArgsHelper",
+		NTType:     18,
+		Index:      40,
+		NumSymbols: 0,
+		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
+			return ast.NewCallArgs()
+		},
+	},
+	ProdTabEntry{
+		String: `Arg : "%" int_lit	<< ast.NewArg(X[1]) >>`,
+		Id:         "Arg",
+		NTType:     19,
+		Index:      41,
 		NumSymbols: 2,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewArg(X[1])
@@ -422,8 +442,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `Var : id	<< ast.NewVar(X[0]) >>`,
 		Id:         "Var",
-		NTType:     19,
-		Index:      40,
+		NTType:     20,
+		Index:      42,
 		NumSymbols: 1,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewVar(X[0])
@@ -432,8 +452,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `IfElse : "if" "(" Expr ")" "{" Block "}" "else" "{" Block "}"	<< ast.NewIfElse(X[2], X[5], X[9]) >>`,
 		Id:         "IfElse",
-		NTType:     20,
-		Index:      41,
+		NTType:     21,
+		Index:      43,
 		NumSymbols: 11,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewIfElse(X[2], X[5], X[9])
@@ -442,8 +462,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `IfElse : "if" "(" Expr ")" "{" Block "}" "else" IfElse	<< ast.NewIfElse(X[2], X[5], X[8]) >>`,
 		Id:         "IfElse",
-		NTType:     20,
-		Index:      42,
+		NTType:     21,
+		Index:      44,
 		NumSymbols: 9,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewIfElse(X[2], X[5], X[8])
@@ -452,8 +472,8 @@ var productionsTable = ProdTab{
 	ProdTabEntry{
 		String: `While : "while" "(" Expr ")" "{" Block "}"	<< ast.NewWhile(X[2], X[5]) >>`,
 		Id:         "While",
-		NTType:     21,
-		Index:      43,
+		NTType:     22,
+		Index:      45,
 		NumSymbols: 7,
 		ReduceFunc: func(X []Attrib, C interface{}) (Attrib, error) {
 			return ast.NewWhile(X[2], X[5])

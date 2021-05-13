@@ -1,0 +1,21 @@
+fun greet(greeting) {
+    fun(punctuation) {
+        id = fun(x) { x + "" };
+        myfun = fun(name) {
+            fun() {
+                greeting + " " + name + id(punctuation)
+            }
+        };
+        greeting = "not the actual greeting anymore"; /* StringLang closures are by-value */
+        myfun
+    }
+}
+
+hi_er = greet("hi");
+excited_hi_er = hi_er("!");
+o_hi = excited_hi_er("mark");
+author = excited_hi_er("skius");
+
+/* Should return "hi mark! and also hi skius!" and the source for the 'author' lambda */
+o_hi() + " and also " + author() + "\n" + author
+

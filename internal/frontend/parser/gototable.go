@@ -2,7 +2,7 @@
 
 package parser
 
-const numNTSymbols = 22
+const numNTSymbols = 23
 
 type (
 	gotoTable [numStates]gotoRow
@@ -26,6 +26,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -50,6 +51,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -74,6 +76,7 @@ var gotoTab = gotoTable{
 		13, // ExprEquals
 		14, // ExprConcat
 		15, // ExprLeaf
+		21, // Lambda
 		20, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -98,6 +101,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -122,6 +126,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -146,6 +151,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -170,6 +176,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -187,20 +194,21 @@ var gotoTab = gotoTable{
 		-1, // FuncParamsHelper
 		-1, // Block
 		-1, // BlockHelper
-		27, // Expr
-		29, // ExprOr
-		30, // ExprAnd
-		31, // ExprNotEquals
-		32, // ExprEquals
-		33, // ExprConcat
-		34, // ExprLeaf
-		39, // Index
+		30, // Expr
+		32, // ExprOr
+		33, // ExprAnd
+		34, // ExprNotEquals
+		35, // ExprEquals
+		36, // ExprConcat
+		37, // ExprLeaf
+		43, // Lambda
+		42, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
-		38, // Arg
-		28, // Var
-		35, // IfElse
-		36, // While
+		41, // Arg
+		31, // Var
+		38, // IfElse
+		39, // While
 	},
 	gotoRow{ // S8
 		-1, // S'
@@ -210,7 +218,7 @@ var gotoTab = gotoTable{
 		-1, // FuncParams
 		-1, // FuncParamsHelper
 		-1, // Block
-		43, // BlockHelper
+		47, // BlockHelper
 		-1, // Expr
 		-1, // ExprOr
 		-1, // ExprAnd
@@ -218,6 +226,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -242,6 +251,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -266,6 +276,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -290,6 +301,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -314,6 +326,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -338,6 +351,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -362,6 +376,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -386,6 +401,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -410,6 +426,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -434,6 +451,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -458,6 +476,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -482,6 +501,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -506,6 +526,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -530,6 +551,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -554,6 +576,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -578,6 +601,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -602,6 +626,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -626,6 +651,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -639,24 +665,25 @@ var gotoTab = gotoTable{
 		-1, // Program
 		-1, // FuncDecls
 		-1, // FuncDecl
-		-1, // FuncParams
+		62, // FuncParams
 		-1, // FuncParamsHelper
 		-1, // Block
 		-1, // BlockHelper
-		57, // Expr
-		29, // ExprOr
-		30, // ExprAnd
-		31, // ExprNotEquals
-		32, // ExprEquals
-		33, // ExprConcat
-		34, // ExprLeaf
-		39, // Index
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
-		38, // Arg
-		28, // Var
-		35, // IfElse
-		36, // While
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S27
 		-1, // S'
@@ -674,6 +701,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -698,6 +726,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -715,20 +744,21 @@ var gotoTab = gotoTable{
 		-1, // FuncParamsHelper
 		-1, // Block
 		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
+		64, // Expr
+		32, // ExprOr
+		33, // ExprAnd
+		34, // ExprNotEquals
+		35, // ExprEquals
+		36, // ExprConcat
+		37, // ExprLeaf
+		43, // Lambda
+		42, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		41, // Arg
+		31, // Var
+		38, // IfElse
+		39, // While
 	},
 	gotoRow{ // S30
 		-1, // S'
@@ -746,6 +776,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -770,6 +801,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -794,6 +826,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -818,6 +851,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -842,6 +876,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -866,6 +901,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -890,6 +926,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -914,6 +951,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -938,6 +976,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -962,6 +1001,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -986,6 +1026,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1010,6 +1051,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1034,6 +1076,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1058,6 +1101,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1075,214 +1119,23 @@ var gotoTab = gotoTable{
 		-1, // FuncParamsHelper
 		-1, // Block
 		-1, // BlockHelper
-		70, // Expr
-		10, // ExprOr
-		11, // ExprAnd
-		12, // ExprNotEquals
-		13, // ExprEquals
-		14, // ExprConcat
-		15, // ExprLeaf
-		20, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		19, // Arg
-		9,  // Var
-		16, // IfElse
-		17, // While
-	},
-	gotoRow{ // S45
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		73, // Expr
-		75, // ExprOr
-		76, // ExprAnd
-		77, // ExprNotEquals
-		78, // ExprEquals
-		79, // ExprConcat
-		80, // ExprLeaf
-		86, // Index
-		85, // CallArgs
-		-1, // CallArgsHelper
-		84, // Arg
-		74, // Var
-		81, // IfElse
-		82, // While
-	},
-	gotoRow{ // S46
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		90, // Expr
-		10, // ExprOr
-		11, // ExprAnd
-		12, // ExprNotEquals
-		13, // ExprEquals
-		14, // ExprConcat
-		15, // ExprLeaf
-		20, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		19, // Arg
-		9,  // Var
-		16, // IfElse
-		17, // While
-	},
-	gotoRow{ // S47
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		93, // ExprAnd
-		12, // ExprNotEquals
-		13, // ExprEquals
-		14, // ExprConcat
-		15, // ExprLeaf
-		20, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		19, // Arg
-		92, // Var
-		16, // IfElse
-		17, // While
-	},
-	gotoRow{ // S48
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		94, // ExprNotEquals
-		13, // ExprEquals
-		14, // ExprConcat
-		15, // ExprLeaf
-		20, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		19, // Arg
-		92, // Var
-		16, // IfElse
-		17, // While
-	},
-	gotoRow{ // S49
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		95, // ExprEquals
-		14, // ExprConcat
-		15, // ExprLeaf
-		20, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		19, // Arg
-		92, // Var
-		16, // IfElse
-		17, // While
-	},
-	gotoRow{ // S50
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		96, // ExprConcat
-		15, // ExprLeaf
-		20, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		19, // Arg
-		92, // Var
-		16, // IfElse
-		17, // While
-	},
-	gotoRow{ // S51
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
 		-1, // Expr
 		-1, // ExprOr
 		-1, // ExprAnd
 		-1, // ExprNotEquals
 		-1, // ExprEquals
 		-1, // ExprConcat
-		97, // ExprLeaf
-		20, // Index
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
-		19, // Arg
-		92, // Var
-		16, // IfElse
-		17, // While
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
-	gotoRow{ // S52
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		100, // Expr
-		102, // ExprOr
-		103, // ExprAnd
-		104, // ExprNotEquals
-		105, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		111, // Arg
-		101, // Var
-		108, // IfElse
-		109, // While
-	},
-	gotoRow{ // S53
+	gotoRow{ // S45
 		-1, // S'
 		-1, // Program
 		-1, // FuncDecls
@@ -1298,6 +1151,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1306,29 +1160,230 @@ var gotoTab = gotoTable{
 		-1, // IfElse
 		-1, // While
 	},
+	gotoRow{ // S46
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S47
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S48
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		78, // Expr
+		10, // ExprOr
+		11, // ExprAnd
+		12, // ExprNotEquals
+		13, // ExprEquals
+		14, // ExprConcat
+		15, // ExprLeaf
+		21, // Lambda
+		20, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		19, // Arg
+		9,  // Var
+		16, // IfElse
+		17, // While
+	},
+	gotoRow{ // S49
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		79, // Expr
+		10, // ExprOr
+		11, // ExprAnd
+		12, // ExprNotEquals
+		13, // ExprEquals
+		14, // ExprConcat
+		15, // ExprLeaf
+		21, // Lambda
+		20, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		19, // Arg
+		9,  // Var
+		16, // IfElse
+		17, // While
+	},
+	gotoRow{ // S50
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		82, // ExprAnd
+		12, // ExprNotEquals
+		13, // ExprEquals
+		14, // ExprConcat
+		15, // ExprLeaf
+		21, // Lambda
+		20, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		19, // Arg
+		81, // Var
+		16, // IfElse
+		17, // While
+	},
+	gotoRow{ // S51
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		83, // ExprNotEquals
+		13, // ExprEquals
+		14, // ExprConcat
+		15, // ExprLeaf
+		21, // Lambda
+		20, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		19, // Arg
+		81, // Var
+		16, // IfElse
+		17, // While
+	},
+	gotoRow{ // S52
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		84, // ExprEquals
+		14, // ExprConcat
+		15, // ExprLeaf
+		21, // Lambda
+		20, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		19, // Arg
+		81, // Var
+		16, // IfElse
+		17, // While
+	},
+	gotoRow{ // S53
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		85, // ExprConcat
+		15, // ExprLeaf
+		21, // Lambda
+		20, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		19, // Arg
+		81, // Var
+		16, // IfElse
+		17, // While
+	},
 	gotoRow{ // S54
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		117, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		86, // ExprLeaf
+		21, // Lambda
+		20, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		19, // Arg
+		81, // Var
+		16, // IfElse
+		17, // While
 	},
 	gotoRow{ // S55
 		-1,  // S'
@@ -1339,44 +1394,46 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		118, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
+		90,  // Expr
+		92,  // ExprOr
+		93,  // ExprAnd
+		94,  // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
+		102, // CallArgs
 		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		101, // Arg
+		91,  // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S56
 		-1,  // S'
 		-1,  // Program
 		-1,  // FuncDecls
 		-1,  // FuncDecl
-		120, // FuncParams
+		-1,  // FuncParams
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
+		111, // Expr
+		113, // ExprOr
+		114, // ExprAnd
+		115, // ExprNotEquals
+		116, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		-1,  // IfElse
-		-1,  // While
+		122, // Arg
+		112, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S57
 		-1, // S'
@@ -1394,6 +1451,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1403,28 +1461,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S58
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		129, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S59
 		-1,  // S'
@@ -1435,147 +1494,28 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		73,  // Expr
-		75,  // ExprOr
-		76,  // ExprAnd
-		77,  // ExprNotEquals
-		78,  // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		122, // CallArgs
+		130, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		84,  // Arg
-		74,  // Var
-		81,  // IfElse
-		82,  // While
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S60
 		-1,  // S'
 		-1,  // Program
 		-1,  // FuncDecls
 		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		123, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
-	},
-	gotoRow{ // S61
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		126, // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		125, // Var
-		35,  // IfElse
-		36,  // While
-	},
-	gotoRow{ // S62
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		127, // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		125, // Var
-		35,  // IfElse
-		36,  // While
-	},
-	gotoRow{ // S63
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		128, // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		125, // Var
-		35,  // IfElse
-		36,  // While
-	},
-	gotoRow{ // S64
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		129, // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		125, // Var
-		35,  // IfElse
-		36,  // While
-	},
-	gotoRow{ // S65
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
+		131, // FuncParams
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
@@ -1585,14 +1525,140 @@ var gotoTab = gotoTable{
 		-1,  // ExprNotEquals
 		-1,  // ExprEquals
 		-1,  // ExprConcat
-		130, // ExprLeaf
-		39,  // Index
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		38,  // Arg
-		125, // Var
-		35,  // IfElse
-		36,  // While
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
+	},
+	gotoRow{ // S61
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		132, // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
+	},
+	gotoRow{ // S62
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S63
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		135, // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
+	},
+	gotoRow{ // S64
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S65
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S66
 		-1,  // S'
@@ -1603,44 +1669,46 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		131, // Expr
-		102, // ExprOr
-		103, // ExprAnd
-		104, // ExprNotEquals
-		105, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
+		137, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		111, // Arg
-		101, // Var
-		108, // IfElse
-		109, // While
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S67
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		140, // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		139, // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S68
 		-1,  // S'
@@ -1651,20 +1719,21 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		133, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		141, // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		41,  // Arg
+		139, // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S69
 		-1,  // S'
@@ -1675,20 +1744,21 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		134, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		142, // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		41,  // Arg
+		139, // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S70
 		-1,  // S'
@@ -1698,45 +1768,47 @@ var gotoTab = gotoTable{
 		-1,  // FuncParams
 		-1,  // FuncParamsHelper
 		-1,  // Block
-		135, // BlockHelper
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		143, // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		139, // Var
+		38,  // IfElse
+		39,  // While
+	},
+	gotoRow{ // S71
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
 		-1,  // Expr
 		-1,  // ExprOr
 		-1,  // ExprAnd
 		-1,  // ExprNotEquals
 		-1,  // ExprEquals
 		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
+		144, // ExprLeaf
+		43,  // Lambda
+		42,  // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		-1,  // IfElse
-		-1,  // While
-	},
-	gotoRow{ // S71
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		41,  // Arg
+		139, // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S72
 		-1,  // S'
@@ -1747,20 +1819,21 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		136, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
+		90,  // Expr
+		92,  // ExprOr
+		93,  // ExprAnd
+		94,  // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
+		145, // CallArgs
 		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		101, // Arg
+		91,  // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S73
 		-1,  // S'
@@ -1771,20 +1844,21 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
+		146, // Expr
+		113, // ExprOr
+		114, // ExprAnd
+		115, // ExprNotEquals
+		116, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
 		-1,  // CallArgs
-		138, // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		-1,  // IfElse
-		-1,  // While
+		-1,  // CallArgsHelper
+		122, // Arg
+		112, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S74
 		-1, // S'
@@ -1802,6 +1876,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1811,52 +1886,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S75
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		148, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S76
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		149, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S77
 		-1, // S'
@@ -1874,6 +1951,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1883,28 +1961,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S78
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		150, // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S79
 		-1, // S'
@@ -1922,6 +2001,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1946,6 +2026,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1970,6 +2051,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -1994,6 +2076,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2018,6 +2101,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2042,6 +2126,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2066,6 +2151,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2090,6 +2176,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2114,6 +2201,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2138,6 +2226,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2147,52 +2236,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S89
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		152, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S90
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		154, // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S91
 		-1, // S'
@@ -2210,6 +2301,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2234,6 +2326,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2258,6 +2351,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2282,6 +2376,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2306,6 +2401,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2330,6 +2426,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2354,6 +2451,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2378,6 +2476,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2387,28 +2486,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S99
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		151, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S100
 		-1, // S'
@@ -2426,6 +2526,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2450,6 +2551,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2474,6 +2576,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2498,6 +2601,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2522,6 +2626,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2546,6 +2651,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2570,6 +2676,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2594,6 +2701,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2618,6 +2726,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2642,6 +2751,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2651,28 +2761,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S110
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		168, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S111
 		-1, // S'
@@ -2690,6 +2801,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2714,6 +2826,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2738,6 +2851,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2762,6 +2876,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2786,6 +2901,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2810,6 +2926,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2834,6 +2951,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2858,6 +2976,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2867,28 +2986,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S119
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		167, // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		-1,  // IfElse
-		-1,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S120
 		-1, // S'
@@ -2906,6 +3026,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2930,6 +3051,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2954,6 +3076,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -2978,6 +3101,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3002,6 +3126,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3026,6 +3151,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3050,6 +3176,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3074,6 +3201,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3098,6 +3226,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3122,6 +3251,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3146,6 +3276,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3170,6 +3301,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3194,6 +3326,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3218,6 +3351,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3242,6 +3376,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3266,6 +3401,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3290,6 +3426,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3299,28 +3436,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S137
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		176, // Expr
-		75,  // ExprOr
-		76,  // ExprAnd
-		77,  // ExprNotEquals
-		78,  // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		74,  // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S138
 		-1, // S'
@@ -3338,6 +3476,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3347,196 +3486,204 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S139
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		73,  // Expr
-		75,  // ExprOr
-		76,  // ExprAnd
-		77,  // ExprNotEquals
-		78,  // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		177, // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		74,  // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S140
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		178, // Expr
-		75,  // ExprOr
-		76,  // ExprAnd
-		77,  // ExprNotEquals
-		78,  // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		74,  // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S141
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		181, // ExprAnd
-		77,  // ExprNotEquals
-		78,  // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		180, // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S142
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		182, // ExprNotEquals
-		78,  // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		180, // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S143
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		183, // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		180, // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S144
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		184, // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		180, // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S145
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		185, // ExprLeaf
-		86,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		180, // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S146
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		186, // Expr
-		102, // ExprOr
-		103, // ExprAnd
-		104, // ExprNotEquals
-		105, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		111, // Arg
-		101, // Var
-		108, // IfElse
-		109, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S147
 		-1, // S'
@@ -3554,6 +3701,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3578,6 +3726,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3587,54 +3736,6 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S149
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		188, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
-	},
-	gotoRow{ // S150
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		189, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
-	},
-	gotoRow{ // S151
 		-1, // S'
 		-1, // Program
 		-1, // FuncDecls
@@ -3650,6 +3751,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3657,6 +3759,56 @@ var gotoTab = gotoTable{
 		-1, // Var
 		-1, // IfElse
 		-1, // While
+	},
+	gotoRow{ // S150
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S151
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		193, // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S152
 		-1, // S'
@@ -3674,6 +3826,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -3691,44 +3844,46 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		73,  // Expr
-		75,  // ExprOr
-		76,  // ExprAnd
-		77,  // ExprNotEquals
-		78,  // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		191, // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		74,  // Var
-		81,  // IfElse
-		82,  // While
-	},
-	gotoRow{ // S154
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		192, // Expr
-		102, // ExprOr
-		103, // ExprAnd
-		104, // ExprNotEquals
-		105, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
+		195, // Expr
+		92,  // ExprOr
+		93,  // ExprAnd
+		94,  // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		111, // Arg
-		101, // Var
-		108, // IfElse
-		109, // While
+		101, // Arg
+		91,  // Var
+		98,  // IfElse
+		99,  // While
+	},
+	gotoRow{ // S154
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S155
 		-1,  // S'
@@ -3739,20 +3894,21 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		195, // ExprAnd
-		104, // ExprNotEquals
-		105, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
+		196, // Expr
+		92,  // ExprOr
+		93,  // ExprAnd
+		94,  // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		111, // Arg
-		194, // Var
-		108, // IfElse
-		109, // While
+		101, // Arg
+		91,  // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S156
 		-1,  // S'
@@ -3765,18 +3921,19 @@ var gotoTab = gotoTable{
 		-1,  // BlockHelper
 		-1,  // Expr
 		-1,  // ExprOr
-		-1,  // ExprAnd
-		196, // ExprNotEquals
-		105, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
+		199, // ExprAnd
+		94,  // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		111, // Arg
-		194, // Var
-		108, // IfElse
-		109, // While
+		101, // Arg
+		198, // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S157
 		-1,  // S'
@@ -3790,17 +3947,18 @@ var gotoTab = gotoTable{
 		-1,  // Expr
 		-1,  // ExprOr
 		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		197, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
+		200, // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		111, // Arg
-		194, // Var
-		108, // IfElse
-		109, // While
+		101, // Arg
+		198, // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S158
 		-1,  // S'
@@ -3815,16 +3973,17 @@ var gotoTab = gotoTable{
 		-1,  // ExprOr
 		-1,  // ExprAnd
 		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		198, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
+		201, // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		111, // Arg
-		194, // Var
-		108, // IfElse
-		109, // While
+		101, // Arg
+		198, // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S159
 		-1,  // S'
@@ -3840,15 +3999,16 @@ var gotoTab = gotoTable{
 		-1,  // ExprAnd
 		-1,  // ExprNotEquals
 		-1,  // ExprEquals
-		-1,  // ExprConcat
-		199, // ExprLeaf
-		112, // Index
+		202, // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		111, // Arg
-		194, // Var
-		108, // IfElse
-		109, // While
+		101, // Arg
+		198, // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S160
 		-1,  // S'
@@ -3859,94 +4019,123 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		200, // Expr
-		102, // ExprOr
-		103, // ExprAnd
-		104, // ExprNotEquals
-		105, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		203, // ExprLeaf
+		104, // Lambda
+		103, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		111, // Arg
-		101, // Var
-		108, // IfElse
-		109, // While
+		101, // Arg
+		198, // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S161
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		90,  // Expr
+		92,  // ExprOr
+		93,  // ExprAnd
+		94,  // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
+		204, // CallArgs
+		-1,  // CallArgsHelper
+		101, // Arg
+		91,  // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S162
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		205, // Expr
+		113, // ExprOr
+		114, // ExprAnd
+		115, // ExprNotEquals
+		116, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		122, // Arg
+		112, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S163
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		202, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S164
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S165
 		-1,  // S'
 		-1,  // Program
 		-1,  // FuncDecls
@@ -3955,92 +4144,71 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		203, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
+		207, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
-	},
-	gotoRow{ // S165
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S166
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		208, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S167
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		209, // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S168
 		-1, // S'
@@ -4058,6 +4226,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4082,6 +4251,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4091,150 +4261,131 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S170
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		211, // Expr
+		113, // ExprOr
+		114, // ExprAnd
+		115, // ExprNotEquals
+		116, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		122, // Arg
+		112, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S171
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		214, // ExprAnd
+		115, // ExprNotEquals
+		116, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		122, // Arg
+		213, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S172
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		215, // ExprNotEquals
+		116, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		122, // Arg
+		213, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S173
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		216, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		122, // Arg
+		213, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S174
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		217, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		122, // Arg
+		213, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S175
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
-	},
-	gotoRow{ // S176
 		-1,  // S'
 		-1,  // Program
 		-1,  // FuncDecls
@@ -4249,38 +4400,65 @@ var gotoTab = gotoTable{
 		-1,  // ExprNotEquals
 		-1,  // ExprEquals
 		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
+		218, // ExprLeaf
+		124, // Lambda
+		123, // Index
 		-1,  // CallArgs
-		210, // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		-1,  // IfElse
-		-1,  // While
+		-1,  // CallArgsHelper
+		122, // Arg
+		213, // Var
+		119, // IfElse
+		120, // While
+	},
+	gotoRow{ // S176
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		90,  // Expr
+		92,  // ExprOr
+		93,  // ExprAnd
+		94,  // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
+		219, // CallArgs
+		-1,  // CallArgsHelper
+		101, // Arg
+		91,  // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S177
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		220, // Expr
+		113, // ExprOr
+		114, // ExprAnd
+		115, // ExprNotEquals
+		116, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		122, // Arg
+		112, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S178
 		-1, // S'
@@ -4298,6 +4476,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4322,6 +4501,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4331,52 +4511,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S180
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		222, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S181
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		223, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S182
 		-1, // S'
@@ -4394,6 +4576,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4418,6 +4601,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4442,6 +4626,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4451,52 +4636,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S185
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		227, // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S186
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		228, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S187
 		-1, // S'
@@ -4514,6 +4701,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4538,6 +4726,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4562,6 +4751,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4586,6 +4776,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4610,6 +4801,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4634,6 +4826,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4658,6 +4851,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4682,6 +4876,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4691,28 +4886,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S195
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		253, // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S196
 		-1, // S'
@@ -4730,6 +4926,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4754,6 +4951,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4778,6 +4976,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4802,6 +5001,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4826,6 +5026,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4850,6 +5051,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4874,6 +5076,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4898,6 +5101,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -4907,148 +5111,154 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S204
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		221, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S205
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		240, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S206
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		241, // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		-1,  // IfElse
-		-1,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S207
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		242, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S208
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		243, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S209
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		244, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S210
 		-1, // S'
@@ -5066,6 +5276,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5090,6 +5301,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5114,6 +5326,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5138,6 +5351,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5162,6 +5376,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5186,6 +5401,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5210,6 +5426,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5234,6 +5451,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5258,6 +5476,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5282,6 +5501,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5306,6 +5526,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5330,6 +5551,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5354,6 +5576,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5363,28 +5586,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S223
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		250, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S224
 		-1,  // S'
@@ -5393,70 +5617,73 @@ var gotoTab = gotoTable{
 		-1,  // FuncDecl
 		-1,  // FuncParams
 		-1,  // FuncParamsHelper
-		-1,  // Block
-		251, // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
+		265, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		-1,  // IfElse
-		-1,  // While
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S225
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		266, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S226
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		267, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S227
 		-1, // S'
@@ -5474,6 +5701,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5498,6 +5726,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5522,6 +5751,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5546,6 +5776,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5555,52 +5786,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S231
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		270, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S232
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		271, // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S233
 		-1, // S'
@@ -5618,6 +5851,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5642,6 +5876,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5666,6 +5901,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5690,6 +5926,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5714,6 +5951,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5738,6 +5976,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5762,6 +6001,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5786,6 +6026,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5810,6 +6051,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5834,6 +6076,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5858,6 +6101,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5882,6 +6126,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -5891,150 +6136,181 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S245
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		268, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S246
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		269, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S247
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		270, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S248
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		271, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S249
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		284, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S250
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		285, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S251
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		286, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S252
 		-1, // S'
 		-1, // Program
 		-1, // FuncDecls
@@ -6050,6 +6326,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6058,221 +6335,205 @@ var gotoTab = gotoTable{
 		-1, // IfElse
 		-1, // While
 	},
-	gotoRow{ // S252
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		274, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
-	},
 	gotoRow{ // S253
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		73,  // Expr
-		75,  // ExprOr
-		76,  // ExprAnd
-		77,  // ExprNotEquals
-		78,  // ExprEquals
-		79,  // ExprConcat
-		80,  // ExprLeaf
-		86,  // Index
-		275, // CallArgs
-		-1,  // CallArgsHelper
-		84,  // Arg
-		74,  // Var
-		81,  // IfElse
-		82,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S254
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		276, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S255
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		279, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		278, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S256
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		280, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		278, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S257
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		281, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		278, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S258
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		282, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		278, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S259
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		283, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		278, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S260
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		284, // Expr
-		102, // ExprOr
-		103, // ExprAnd
-		104, // ExprNotEquals
-		105, // ExprEquals
-		106, // ExprConcat
-		107, // ExprLeaf
-		112, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		111, // Arg
-		101, // Var
-		108, // IfElse
-		109, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S261
 		-1, // S'
@@ -6290,6 +6551,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6299,52 +6561,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S262
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		286, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S263
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		287, // Expr
-		29,  // ExprOr
-		30,  // ExprAnd
-		31,  // ExprNotEquals
-		32,  // ExprEquals
-		33,  // ExprConcat
-		34,  // ExprLeaf
-		39,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		38,  // Arg
-		28,  // Var
-		35,  // IfElse
-		36,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S264
 		-1, // S'
@@ -6362,6 +6626,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6386,6 +6651,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6410,6 +6676,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6434,6 +6701,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6458,6 +6726,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6467,28 +6736,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S269
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		296, // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S270
 		-1, // S'
@@ -6506,6 +6776,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6530,6 +6801,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6547,44 +6819,46 @@ var gotoTab = gotoTable{
 		-1,  // FuncParamsHelper
 		-1,  // Block
 		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
+		298, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		294, // IfElse
-		-1,  // While
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S273
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		299, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S274
 		-1,  // S'
@@ -6594,165 +6868,172 @@ var gotoTab = gotoTable{
 		-1,  // FuncParams
 		-1,  // FuncParamsHelper
 		-1,  // Block
-		295, // BlockHelper
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		302, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		301, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S275
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		303, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		301, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S276
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		304, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		301, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S277
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		305, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		301, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S278
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
 		-1,  // Expr
 		-1,  // ExprOr
 		-1,  // ExprAnd
 		-1,  // ExprNotEquals
 		-1,  // ExprEquals
 		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
+		306, // ExprLeaf
+		245, // Lambda
+		244, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		-1,  // IfElse
-		-1,  // While
-	},
-	gotoRow{ // S275
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
-	},
-	gotoRow{ // S276
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
-	},
-	gotoRow{ // S277
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
-	},
-	gotoRow{ // S278
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		243, // Arg
+		301, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S279
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		90,  // Expr
+		92,  // ExprOr
+		93,  // ExprAnd
+		94,  // ExprNotEquals
+		95,  // ExprEquals
+		96,  // ExprConcat
+		97,  // ExprLeaf
+		104, // Lambda
+		103, // Index
+		307, // CallArgs
+		-1,  // CallArgsHelper
+		101, // Arg
+		91,  // Var
+		98,  // IfElse
+		99,  // While
 	},
 	gotoRow{ // S280
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		308, // Expr
+		113, // ExprOr
+		114, // ExprAnd
+		115, // ExprNotEquals
+		116, // ExprEquals
+		117, // ExprConcat
+		118, // ExprLeaf
+		124, // Lambda
+		123, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		122, // Arg
+		112, // Var
+		119, // IfElse
+		120, // While
 	},
 	gotoRow{ // S281
 		-1, // S'
@@ -6770,6 +7051,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6779,52 +7061,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S282
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		310, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S283
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		311, // Expr
+		32,  // ExprOr
+		33,  // ExprAnd
+		34,  // ExprNotEquals
+		35,  // ExprEquals
+		36,  // ExprConcat
+		37,  // ExprLeaf
+		43,  // Lambda
+		42,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		41,  // Arg
+		31,  // Var
+		38,  // IfElse
+		39,  // While
 	},
 	gotoRow{ // S284
 		-1, // S'
@@ -6842,6 +7126,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6866,6 +7151,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6890,6 +7176,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -6899,28 +7186,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S287
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		315, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S288
 		-1,  // S'
@@ -6929,142 +7217,148 @@ var gotoTab = gotoTable{
 		-1,  // FuncDecl
 		-1,  // FuncParams
 		-1,  // FuncParamsHelper
-		-1,  // Block
+		316, // Block
 		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		302, // IfElse
-		-1,  // While
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
 	},
 	gotoRow{ // S289
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
-	},
-	gotoRow{ // S290
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
-	},
-	gotoRow{ // S291
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
-	},
-	gotoRow{ // S292
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
-	},
-	gotoRow{ // S293
 		-1,  // S'
 		-1,  // Program
 		-1,  // FuncDecls
 		-1,  // FuncDecl
 		-1,  // FuncParams
 		-1,  // FuncParamsHelper
-		305, // Block
+		317, // Block
 		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
 		-1,  // CallArgs
 		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S290
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		318, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S291
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		319, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S292
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		320, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S293
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S294
 		-1, // S'
@@ -7082,6 +7376,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7106,6 +7401,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7130,6 +7426,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7154,6 +7451,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7163,28 +7461,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S298
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		323, // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		-1,  // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S299
 		-1, // S'
@@ -7202,6 +7501,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7226,6 +7526,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7235,28 +7536,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S301
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		308, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S302
 		-1, // S'
@@ -7274,6 +7576,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7283,52 +7586,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S303
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		310, // IfElse
-		-1,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S304
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		312, // IfElse
-		-1,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S305
 		-1, // S'
@@ -7346,6 +7651,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7355,52 +7661,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S306
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		314, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S307
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		315, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S308
 		-1, // S'
@@ -7418,6 +7726,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7427,28 +7736,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S309
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		317, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S310
 		-1, // S'
@@ -7466,6 +7776,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7475,28 +7786,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S311
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		318, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S312
 		-1, // S'
@@ -7514,6 +7826,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7538,6 +7851,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7562,6 +7876,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7586,6 +7901,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7610,6 +7926,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7634,6 +7951,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7658,6 +7976,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7682,6 +8001,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7706,6 +8026,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7715,28 +8036,29 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S321
-		-1, // S'
-		-1, // Program
-		-1, // FuncDecls
-		-1, // FuncDecl
-		-1, // FuncParams
-		-1, // FuncParamsHelper
-		-1, // Block
-		-1, // BlockHelper
-		-1, // Expr
-		-1, // ExprOr
-		-1, // ExprAnd
-		-1, // ExprNotEquals
-		-1, // ExprEquals
-		-1, // ExprConcat
-		-1, // ExprLeaf
-		-1, // Index
-		-1, // CallArgs
-		-1, // CallArgsHelper
-		-1, // Arg
-		-1, // Var
-		-1, // IfElse
-		-1, // While
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		337, // IfElse
+		-1,  // While
 	},
 	gotoRow{ // S322
 		-1, // S'
@@ -7754,6 +8076,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7763,52 +8086,54 @@ var gotoTab = gotoTable{
 		-1, // While
 	},
 	gotoRow{ // S323
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		-1,  // Block
-		-1,  // BlockHelper
-		-1,  // Expr
-		-1,  // ExprOr
-		-1,  // ExprAnd
-		-1,  // ExprNotEquals
-		-1,  // ExprEquals
-		-1,  // ExprConcat
-		-1,  // ExprLeaf
-		-1,  // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		-1,  // Arg
-		-1,  // Var
-		325, // IfElse
-		-1,  // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S324
-		-1,  // S'
-		-1,  // Program
-		-1,  // FuncDecls
-		-1,  // FuncDecl
-		-1,  // FuncParams
-		-1,  // FuncParamsHelper
-		326, // Block
-		-1,  // BlockHelper
-		224, // Expr
-		226, // ExprOr
-		227, // ExprAnd
-		228, // ExprNotEquals
-		229, // ExprEquals
-		230, // ExprConcat
-		231, // ExprLeaf
-		236, // Index
-		-1,  // CallArgs
-		-1,  // CallArgsHelper
-		235, // Arg
-		225, // Var
-		232, // IfElse
-		233, // While
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
 	},
 	gotoRow{ // S325
 		-1, // S'
@@ -7826,6 +8151,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7850,6 +8176,7 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper
@@ -7874,6 +8201,1007 @@ var gotoTab = gotoTable{
 		-1, // ExprEquals
 		-1, // ExprConcat
 		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S328
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S329
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		342, // IfElse
+		-1,  // While
+	},
+	gotoRow{ // S330
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S331
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S332
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S333
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S334
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S335
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S336
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		345, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S337
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S338
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		346, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S339
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		347, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S340
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		348, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S341
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		349, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S342
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S343
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		351, // IfElse
+		-1,  // While
+	},
+	gotoRow{ // S344
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		353, // IfElse
+		-1,  // While
+	},
+	gotoRow{ // S345
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S346
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S347
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S348
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S349
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S350
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		359, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S351
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S352
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		360, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S353
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S354
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S355
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S356
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S357
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S358
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S359
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S360
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S361
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		-1,  // Block
+		-1,  // BlockHelper
+		-1,  // Expr
+		-1,  // ExprOr
+		-1,  // ExprAnd
+		-1,  // ExprNotEquals
+		-1,  // ExprEquals
+		-1,  // ExprConcat
+		-1,  // ExprLeaf
+		-1,  // Lambda
+		-1,  // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		-1,  // Arg
+		-1,  // Var
+		365, // IfElse
+		-1,  // While
+	},
+	gotoRow{ // S362
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S363
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S364
+		-1,  // S'
+		-1,  // Program
+		-1,  // FuncDecls
+		-1,  // FuncDecl
+		-1,  // FuncParams
+		-1,  // FuncParamsHelper
+		366, // Block
+		-1,  // BlockHelper
+		232, // Expr
+		234, // ExprOr
+		235, // ExprAnd
+		236, // ExprNotEquals
+		237, // ExprEquals
+		238, // ExprConcat
+		239, // ExprLeaf
+		245, // Lambda
+		244, // Index
+		-1,  // CallArgs
+		-1,  // CallArgsHelper
+		243, // Arg
+		233, // Var
+		240, // IfElse
+		241, // While
+	},
+	gotoRow{ // S365
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S366
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
+		-1, // Index
+		-1, // CallArgs
+		-1, // CallArgsHelper
+		-1, // Arg
+		-1, // Var
+		-1, // IfElse
+		-1, // While
+	},
+	gotoRow{ // S367
+		-1, // S'
+		-1, // Program
+		-1, // FuncDecls
+		-1, // FuncDecl
+		-1, // FuncParams
+		-1, // FuncParamsHelper
+		-1, // Block
+		-1, // BlockHelper
+		-1, // Expr
+		-1, // ExprOr
+		-1, // ExprAnd
+		-1, // ExprNotEquals
+		-1, // ExprEquals
+		-1, // ExprConcat
+		-1, // ExprLeaf
+		-1, // Lambda
 		-1, // Index
 		-1, // CallArgs
 		-1, // CallArgsHelper

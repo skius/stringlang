@@ -56,6 +56,13 @@ func HasSideEffects(e Expr) bool {
 	return false
 }
 
+func FreeVars(e Expr) map[string]struct{} {
+	// I haven't decided yet what the difference should be to UsedVars
+	used := make(map[string]struct{})
+	setUsedVars(e, used)
+	return used
+}
+
 func UsedVars(b Block) map[string]struct{} {
 	used := make(map[string]struct{})
 	setUsedVars(b, used)
@@ -105,37 +112,26 @@ func setUsedVars(expr Expr, used map[string]struct{}) {
 		for _, e := range val.Args {
 			setUsedVars(e, used)
 		}
+		// Because we allow arbitrary sources for a call, we need to take those into account
+		setUsedVars(val.Fn, used)
 	case Index:
 		setUsedVars(val.Source, used)
 		setUsedVars(val.I, used)
+	case Lambda:
+		innerUsed := UsedVars(val.Code)
+		// Lambda's used vars are "used \union (innerUsed \except params)
+		for _, v := range val.Params {
+			delete(innerUsed, v)
+		}
+		for v := range innerUsed {
+			used[v] = struct{}{}
+		}
 	}
 	return
 }
 
 func attribToString(a Attrib) string {
 	return string(a.(*token.Token).Lit)
-}
-func unescape(s string) string {
-	in := []rune(s)
-	out := make([]rune, 0, len(in))
-	var escape bool
-	for _, r := range in {
-		switch {
-		case escape:
-			switch r {
-			case 'n':
-				out = append(out, '\n')
-			default:
-				out = append(out, r)
-			}
-			escape = false
-		case r == '\\':
-			escape = true
-		default:
-			out = append(out, r)
-		}
-	}
-	return string(out)
 }
 
 const (
@@ -180,6 +176,7 @@ Complete switch of expressions
 	case IfElse:
 	case While:
 	case Call:
+	case Lambda:
 	}
 
 */

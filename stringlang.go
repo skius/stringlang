@@ -13,7 +13,7 @@ type Var = ast.Var
 type Context = ast.Context
 
 func NewContext(args []string, funcs map[string]func([]string) string) *Context {
-	return ast.NewContext(args, funcs)
+	return ast.NewContext(args, funcs, Parse)
 }
 
 func Parse(body []byte) (ast.Expr, error) {

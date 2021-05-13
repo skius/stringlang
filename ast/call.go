@@ -1,14 +1,17 @@
 package ast
 
-import "strings"
+import (
+	"fmt"
+	"strings"
+)
 
 type Call struct {
-	Fn   Var
+	Fn   Expr
 	Args CallArgs
 }
 
 func NewCall(f, as Attrib) (Expr, error) {
-	fn := f.(Var)
+	fn := f.(Expr)
 	args := as.(CallArgs)
 	return Call{Fn: fn, Args: args}, nil
 }
@@ -17,19 +20,49 @@ func (ca Call) Eval(c *Context) Val {
 		return ""
 	}
 
-	userFn, ok := c.UserFunctionMap[string(ca.Fn)]
+	if fnVar, ok := ca.Fn.(Var); ok {
+		userFn, ok := c.UserFunctionMap[string(fnVar)]
+		if ok {
+			vals := make([]Val, 0, len(ca.Args))
+			for _, argExp := range ca.Args {
+				v := argExp.Eval(c)
+				vals = append(vals, v)
+			}
+			res := userFn.Call(c, vals)
+			return res
+		}
+
+		fn, ok := c.FunctionMap[string(fnVar)]
+		if ok {
+			vals := make([]string, 0, len(ca.Args))
+			for _, argExp := range ca.Args {
+				v := argExp.Eval(c)
+				vals = append(vals, string(v))
+			}
+			res := fn(vals)
+			return Val(res)
+		}
+		// Treat as expression, fallthrough
+	}
+
+	fnSource := ca.Fn.Eval(c)
+	fnAst, err := c.parseFn([]byte(fnSource))
+	if err != nil {
+		fmt.Println("Error occurred:", err)
+		return ""
+	}
+	fnProg := fnAst.(Program)
+	if len(fnProg.Code) != 1 {
+		// Must consist of exactly one lambda
+		fmt.Println("Length of parsed program is not equal to 1")
+		return ""
+	}
+	fst := fnProg.Code[0]
+	lam, ok := fst.(Lambda)
 	if !ok {
-		fn, ok := c.FunctionMap[string(ca.Fn)]
-		if !ok {
-			panic("function '" + string(ca.Fn) + "' not found.")
-		}
-		vals := make([]string, 0, len(ca.Args))
-		for _, argExp := range ca.Args {
-			v := argExp.Eval(c)
-			vals = append(vals, string(v))
-		}
-		res := fn(vals)
-		return Val(res)
+		// Must be lambda
+		fmt.Println("Parsed program is not a Lambda")
+		return ""
 	}
 
 	vals := make([]Val, 0, len(ca.Args))
@@ -37,7 +70,8 @@ func (ca Call) Eval(c *Context) Val {
 		v := argExp.Eval(c)
 		vals = append(vals, v)
 	}
-	res := userFn.Call(c, vals)
+
+	res := lam.Call(c, vals)
 	return res
 }
 func (ca Call) String() string {
@@ -95,6 +129,7 @@ func (f FuncDecl) Call(c *Context, args []Val) Val {
 		MaxStackSize:    c.MaxStackSize - CheckSize(c.VariableMap) - GoStackframeEstimate, // New context needs to account for Go stackframes
 		limitStackSize:  c.limitStackSize,
 		exitChannel:     c.exitChannel,
+		parseFn:         c.parseFn,
 	}
 	return f.Code.Eval(&cNew)
 }

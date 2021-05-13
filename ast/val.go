@@ -1,16 +1,20 @@
 package ast
 
+import "strconv"
+
 type Val string
 
 func NewVal(a Attrib) (Expr, error) {
 	quoted := attribToString(a)
-	unquoted := quoted[1 : len(quoted)-1]
-	unescaped := unescape(unquoted)
-	return Val(unescaped), nil
+	res, err := strconv.Unquote(quoted)
+	if err != nil {
+		panic(err)
+	}
+	return Val(res), nil
 }
 func (v Val) Eval(c *Context) Val {
 	return v
 }
 func (v Val) String() string {
-	return "\"" + string(v) + "\""
+	return strconv.Quote(string(v))
 }
