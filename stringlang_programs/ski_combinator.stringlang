@@ -1,0 +1,27 @@
+/* The Calculus */
+I = fun(x) { x };
+K = fun(x) { fun(y) { x } };
+S = fun(x) { fun(y) { fun(z) { x(z)(y(z)) } } };
+
+/* Booleans */
+T = K;
+F = S(K);
+
+/* I am unsure how safe this comparison of lambdas is */
+bool_str = fun(b) { b == T };
+
+/* Boolean operators */
+NOT = S(S(I)(K(F)))(K(T));
+OR = S(I)(K(T));
+AND = S(S)(K(K(F)));
+
+other_k = S(K)(S)(K);
+
+I("Identity") + "\n" +
+K("Always Me")("Never Me") + "\n" +
+other_k("also Always Me")("also Never Me") + "\n\n" +
+
+"NOT T = " + bool_str(NOT(T)) + ", NOT F = " + bool_str(NOT(F)) + "\n" +
+"T AND F = " + bool_str(AND(T)(F)) + ", T AND T = " + bool_str(AND(T)(T)) + "\n" +
+"F OR T = " + bool_str(OR(F)(T)) + ", F OR F = " + bool_str(OR(F)(F))
+
