@@ -58,7 +58,7 @@ func main() {
 
 	expr, err := stringlang.Parse(source)
 	if err != nil {
-		panic(err)
+		panic(sourceFile + ":" + err.Error())
 	}
 
 	program := expr.(ast.Program)
