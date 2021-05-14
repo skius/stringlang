@@ -18,3 +18,6 @@ func (a Assn) Eval(c *Context) Val {
 func (a Assn) String() string {
 	return a.V.String() + " = " + a.E.String()
 }
+func (a Assn) Precedence() int {
+	return 0
+}

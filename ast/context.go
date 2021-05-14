@@ -38,3 +38,14 @@ func (c *Context) GetExitChannel() chan int {
 	}
 	return c.exitChannel
 }
+
+func (c *Context) FuncNames() Set {
+	names := make(Set, len(c.FunctionMap) + len(c.UserFunctionMap))
+	for fId := range c.UserFunctionMap {
+		names.Add(fId)
+	}
+	for fId := range c.FunctionMap {
+		names.Add(fId)
+	}
+	return names
+}

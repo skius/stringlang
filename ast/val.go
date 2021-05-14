@@ -18,3 +18,7 @@ func (v Val) Eval(c *Context) Val {
 func (v Val) String() string {
 	return strconv.Quote(string(v))
 }
+func (v Val) Precedence() int {
+	// Leaf, not operator
+	return LeafPrecedence
+}

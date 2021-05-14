@@ -17,8 +17,8 @@ func NewLambda(ps, b Attrib) (Expr, error) {
 }
 
 func (l Lambda) Eval(c *Context) Val {
-	// Closure by value, copy the value of l's body's free vars in the current context into its body
-	fvMap := FreeVars(l)
+	// Closure by value, copy the value of l's body's var that are used before defined in the current context into its body
+	fvMap := UsedBeforeDefVars(l, c.FuncNames())
 
 	// Need to sort as slice because key traversal in maps is non-deterministic
 	fv := make([]string, 0, len(fvMap))
@@ -44,6 +44,10 @@ func (l Lambda) String() string {
 	res += "\n}"
 	//res = strings.ReplaceAll(res, "\"", "\\\"")
 	return res
+}
+
+func (l Lambda) Precedence() int {
+	return LeafPrecedence
 }
 
 func (l Lambda) Call(c *Context, args []Val) Val {

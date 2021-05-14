@@ -34,3 +34,7 @@ func (e While) String() string {
 	str := "while (" + e.Cond.String() + ") {\n\t" + thenStr + "\n}"
 	return str
 }
+func (e While) Precedence() int {
+	// Leaf, not operator
+	return LeafPrecedence
+}

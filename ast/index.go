@@ -25,5 +25,13 @@ func (i Index) Eval(c *Context) Val {
 	return Val(src[idx])
 }
 func (i Index) String() string {
-	return i.Source.String() + "[" + i.I.String() + "]"
+	srcStr := i.Source.String()
+	if i.Source.Precedence() < LeafPrecedence {
+		srcStr = "(" + srcStr + ")"
+	}
+	return srcStr + "[" + i.I.String() + "]"
+}
+func (i Index) Precedence() int {
+	// Leaf, not operator
+	return LeafPrecedence
 }

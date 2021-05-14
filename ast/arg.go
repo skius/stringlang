@@ -18,3 +18,7 @@ func (a Arg) Eval(c *Context) Val {
 func (a Arg) String() string {
 	return "$" + strconv.Itoa(int(a))
 }
+func (a Arg) Precedence() int {
+	// Leaf, not operator
+	return LeafPrecedence
+}

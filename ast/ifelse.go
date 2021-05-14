@@ -31,3 +31,7 @@ func (e IfElse) String() string {
 	str := "if (" + e.Cond.String() + ") {\n\t" + thenStr + "\n} else {\n\t" + elseStr + "\n}"
 	return str
 }
+func (e IfElse) Precedence() int {
+	// Leaf, not operator
+	return LeafPrecedence
+}

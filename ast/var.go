@@ -14,3 +14,7 @@ func (v Var) Eval(c *Context) Val {
 func (v Var) String() string {
 	return string(v)
 }
+func (v Var) Precedence() int {
+	// Leaf, not operator
+	return LeafPrecedence
+}

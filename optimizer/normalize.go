@@ -57,36 +57,12 @@ func (n *normalizer) compileStmt(_e Expr) (res []Expr) {
 		res = codeSrc
 		res = append(res, codeI...)
 		res = append(res, Index{Source: locSrc, I: locI})
-	case Concat:
-		codeA, locA := n.compileExpr(e.A, 0)
-		codeB, locB := n.compileExpr(e.B, 0)
-		res = codeA
-		res = append(res, codeB...)
-		res = append(res, Concat{A: locA, B: locB})
-	case And:
-		codeA, locA := n.compileExpr(e.A, 0)
-		codeB, locB := n.compileExpr(e.B, 0)
-		res = codeA
-		res = append(res, codeB...)
-		res = append(res, And{A: locA, B: locB})
-	case Or:
-		codeA, locA := n.compileExpr(e.A, 0)
-		codeB, locB := n.compileExpr(e.B, 0)
-		res = codeA
-		res = append(res, codeB...)
-		res = append(res, Or{A: locA, B: locB})
-	case Equals:
-		codeA, locA := n.compileExpr(e.A, 0)
-		codeB, locB := n.compileExpr(e.B, 0)
-		res = codeA
-		res = append(res, codeB...)
-		res = append(res, Equals{A: locA, B: locB})
-	case NotEquals:
-		codeA, locA := n.compileExpr(e.A, 0)
-		codeB, locB := n.compileExpr(e.B, 0)
-		res = codeA
-		res = append(res, codeB...)
-		res = append(res, NotEquals{A: locA, B: locB})
+	case BinOp:
+		codeLhs, locLhs := n.compileExpr(e.Lhs, 0)
+		codeRhs, locRhs := n.compileExpr(e.Rhs, 0)
+		res = codeLhs
+		res = append(res, codeRhs...)
+		res = append(res, BinOp{Lhs: locLhs, Rhs: locRhs, Op: e.Op})
 	case IfElse: // TODO: currently short-circuiting is broken
 		codeCond, locCond := n.compileExpr(e.Cond, 0)
 		res = append(res, codeCond...)
@@ -152,73 +128,17 @@ func (n *normalizer) compileExpr(_e Expr, maxDepth int) (code []Expr, loc Expr) 
 		} else {
 			panic("maxDepth > 1")
 		}
-	case Concat:
+	case BinOp:
 		if maxDepth == 0 {
 			v := Var(n.genName())
 			code = n.compileStmt(Assn{V: v, E: e})
 			loc = v
 		} else if maxDepth == 1 {
-			codeA, locA := n.compileExpr(e.A, 0)
-			codeB, locB := n.compileExpr(e.B, 0)
-			code = append(code, codeA...)
-			code = append(code, codeB...)
-			loc = Concat{A: locA, B: locB}
-		} else {
-			panic("maxDepth > 1")
-		}
-	case And:
-		if maxDepth == 0 {
-			v := Var(n.genName())
-			code = n.compileStmt(Assn{V: v, E: e})
-			loc = v
-		} else if maxDepth == 1 {
-			codeA, locA := n.compileExpr(e.A, 0)
-			codeB, locB := n.compileExpr(e.B, 0)
-			code = append(code, codeA...)
-			code = append(code, codeB...)
-			loc = And{A: locA, B: locB}
-		} else {
-			panic("maxDepth > 1")
-		}
-	case Or:
-		if maxDepth == 0 {
-			v := Var(n.genName())
-			code = n.compileStmt(Assn{V: v, E: e})
-			loc = v
-		} else if maxDepth == 1 {
-			codeA, locA := n.compileExpr(e.A, 0)
-			codeB, locB := n.compileExpr(e.B, 0)
-			code = append(code, codeA...)
-			code = append(code, codeB...)
-			loc = Or{A: locA, B: locB}
-		} else {
-			panic("maxDepth > 1")
-		}
-	case Equals:
-		if maxDepth == 0 {
-			v := Var(n.genName())
-			code = n.compileStmt(Assn{V: v, E: e})
-			loc = v
-		} else if maxDepth == 1 {
-			codeA, locA := n.compileExpr(e.A, 0)
-			codeB, locB := n.compileExpr(e.B, 0)
-			code = append(code, codeA...)
-			code = append(code, codeB...)
-			loc = Equals{A: locA, B: locB}
-		} else {
-			panic("maxDepth > 1")
-		}
-	case NotEquals:
-		if maxDepth == 0 {
-			v := Var(n.genName())
-			code = n.compileStmt(Assn{V: v, E: e})
-			loc = v
-		} else if maxDepth == 1 {
-			codeA, locA := n.compileExpr(e.A, 0)
-			codeB, locB := n.compileExpr(e.B, 0)
-			code = append(code, codeA...)
-			code = append(code, codeB...)
-			loc = NotEquals{A: locA, B: locB}
+			codeLhs, locLhs := n.compileExpr(e.Lhs, 0)
+			codeRhs, locRhs := n.compileExpr(e.Rhs, 0)
+			code = append(code, codeLhs...)
+			code = append(code, codeRhs...)
+			loc = BinOp{Lhs: locLhs, Rhs: locRhs, Op: e.Op}
 		} else {
 			panic("maxDepth > 1")
 		}
@@ -292,74 +212,66 @@ func (n *normalizer) genName() string {
 	return "__temp" + lastNum
 }
 
-func succ(s string) string {
-	sRev := reverse(s)
+//func succ(s string) string {
+//	sRev := reverse(s)
+//
+//	if sRev == "" {
+//		return "a"
+//	}
+//
+//	if sRev[0] == 'z' {
+//		return reverse("a" + reverse(succ(reverse(sRev[1:]))))
+//	}
+//
+//	res := string(sRev[0]+1) + sRev[1:]
+//	return reverse(res)
+//}
+//
+//func reverse(s string) string {
+//	var sRev string
+//	for i := len(s) - 1; i >= 0; i-- {
+//		sRev += string(s[i])
+//	}
+//	return sRev
+//}
 
-	if sRev == "" {
-		return "a"
-	}
-
-	if sRev[0] == 'z' {
-		return reverse("a" + reverse(succ(reverse(sRev[1:]))))
-	}
-
-	res := string(sRev[0]+1) + sRev[1:]
-	return reverse(res)
-}
-
-func reverse(s string) string {
-	var sRev string
-	for i := len(s) - 1; i >= 0; i-- {
-		sRev += string(s[i])
-	}
-	return sRev
-}
-
-func max(a, b int) int {
-	if a > b {
-		return a
-	}
-	return b
-}
-
-func primitiveLevel(e Expr) int {
-	switch val := e.(type) {
-	case Program:
-		return primitiveLevel(val.Code)
-	case Block:
-		codeMax := 0
-		for _, e := range val {
-			codeMax = max(primitiveLevel(e), codeMax)
-		}
-		return len(val) + codeMax
-	case Assn:
-		return 1 + primitiveLevel(val.E)
-	case Var:
-		return 0
-	case Val:
-		return 0
-	case And:
-		return 1 + max(primitiveLevel(val.A), primitiveLevel(val.B))
-	case Or:
-		return 1 + max(primitiveLevel(val.A), primitiveLevel(val.B))
-	case NotEquals:
-		return 1 + max(primitiveLevel(val.A), primitiveLevel(val.B))
-	case Equals:
-		return 1 + max(primitiveLevel(val.A), primitiveLevel(val.B))
-	case Concat:
-		return 1 + max(primitiveLevel(val.A), primitiveLevel(val.B))
-	case While:
-		return 1 + max(primitiveLevel(val.Cond), primitiveLevel(val.Body))
-	case IfElse:
-		return 1 + max(max(primitiveLevel(val.Cond), primitiveLevel(val.Then)), primitiveLevel(val.Else))
-	case Call:
-		argM := 0
-		for _, e := range val.Args {
-			argM = max(primitiveLevel(e), argM)
-		}
-		return 1 + argM
-	case Index:
-		return 1 + max(primitiveLevel(val.Source), primitiveLevel(val.I))
-	}
-	return 0
-}
+//func max(a, b int) int {
+//	if a > b {
+//		return a
+//	}
+//	return b
+//}
+//
+//func primitiveLevel(e Expr) int {
+//	switch val := e.(type) {
+//	case Program:
+//		return primitiveLevel(val.Code)
+//	case Block:
+//		codeMax := 0
+//		for _, e := range val {
+//			codeMax = max(primitiveLevel(e), codeMax)
+//		}
+//		return len(val) + codeMax
+//	case Assn:
+//		return 1 + primitiveLevel(val.E)
+//	case Var:
+//		return 0
+//	case Val:
+//		return 0
+//	case BinOp:
+//		return 1 + max(primitiveLevel(val.Lhs), primitiveLevel(val.Rhs))
+//	case While:
+//		return 1 + max(primitiveLevel(val.Cond), primitiveLevel(val.Body))
+//	case IfElse:
+//		return 1 + max(max(primitiveLevel(val.Cond), primitiveLevel(val.Then)), primitiveLevel(val.Else))
+//	case Call:
+//		argM := 0
+//		for _, e := range val.Args {
+//			argM = max(primitiveLevel(e), argM)
+//		}
+//		return 1 + argM
+//	case Index:
+//		return 1 + max(primitiveLevel(val.Source), primitiveLevel(val.I))
+//	}
+//	return 0
+//}

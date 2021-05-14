@@ -49,19 +49,27 @@ func (ca Call) Eval(c *Context) Val {
 	fnAst, err := c.parseFn([]byte(fnSource))
 	if err != nil {
 		fmt.Println("Error occurred:", err)
+		fmt.Println("Fn is:")
+		fmt.Println(ca.Fn)
+		fmt.Println("source is:")
+		fmt.Println(string(fnSource))
 		return ""
 	}
 	fnProg := fnAst.(Program)
 	if len(fnProg.Code) != 1 {
 		// Must consist of exactly one lambda
-		fmt.Println("Length of parsed program is not equal to 1")
+		fmt.Println("Length of parsed program is not equal to 1, Fn expression is:")
+		fmt.Println(ca.Fn)
+		fmt.Println("source is:")
+		fmt.Println(string(fnSource))
 		return ""
 	}
 	fst := fnProg.Code[0]
 	lam, ok := fst.(Lambda)
 	if !ok {
 		// Must be lambda
-		fmt.Println("Parsed program is not a Lambda")
+		fmt.Println("Parsed program is not a Lambda:")
+		fmt.Println(string(fnSource))
 		return ""
 	}
 
@@ -80,7 +88,16 @@ func (ca Call) String() string {
 		args = append(args, arg.String())
 	}
 
-	return ca.Fn.String() + "(" + strings.Join(args, ", ") + ")"
+	fnStr := ca.Fn.String()
+	if ca.Fn.Precedence() < LeafPrecedence {
+		fnStr = "(" + fnStr + ")"
+	}
+
+	return fnStr + "(" + strings.Join(args, ", ") + ")"
+}
+func (ca Call) Precedence() int {
+	// Leaf, not operator
+	return LeafPrecedence
 }
 
 // CallArgs is not an Expr, since it can never appear on its own

@@ -9,7 +9,11 @@ type Attrib interface{}
 type Expr interface {
 	Eval(*Context) Val
 	String() string
+	Precedence() int
+	//IsRightAssociative() bool // Unnecessary, we only have left-associative expressions currently.
 }
+
+const LeafPrecedence int = 100
 
 type Program struct {
 	Funcs []FuncDecl
@@ -40,6 +44,10 @@ func (p Program) String() string {
 	result := strings.Join(funcdecls, "\n")
 	return result + "\n" + p.Code.String()
 }
+func (p Program) Precedence() int {
+	// Unused
+	return -1
+}
 
 type Block []Expr
 
@@ -69,4 +77,8 @@ func (b Block) String() string {
 		}
 	}
 	return str
+}
+func (b Block) Precedence() int {
+	// Unused
+	return -1
 }
