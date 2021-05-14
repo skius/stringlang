@@ -57,7 +57,7 @@ Get the parser generator `gocc` used in this project from: [goccmack/gocc](https
 
 ### Example StringLang programs
 
-See `stringlang_programs/`
+See [`stringlang_programs/`](stringlang_programs)
 
 ## Syntax
 
