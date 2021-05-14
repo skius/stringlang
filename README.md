@@ -66,9 +66,9 @@ constitutes a `StringLang` source file. The complete grammar can be found in `la
 
 ```
 identifier: any string of alphanumeric and underscore characters not beginning with a digit
-number: positive integer
-string_literal: a "double-quoted" string, containing any sequence of characters
-comment: /* any text enclosed by /* and */, except '/*' and '*/' */
+number: non-negative integer
+string_literal: a "double-quoted" string, containing any sequence of characters, escapes allowed using '\'
+comment: any text enclosed by /* and */, except '/*' and '*/' (no nested comments)
 
 
 program:
@@ -90,7 +90,7 @@ expression:
     $number
     expression[expression]
     expression[number]
-    identifier(expression1, expression2, ..., expressionN)  // N can be 0
+    expression(expression1, expression2, ..., expressionN)  // N can be 0
     
     expression || expression
     expression && expression
@@ -103,12 +103,17 @@ expression:
     ifelse
     while
     
+    lambda
+    
 ifelse:
     if (expression) { block } else { block }
     if (expression) { block } else ifelse                   // This effectively allows else-if 
     
 while:
     while (expression) { block }
+
+lambda:
+    fun(param1, param2, ..., paramN) { block }              // paramX are identifiers, N may be 0
 ```
 
 ### Caveats
@@ -127,14 +132,52 @@ All expressions/values in `StringLang` are Strings.
 ### Functions
 
 Functions in `StringLang` can either be user-defined (i.e. they are written in `StringLang` and reside
-in the header of the interpreted file), or they can be built-in (i.e. supplied to the interpreter
-via the context, see the Context section). Because built-in functions are written in Go, they can accomplish anything
-Go can accomplish. 
+as a top-level function in the header of the interpreted file, or are lambdas), or they can be built-in 
+(i.e. supplied to the interpreter via the [context](#context-functions-and-arguments)). 
+Because built-in functions are written in Go, they can accomplish anything Go can accomplish. 
 
 User-defined `StringLang` functions are evaluated with their own completely separate variable scope and
 are mutually recursive. The arguments passed to them are bound to the variables in the corresponding parameter lists.
 
-All functions in `StringLang` are pass-by-value.
+All functions in `StringLang` are pass-by-value, hence also strict.
+
+#### Calls
+
+In a `expr(args...)` call, finding the function corresponding to `expr` has the following order:
+1. Check if `expr` is an `identifier` equal to some `f` and that there exists a *top-level, user-defined* function 
+   `fun f(params) { block }`, if so, call that function.
+2. Check if `expr` is an `identifier` equal to some `f` and that there exists a *built-in* 
+   function that is mapped to that `f` in the provided [context](#context-functions-and-arguments), if so, call that.
+3. If `expr` is not an `identifier` with corresponding named function, then [evaluate](#evaluation) `expr` and treat the
+   resulting String as source code of a `lambda`, then call that lambda.
+
+#### Lambdas
+
+Lambdas in StringLang capture their environment by-value, and encode it as simple assignments at the top of the `block`.
+Evaluating them (which is different to calling them) results in a canonical source representation of the lambda.  
+
+Example: The expression `fun(x) { x + y }` is evaluated differently depending on its context. In particular,
+the run-time value of the `identifier` `y` will be copied into the block, e.g. assuming `y` evaluates to `"value"`
+in the current context the lambda becomes: `fun(x) { y = "value"; x + y }`, a context-insensitive lambda. Now it can
+be evaluated into a String and returned: 
+```
+"fun(x) {
+   y = \"value\";
+   x + y
+}"
+```
+At the site of a [call](#calls), this String can now be interpreted as the source code of a lambda, and called as such.  
+Note that because we stored the value of `y` inside the lambda, the context in which we call this "lambda-turned-String"
+does not matter.
+
+Also note that lambdas are still user-defined functions, which are evaluated using a separate variable scope. Hence the
+`y = "value"` in the block will not cause the caller's `y` to be set to `"value"`.
+
+If you need more examples, see [lambdas.stringlang](stringlang_programs/lambdas.stringlang) or
+[ski_combinator.stringlang](stringlang_programs/ski_combinator.stringlang) to see how the SK-calculus looks like in
+StringLang.
+
+
 
 ### Binary Operators
 
@@ -153,24 +196,27 @@ The following list gives the binary operators, ordered from low to high preceden
 
 ### Evaluation 
 ```
-string_literal              The value of 'string_literal'
-identifier                  The current value of the variable with identifier 'identifier'.
-identifier = expression     The value of 'expression'. 
+string_literal ------------ The value of 'string_literal'
+identifier ---------------- The current value of the variable with identifier 'identifier'.
+identifier = expression --- The value of 'expression'. 
                             Side effect: Variable 'identifier' now has that value.
-$number                     The value of the 'number'-th (zero-indexed) argument to the program.
-expr1[expr2 or number]      The character at position 'expr2' resp. 'number' of the value 
+$number ------------------- The value of the 'number'-th (zero-indexed) argument to the program.
+expr1[expr2 or number] ---- The character at position 'expr2' resp. 'number' of the value 
                             that 'expr1' evaluates to.
-identifier(expr1, ...)      Function call to function 'identifier' with arguments 'expr1, ...'.
+expr(expr1, ...) ---------- Function call to function 'expr' (See 'Functions' section) with arguments 'expr1, ...'.
                             Arguments are evaluated before passed to the function.
                             Evaluates to the function's return value.
-expr1 <binop> expr2         The value of the corresponding binary operation. 
+expr1 <binop> expr2 ------- The value of the corresponding binary operation. 
 
-ifelse                      The value of the then-block if the condition evaluates to a true value,
+ifelse -------------------- The value of the then-block if the condition evaluates to a true value,
                             or the value of the else-block if the condition evaluates to a false value.
-while                       The value of the last iteration of the block if it gets executed once, else "".
+while --------------------- The value of the last iteration of the block if it gets executed once, else "".
                             Side effects: All iterations might cause side effects
                             
-block                       The value of the last expression in the block.
+lambda -------------------- The canonical source representation of the whole lambda as string, but with the blocks's
+                            used variables captured by-value in the lambda.
+                            
+block --------------------- The value of the last expression in the block.
                             Side effects: Evaluates all expressions in the list.
 
 ```
